@@ -5,13 +5,15 @@ namespace Tests.ScenarioSceneParts
 {
     public class ScenePartsMock : IScenarioSceneParts
     {
-        public bool NeedExecuteEveryFrame { get; } = false;
+        public int ExecutionCounter { get; private set; }
 
-        public ExecutionPriority Priority { get; } = ExecutionPriority.Low;
+        public Scenario Scenario { get; private set; }
 
-        public int ExecutionCounter { get; set; }
+        public int ExecutionEveryFrameCounter { get; private set; }
 
-        public int ExecutionEveryFrameCounter { get; set; }
+        public bool NeedExecuteEveryFrame => false;
+
+        public ExecutionPriority Priority { get; set; } = ExecutionPriority.Low;
 
         public void Execute()
         {
@@ -25,6 +27,7 @@ namespace Tests.ScenarioSceneParts
 
         public void SetScenario(Scenario scenario)
         {
+            Scenario = scenario;
         }
 
         public void SetResource(Resource resource)
