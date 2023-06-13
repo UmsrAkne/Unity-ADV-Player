@@ -1,3 +1,5 @@
+using SceneContents;
+
 namespace ScenarioSceneParts
 {
     public interface IScenarioSceneParts
@@ -10,10 +12,10 @@ namespace ScenarioSceneParts
 
         void ExecuteEveryFrame();
 
-        // void SetScenario(Scenario scenario);
-        //
-        // void SetResource(Resource resource);
-        //
+        void SetScenario(Scenario scenario);
+
+        void SetResource(Resource resource);
+
         // void SetUI(UI ui);
     }
 }
