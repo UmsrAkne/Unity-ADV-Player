@@ -12,11 +12,11 @@ namespace ScenarioSceneParts
 
         private bool Writing { get; set; }
 
-        private int ScenarioIndex { get; set; }
+        public int ScenarioIndex { get; private set; }
 
         private IWritable TextField { get; set; }
 
-        private string CurrentText { get; set; } = string.Empty;
+        public string CurrentText { get; private set; } = string.Empty;
 
         private Scenario Scenario { get; set; }
 
