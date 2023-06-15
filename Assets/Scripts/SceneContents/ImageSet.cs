@@ -36,7 +36,7 @@ namespace SceneContents
 
         private GameObject MaskObject => maskUnit.GameObject;
 
-        private bool Overwriting { get; set; }
+        public bool Overwriting { get; set; }
 
         private List<ImageUnit> ImageUnits { get; set; } = new List<ImageUnit>(4) { null, null, null, null };
 
@@ -148,7 +148,7 @@ namespace SceneContents
             Scale = scale;
         }
 
-        public SpriteRenderer SetSprite(Sprite sp, int index)
+        public void SetSprite(SpriteWrapper spw, int index, Color color)
         {
             Overwriting = true;
 
@@ -157,19 +157,13 @@ namespace SceneContents
                 ReplaceImage(TemporaryImages[index], index);
             }
 
-            var spw = new SpriteWrapper()
-            {
-                Sprite = sp,
-            };
-
             var imageUnit = new ImageUnit(spw);
             TemporaryImages[index] = imageUnit;
             imageUnit.SetParent(GameObject);
 
             // sprite の上書きを常に最前面に対して行う。
             imageUnit.SpriteRenderer.sortingOrder = ++overwriteLayerIndex;
-
-            return imageUnit.SpriteRenderer;
+            imageUnit.SpriteRenderer.color = color;
         }
 
         public void Overwrite(float depth)

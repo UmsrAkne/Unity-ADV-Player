@@ -15,6 +15,12 @@ namespace Tests.ScenarioSceneParts
 
         public int Angle { get; set; }
 
+        public float Wx { get; }
+
+        public float Wy { get; }
+
+        public bool Overwriting { get; set; }
+
         public void Dispose()
         {
         }
@@ -24,6 +30,14 @@ namespace Tests.ScenarioSceneParts
         }
 
         public void SetSortingOrder(int order)
+        {
+        }
+
+        public void Overwrite(float drawingDepth)
+        {
+        }
+
+        public void SetSprite(SpriteWrapper spw, int index, Color color)
         {
         }
     }
