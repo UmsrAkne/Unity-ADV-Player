@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace SceneContents
 {
     public interface IDisplayObject
@@ -11,5 +13,11 @@ namespace SceneContents
         float Y { get; set; }
 
         int Angle { get; set; }
+
+        void Dispose();
+
+        void SetParent(Transform transform);
+
+        void SetSortingOrder(int order);
     }
 }

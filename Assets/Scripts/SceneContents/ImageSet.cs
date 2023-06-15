@@ -8,11 +8,39 @@ namespace SceneContents
     public class ImageSet : IDisplayObject
     {
         private float alpha = 1.0f;
-        private float scale = 1.0f;
         private int angle;
-        private ImageUnit parentUnit;
         private ImageUnit maskUnit;
         private int overwriteLayerIndex = 1;
+        private ImageUnit parentUnit;
+        private float scale = 1.0f;
+
+        /// <summary>
+        /// 現在の X座標(ワールド座標) を取得します。
+        /// ローカル座標は setParent の時点で値がずれるため、現在の画像のポジションを外側で利用する場合は、このプロパティを利用します。
+        /// </summary>
+        public float Wx
+            => GameObject.transform.parent.TransformPoint(GameObject.transform.localPosition).x;
+
+        /// <summary>
+        /// 現在の Y座標(ワールド座標) を取得します。
+        /// ローカル座標は setParent の時点で値がずれるため、現在の画像のポジションを外側で利用する場合は、このプロパティを利用します。
+        /// </summary>
+        public float Wy
+            => GameObject.transform.parent.TransformPoint(GameObject.transform.localPosition).y;
+
+        public int SortingLayerIndex { get; set; }
+
+        public SortingGroup SortingGroup => parentUnit.SortingGroup;
+
+        public GameObject GameObject => parentUnit.GameObject;
+
+        private GameObject MaskObject => maskUnit.GameObject;
+
+        private bool Overwriting { get; set; }
+
+        private List<ImageUnit> ImageUnits { get; set; } = new List<ImageUnit>(4) { null, null, null, null };
+
+        private List<ImageUnit> TemporaryImages { get; set; } = new List<ImageUnit>(4) { null, null, null, null };
 
         public float Alpha
         {
@@ -47,20 +75,6 @@ namespace SceneContents
             set => GameObject.transform.localPosition = new Vector3(value, GameObject.transform.localPosition.y);
         }
 
-        /// <summary>
-        /// 現在の X座標(ワールド座標) を取得します。
-        /// ローカル座標は setParent の時点で値がずれるため、現在の画像のポジションを外側で利用する場合は、このプロパティを利用します。
-        /// </summary>
-        public float Wx
-            => GameObject.transform.parent.TransformPoint(GameObject.transform.localPosition).x;
-
-        /// <summary>
-        /// 現在の Y座標(ワールド座標) を取得します。
-        /// ローカル座標は setParent の時点で値がずれるため、現在の画像のポジションを外側で利用する場合は、このプロパティを利用します。
-        /// </summary>
-        public float Wy
-            => GameObject.transform.parent.TransformPoint(GameObject.transform.localPosition).y;
-
         public float Y
         {
             get => GameObject.transform.localPosition.y;
@@ -77,19 +91,29 @@ namespace SceneContents
             }
         }
 
-        public int SortingLayerIndex { get; set; }
+        /// <summary>
+        /// この ImageSet が参照している GameObject を SetActive(false) に設定します。
+        /// </summary>
+        public void Dispose()
+        {
+            GameObject.SetActive(false);
+            MaskObject.SetActive(false);
 
-        public SortingGroup SortingGroup => parentUnit.SortingGroup;
+            ImageUnits.ForEach(u =>
+            {
+                u?.GameObject.SetActive(false);
+            });
+        }
 
-        private GameObject GameObject => parentUnit.GameObject;
+        public void SetParent(Transform transform)
+        {
+            GameObject.transform.SetParent(transform);
+        }
 
-        private GameObject MaskObject => maskUnit.GameObject;
-
-        private bool Overwriting { get; set; }
-
-        private List<ImageUnit> ImageUnits { get; set; } = new List<ImageUnit>(4) { null, null, null, null };
-
-        private List<ImageUnit> TemporaryImages { get; set; } = new List<ImageUnit>(4) { null, null, null, null };
+        public void SetSortingOrder(int order)
+        {
+            SortingGroup.sortingOrder = order;
+        }
 
         public void Draw(List<SpriteWrapper> spriteWrappers)
         {
@@ -174,20 +198,6 @@ namespace SceneContents
             }
 
             Overwriting = TemporaryImages.Any(i => i != null);
-        }
-
-        /// <summary>
-        /// この ImageSet が参照している GameObject を SetActive(false) に設定します。
-        /// </summary>
-        public void Dispose()
-        {
-            GameObject.SetActive(false);
-            MaskObject.SetActive(false);
-
-            ImageUnits.ForEach(u =>
-            {
-                u?.GameObject.SetActive(false);
-            });
         }
 
         private void ReplaceImage(ImageUnit temporaryImageUnit, int index)
