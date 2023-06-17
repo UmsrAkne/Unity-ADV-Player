@@ -11,13 +11,13 @@ namespace SceneContents
 
         public List<Scenario> Scenarios { get; set; }
 
-        // public List<SpriteWrapper> Images { get; set; }
-        //
-        // public Dictionary<string, SpriteWrapper> ImagesByName { get; set; }
-        //
+        public List<SpriteWrapper> Images { get; set; }
+
+        public Dictionary<string, SpriteWrapper> ImagesByName { get; set; }
+
         // public List<SpriteWrapper> MaskImages { get; set; }
-        //
-        // public Dictionary<string, SpriteWrapper> MaskImagesByName { get; set; }
+
+        public Dictionary<string, SpriteWrapper> MaskImagesByName { get; set; }
 
         public AudioSource BGMAudioSource { get; set; }
 

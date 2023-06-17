@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SceneContents
 {
     public class Scenario
@@ -8,10 +10,10 @@ namespace SceneContents
 
         public string ChapterName { get; set; } = string.Empty;
 
-        // public List<ImageOrder> ImageOrders { get; set; } = new List<ImageOrder>();
-        //
-        // public List<ImageOrder> DrawOrders { get; set; } = new List<ImageOrder>();
-        //
+        public List<ImageOrder> ImageOrders { get; set; } = new List<ImageOrder>();
+
+        public List<ImageOrder> DrawOrders { get; set; } = new List<ImageOrder>();
+
         // public List<VoiceOrder> VoiceOrders { get; set; } = new List<VoiceOrder>();
         //
         // public List<BGVOrder> BGVOrders { get; set; } = new List<BGVOrder>();
