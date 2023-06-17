@@ -9,7 +9,8 @@ namespace SceneLogics
         private static void Init()
         {
             // このメソッド内の処理はアプリ起動時に実行される。
-            SceneManager.LoadScene("ScenarioScene");
+            // SceneManager.LoadScene("ScenarioScene");
+            SceneManager.LoadScene("LoadScene");
         }
 
         void Awake()
