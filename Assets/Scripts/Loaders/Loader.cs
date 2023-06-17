@@ -5,10 +5,11 @@ namespace Loaders
 {
     public class Loader
     {
-        public event EventHandler LoadCompleted;
+        public event EventHandler TextLoadCompleted;
+        public event EventHandler MediaLoadCompleted;
 
         private int loadCompleteCount;
-        // private readonly TextLoader textLoader = new TextLoader();
+        private readonly TextLoader textLoader = new TextLoader();
         // private readonly ImageLoader imageLoader = new ImageLoader{TargetImageType = TargetImageType.eventCg};
         // private readonly ImageLoader maskLoader = new ImageLoader{TargetImageType = TargetImageType.mask};
         // private readonly BGMLoader bgmLoader = new GameObject().AddComponent<BGMLoader>();
@@ -17,9 +18,9 @@ namespace Loaders
         // private readonly VoiceLoader seLoader = new GameObject().AddComponent<VoiceLoader>();
         // private readonly SceneSettingLoader sceneSettingLoader = new SceneSettingLoader();
 
-        public Resource Resource { get; set; } = new Resource();
+        public Resource Resource { get; } = new Resource();
 
-        public void Load(string path)
+        public void LoadMedias(string path)
         {
             // var settingXMLPath = $@"{path}\{ResourcePath.SceneTextDirectoryName}\setting.xml";
 
@@ -37,9 +38,6 @@ namespace Loaders
             // seLoader.TargetAudioType = TargetAudioType.se;
             // bgmLoader.BGMNumber = Resource.SceneSetting.BGMNumber;
             // bgmLoader.BGMFileName = Resource.SceneSetting.BGMFileName;
-
-            // textLoader.Resource = Resource;
-            // textLoader.Load(path);
 
             // imageLoader.UsingFileNames = textLoader.UsingImageFileNames;
 
@@ -75,6 +73,13 @@ namespace Loaders
 
             // Resource.MessageWindowImage = new ImageLoader().LoadImage($@"{ResourcePath.CommonUIDirectoryName}\msgWindowImage.png").Sprite;
             // Resource.SceneDirectoryPath = path;
+        }
+
+        public void LoadTexts(string targetDirectoryPath)
+        {
+            textLoader.Resource = Resource;
+            textLoader.Load(targetDirectoryPath);
+            TextLoadCompleted?.Invoke(this, EventArgs.Empty);
         }
     }
 }
