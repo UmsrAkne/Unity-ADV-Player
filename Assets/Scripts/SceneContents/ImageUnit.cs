@@ -9,6 +9,10 @@ namespace SceneContents
         private SortingGroup sortingGroup;
         private SpriteRenderer spriteRenderer;
 
+        public ImageUnit()
+        {
+        }
+
         public ImageUnit(SpriteWrapper spw)
         {
             Width = spw.Width;

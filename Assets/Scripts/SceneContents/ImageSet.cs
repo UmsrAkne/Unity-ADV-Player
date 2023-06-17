@@ -11,8 +11,13 @@ namespace SceneContents
         private int angle;
         private ImageUnit maskUnit;
         private int overwriteLayerIndex = 1;
-        private ImageUnit parentUnit;
         private float scale = 1.0f;
+
+        /// <summary>
+        /// ImageSet に追加される ImageUnit のまとめるための親ユニット
+        /// この Unit 自体に画像の情報は入らないが、描画順やマスクなど、描画に関する内容を管理するのに必須。
+        /// </summary>
+        private readonly ImageUnit parentUnit = new ImageUnit();
 
         /// <summary>
         /// 現在の X座標(ワールド座標) を取得します。
