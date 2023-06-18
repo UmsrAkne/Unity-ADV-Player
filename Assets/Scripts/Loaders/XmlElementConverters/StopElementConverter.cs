@@ -1,17 +1,18 @@
-﻿namespace Loaders.XmlElementConverters
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Xml.Linq;
-    using SceneContents;
+﻿using ScenarioSceneParts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
+using SceneContents;
 
+namespace Loaders.XmlElementConverters
+{
     public class StopElementConverter : IXMLElementConverter
     {
-        private string channelAttribute = "channel";
-        private string layerIndexAttribute = "layerIndex";
-        private string nameAttribute = "name";
-        private string targetAttribute = "target";
+        private readonly string channelAttribute = "channel";
+        private readonly string layerIndexAttribute = "layerIndex";
+        private readonly string nameAttribute = "name";
+        private readonly string targetAttribute = "target";
 
         public string TargetElementName => "stop";
 
@@ -19,48 +20,58 @@
 
         public void Convert(XElement xmlElement, Scenario scenario)
         {
-            var tags = xmlElement.Elements(TargetElementName);
+            var tags = xmlElement.Elements(TargetElementName).ToList();
 
-            // if (tags.Count() != 0)
-            // {
-            //     foreach (var stopTag in tags)
-            //     {
-            //         var stopOrder = new StopOrder();
+            if (!tags.Any())
+            {
+                return;
+            }
 
-            //         if (!stopTag.Attributes().Any(x => x.Name == targetAttribute))
-            //         {
-            //             Log.Add($"<stop> には target 属性が必須です。Index={scenario.Index}");
-            //         }
-            //         else
-            //         {
-            //             if (Enum.TryParse(stopTag.Attribute(targetAttribute).Value, out StoppableSceneParts d))
-            //             {
-            //                 stopOrder.Target = d;
-            //             }
-            //             else
-            //             {
-            //                 Log.Add($"target 属性の変換に失敗。Index={scenario.Index}");
-            //             }
-            //         }
+            foreach (var stopTag in tags)
+            {
+                var stopOrder = GenerateStopOrder(stopTag, scenario);
+                scenario.StopOrders.Add(stopOrder);
+            }
+        }
 
-            //         if (stopTag.Attribute(layerIndexAttribute) != null)
-            //         {
-            //             stopOrder.LayerIndex = int.Parse(stopTag.Attribute(layerIndexAttribute).Value);
-            //         }
+        private StopOrder GenerateStopOrder(XElement stopTag, Scenario scenario)
+        {
+            var stopOrder = new StopOrder();
 
-            //         if (stopTag.Attribute(channelAttribute) != null)
-            //         {
-            //             stopOrder.Channel = int.Parse(stopTag.Attribute(channelAttribute).Value);
-            //         }
+            if (stopTag.Attributes().All(x => x.Name != targetAttribute))
+            {
+                Log.Add($"<stop> には target 属性が必須です。Index={scenario.Index}");
+            }
+            else
+            {
+                var val = XElementHelper.GetStringFromAttribute(stopTag, targetAttribute);
+                var upperAttValue = val[..1].ToUpper() + val[1..];
+                if (Enum.TryParse(upperAttValue, out StoppableSceneParts d))
+                {
+                    stopOrder.Target = d;
+                }
+                else
+                {
+                    Log.Add($"target 属性の変換に失敗。Index={scenario.Index}");
+                }
+            }
 
-            //         if (stopTag.Attribute(nameAttribute) != null)
-            //         {
-            //             stopOrder.Name = stopTag.Attribute(nameAttribute).Value;
-            //         }
+            if (XElementHelper.HasAttribute(stopTag, layerIndexAttribute))
+            {
+                stopOrder.LayerIndex = XElementHelper.GetIntFromAttribute(stopTag, layerIndexAttribute);
+            }
 
-            //         scenario.StopOrders.Add(stopOrder);
-            //     }
-            // }
+            if (XElementHelper.HasAttribute(stopTag, channelAttribute))
+            {
+                stopOrder.Channel = XElementHelper.GetIntFromAttribute(stopTag, channelAttribute);
+            }
+
+            if (XElementHelper.HasAttribute(stopTag, nameAttribute))
+            {
+                stopOrder.Name = XElementHelper.GetStringFromAttribute(stopTag, nameAttribute);
+            }
+
+            return stopOrder;
         }
     }
 }

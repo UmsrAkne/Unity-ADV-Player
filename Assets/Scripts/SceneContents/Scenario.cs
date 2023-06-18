@@ -14,16 +14,16 @@ namespace SceneContents
 
         public List<ImageOrder> DrawOrders { get; set; } = new List<ImageOrder>();
 
-        // public List<VoiceOrder> VoiceOrders { get; set; } = new List<VoiceOrder>();
-        //
-        // public List<BGVOrder> BGVOrders { get; set; } = new List<BGVOrder>();
-        //
+        public List<VoiceOrder> VoiceOrders { get; set; } = new List<VoiceOrder>();
+
+        public List<BgvOrder> BgvOrders { get; set; } = new List<BgvOrder>();
+
         // public int VoiceIndex { get; set; }
         //
         // public List<SEOrder> SEOrders { get; set; } = new List<SEOrder>();
         //
         // public List<IAnimation> Animations { get; set; } = new List<IAnimation>();
-        //
-        // public List<StopOrder> StopOrders { get; set; } = new List<StopOrder>();
+
+           public List<StopOrder> StopOrders { get; set; } = new List<StopOrder>();
     }
 }

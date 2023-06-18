@@ -18,26 +18,26 @@
         {
             var tags = xmlElement.Elements(TargetElementName);
 
-            // if (tags.Count() != 0)
-            // {
-            //     foreach (XElement bgvTag in tags)
-            //     {
-            //         var order = new BGVOrder();
+            if (tags.Count() != 0)
+            {
+                foreach (var bgvTag in tags)
+                {
+                    var order = new BgvOrder();
 
-            //         if (bgvTag.Attribute(namesAttribute) != null)
-            //         {
-            //             order.FileNames = new List<string>(bgvTag.Attribute(namesAttribute).Value.Split(','));
-            //             order.FileNames = order.FileNames.Select(name => name.Trim()).ToList();
-            //         }
+                    if (bgvTag.Attribute(namesAttribute) != null)
+                    {
+                        order.FileNames = new List<string>(bgvTag.Attribute(namesAttribute).Value.Split(','));
+                        order.FileNames = order.FileNames.Select(name => name.Trim()).ToList();
+                    }
 
-            //         if (bgvTag.Attribute(channelAttribute) != null)
-            //         {
-            //             order.Channel = int.Parse(bgvTag.Attribute(channelAttribute).Value);
-            //         }
+                    if (bgvTag.Attribute(channelAttribute) != null)
+                    {
+                        order.Channel = int.Parse(bgvTag.Attribute(channelAttribute).Value);
+                    }
 
-            //         scenario.BGVOrders.Add(order);
-            //     }
-            // }
+                    scenario.BgvOrders.Add(order);
+                }
+            }
         }
     }
 }
