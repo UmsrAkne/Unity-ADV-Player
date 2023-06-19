@@ -26,6 +26,7 @@ namespace Tests.Loaders.XmlElementConverters
             Assert.AreEqual("imgC", scenario.DrawOrders[0].Names[2]);
             Assert.IsTrue(string.IsNullOrEmpty(scenario.DrawOrders[0].Names[3]));
             Assert.AreEqual(0.5, scenario.DrawOrders[0].Depth);
+            Assert.AreEqual(2, scenario.DrawOrders[0].TargetLayerIndex);
             Assert.IsTrue(scenario.DrawOrders[0].IsDrawOrder);
         }
 

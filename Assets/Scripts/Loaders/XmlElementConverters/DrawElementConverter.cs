@@ -9,6 +9,7 @@ namespace Loaders.XmlElementConverters
     {
         private readonly List<string> charaAttribute = new() { "a", "b", "c", "d" };
         private readonly string depthAttribute = "depth";
+        private readonly string targetLayerIndexAttribute = "targetLayerIndex";
 
         public string TargetElementName => "draw";
 
@@ -40,6 +41,11 @@ namespace Loaders.XmlElementConverters
                 if (XElementHelper.HasAttribute(imageTag, depthAttribute))
                 {
                     order.Depth = XElementHelper.GetDoubleFromAttribute(imageTag, depthAttribute);
+                }
+
+                if (XElementHelper.HasAttribute(imageTag, targetLayerIndexAttribute))
+                {
+                    order.TargetLayerIndex = XElementHelper.GetIntFromAttribute(imageTag, targetLayerIndexAttribute);
                 }
 
                 scenario.DrawOrders.Add(order);
