@@ -14,7 +14,7 @@ namespace SceneContents
 
         public List<ImageOrder> DrawOrders { get; set; } = new List<ImageOrder>();
 
-        public List<VoiceOrder> VoiceOrders { get; set; } = new List<VoiceOrder>();
+        public List<SoundOrder> VoiceOrders { get; set; } = new List<SoundOrder>();
 
         public List<BgvOrder> BgvOrders { get; set; } = new List<BgvOrder>();
 
