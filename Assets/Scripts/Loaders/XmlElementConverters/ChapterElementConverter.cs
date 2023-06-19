@@ -15,17 +15,16 @@
 
         public void Convert(XElement xmlElement, Scenario scenario)
         {
-            var tags = xmlElement.Elements(TargetElementName);
+            var tags = xmlElement.Elements(TargetElementName).ToList();
 
-            if (tags.Count() != 0)
+            if (!tags.Any())
             {
-                foreach (var chapterTag in tags)
-                {
-                    if (chapterTag.Attribute(nameAttribute) != null)
-                    {
-                        scenario.ChapterName = chapterTag.Attribute(nameAttribute).Value;
-                    }
-                }
+                return;
+            }
+
+            foreach (var cTag in tags.Where(c => XElementHelper.HasAttribute(c, nameAttribute)))
+            {
+                scenario.ChapterName = XElementHelper.GetStringFromAttribute(cTag, nameAttribute);
             }
         }
     }
