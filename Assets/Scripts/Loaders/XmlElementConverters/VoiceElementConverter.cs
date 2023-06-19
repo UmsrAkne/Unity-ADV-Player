@@ -1,10 +1,10 @@
-﻿namespace Loaders.XmlElementConverters
-{
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Xml.Linq;
-    using SceneContents;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
+using SceneContents;
 
+namespace Loaders.XmlElementConverters
+{
     public class VoiceElementConverter : IXMLElementConverter
     {
         private readonly string numberAttribute = "number";
@@ -17,37 +17,39 @@
 
         public void Convert(XElement xmlElement, Scenario scenario)
         {
-            var tags = xmlElement.Elements(TargetElementName);
+            var tags = xmlElement.Elements(TargetElementName).ToList();
 
-            // if (tags.Count() != 0)
-            // {
-            //     foreach (XElement voiceTag in tags)
-            //     {
-            //         var order = new VoiceOrder();
+            if (!tags.Any())
+            {
+                return;
+            }
 
-            //         if (!voiceTag.Attributes().Any(x => x.Name == numberAttribute || x.Name == fileNameAttribute))
-            //         {
-            //             Log.Add($"<voice> には fileName か number 属性のどちらかが必須です。Index={scenario.Index}");
-            //         }
+            foreach (XElement voiceTag in tags)
+            {
+                var order = new VoiceOrder();
 
-            //         if (voiceTag.Attribute(numberAttribute) != null)
-            //         {
-            //             order.Index = int.Parse(voiceTag.Attribute(numberAttribute).Value);
-            //         }
+                if (!voiceTag.Attributes().Any(x => x.Name == numberAttribute || x.Name == fileNameAttribute))
+                {
+                    Log.Add($"<voice> には fileName か number 属性のどちらかが必須です。Index={scenario.Index}");
+                }
 
-            //         if (voiceTag.Attribute(fileNameAttribute) != null)
-            //         {
-            //             order.FileName = voiceTag.Attribute(fileNameAttribute).Value;
-            //         }
+                if (XElementHelper.HasAttribute(voiceTag, numberAttribute))
+                {
+                    order.Index = XElementHelper.GetIntFromAttribute(voiceTag, numberAttribute);
+                }
 
-            //         if (voiceTag.Attribute(channelAttribute) != null)
-            //         {
-            //             order.Channel = int.Parse(voiceTag.Attribute(channelAttribute).Value);
-            //         }
+                if (XElementHelper.HasAttribute(voiceTag, fileNameAttribute))
+                {
+                    order.FileName = XElementHelper.GetStringFromAttribute(voiceTag, fileNameAttribute);
+                }
 
-            //         scenario.VoiceOrders.Add(order);
-            //     }
-            // }
+                if (XElementHelper.HasAttribute(voiceTag, channelAttribute))
+                {
+                    order.Channel = XElementHelper.GetIntFromAttribute(voiceTag, channelAttribute);
+                }
+
+                scenario.VoiceOrders.Add(order);
+            }
         }
     }
 }
