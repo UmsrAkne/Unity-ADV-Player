@@ -1,6 +1,6 @@
 ﻿namespace SceneContents
 {
-    public class VoiceOrder
+    public class SoundOrder
     {
         public int Index { get; set; }
 

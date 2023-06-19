@@ -26,7 +26,7 @@ namespace Loaders.XmlElementConverters
 
             foreach (XElement voiceTag in tags)
             {
-                var order = new VoiceOrder();
+                var order = new SoundOrder();
 
                 if (!voiceTag.Attributes().Any(x => x.Name == numberAttribute || x.Name == fileNameAttribute))
                 {
