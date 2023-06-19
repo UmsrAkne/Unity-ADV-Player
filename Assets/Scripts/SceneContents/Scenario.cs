@@ -19,11 +19,11 @@ namespace SceneContents
         public List<BgvOrder> BgvOrders { get; set; } = new List<BgvOrder>();
 
         // public int VoiceIndex { get; set; }
-        //
-        // public List<SEOrder> SEOrders { get; set; } = new List<SEOrder>();
-        //
+
+        public List<SoundOrder> SeOrders { get; set; } = new List<SoundOrder>();
+
         // public List<IAnimation> Animations { get; set; } = new List<IAnimation>();
 
-           public List<StopOrder> StopOrders { get; set; } = new List<StopOrder>();
+        public List<StopOrder> StopOrders { get; set; } = new List<StopOrder>();
     }
 }
