@@ -1,16 +1,15 @@
-﻿namespace Loaders.XmlElementConverters
-{
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Xml.Linq;
-    using SceneContents;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
+using SceneContents;
 
+namespace Loaders.XmlElementConverters
+{
     public class DrawElementConverter : IXMLElementConverter
     {
-        // ReSharper disable once IdentifierTypo
-        private readonly List<string> abcdAttribute = new() { "a", "b", "c", "d" };
-
-        private string depthAttribute = "depth";
+        private readonly List<string> charaAttribute = new() { "a", "b", "c", "d" };
+        private readonly string depthAttribute = "depth";
+        private readonly string targetLayerIndexAttribute = "targetLayerIndex";
 
         public string TargetElementName => "draw";
 
@@ -18,32 +17,38 @@
 
         public void Convert(XElement xmlElement, Scenario scenario)
         {
-            var tags = xmlElement.Elements(TargetElementName);
+            var tags = xmlElement.Elements(TargetElementName).ToList();
 
-            if (tags.Count() != 0)
+            if (!tags.Any())
             {
-                foreach (var imageTag in tags)
+                return;
+            }
+
+            foreach (var imageTag in tags)
+            {
+                var order = new ImageOrder() { IsDrawOrder = true };
+
+                if (imageTag.Attributes()
+                    .Any(x => x.Name == "a" || x.Name == "b" || x.Name == "c" || x.Name == "d"))
                 {
-                    var order = new ImageOrder() { IsDrawOrder = true };
-
-                    if (imageTag.Attributes()
-                        .Any(x => x.Name == "a" || x.Name == "b" || x.Name == "c" || x.Name == "d"))
+                    charaAttribute.ForEach(s =>
                     {
-                        abcdAttribute.ForEach(s =>
-                        {
-                            order.Names.Add(imageTag.Attribute(s) != null
-                                ? imageTag.Attribute(s).Value
-                                : string.Empty);
-                        });
-                    }
-
-                    if (imageTag.Attribute(depthAttribute) != null)
-                    {
-                        order.Depth = double.Parse(imageTag.Attribute(depthAttribute).Value);
-                    }
-
-                    scenario.DrawOrders.Add(order);
+                        var imageName = XElementHelper.GetStringFromAttribute(imageTag, s);
+                        order.Names.Add(imageName);
+                    });
                 }
+
+                if (XElementHelper.HasAttribute(imageTag, depthAttribute))
+                {
+                    order.Depth = XElementHelper.GetDoubleFromAttribute(imageTag, depthAttribute);
+                }
+
+                if (XElementHelper.HasAttribute(imageTag, targetLayerIndexAttribute))
+                {
+                    order.TargetLayerIndex = XElementHelper.GetIntFromAttribute(imageTag, targetLayerIndexAttribute);
+                }
+
+                scenario.DrawOrders.Add(order);
             }
         }
     }

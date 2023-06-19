@@ -1,14 +1,14 @@
-﻿namespace Loaders.XmlElementConverters
-{
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Xml.Linq;
-    using SceneContents;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
+using SceneContents;
 
+namespace Loaders.XmlElementConverters
+{
     public class BackgroundVoiceElementConverter : IXMLElementConverter
     {
-        private string channelAttribute = "channel";
-        private string namesAttribute = "names";
+        private readonly string channelAttribute = "channel";
+        private readonly string namesAttribute = "names";
 
         public string TargetElementName => "backgroundVoice";
 
@@ -16,27 +16,30 @@
 
         public void Convert(XElement xmlElement, Scenario scenario)
         {
-            var tags = xmlElement.Elements(TargetElementName);
+            var tags = xmlElement.Elements(TargetElementName).ToList();
 
-            if (tags.Count() != 0)
+            if (!tags.Any())
             {
-                foreach (var bgvTag in tags)
+                return;
+            }
+
+            foreach (var bgvTag in tags)
+            {
+                var order = new BgvOrder();
+
+                if (bgvTag.Attribute(namesAttribute) != null)
                 {
-                    var order = new BgvOrder();
-
-                    if (bgvTag.Attribute(namesAttribute) != null)
-                    {
-                        order.FileNames = new List<string>(bgvTag.Attribute(namesAttribute).Value.Split(','));
-                        order.FileNames = order.FileNames.Select(name => name.Trim()).ToList();
-                    }
-
-                    if (bgvTag.Attribute(channelAttribute) != null)
-                    {
-                        order.Channel = int.Parse(bgvTag.Attribute(channelAttribute).Value);
-                    }
-
-                    scenario.BgvOrders.Add(order);
+                    var fileNames = XElementHelper.GetStringFromAttribute(bgvTag, namesAttribute);
+                    order.FileNames = new List<string>(fileNames.Split(','));
+                    order.FileNames = order.FileNames.Select(name => name.Trim()).ToList();
                 }
+
+                if (XElementHelper.HasAttribute(bgvTag, channelAttribute))
+                {
+                    order.Channel = XElementHelper.GetIntFromAttribute(bgvTag, channelAttribute);
+                }
+
+                scenario.BgvOrders.Add(order);
             }
         }
     }
