@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Animations;
 
 namespace SceneContents
 {
@@ -22,7 +23,7 @@ namespace SceneContents
 
         public List<SoundOrder> SeOrders { get; set; } = new List<SoundOrder>();
 
-        // public List<IAnimation> Animations { get; set; } = new List<IAnimation>();
+        public List<IAnimation> Animations { get; set; } = new List<IAnimation>();
 
         public List<StopOrder> StopOrders { get; set; } = new List<StopOrder>();
     }
