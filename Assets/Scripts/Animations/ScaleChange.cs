@@ -1,12 +1,15 @@
+using System;
 using SceneContents;
 
 namespace Animations
 {
     public class ScaleChange : IAnimation
     {
-        private double changeAmountPerFrame;
+        private double changeAmount;
         private int frameCounter;
         private IDisplayObject target;
+        private readonly double halfPi = Math.PI / 2;
+        private double piPerDur;
 
         public double To { get; set; }
 
@@ -62,25 +65,30 @@ namespace Animations
         public void Stop()
         {
             IsWorking = false;
-            changeAmountPerFrame = 0;
             Target.Scale = To;
             frameCounter = Duration + 1;
         }
 
         private void CoreProcess()
         {
-            if (frameCounter == 0)
-            {
-                changeAmountPerFrame = (To - Target.Scale) / Duration;
-            }
-
-            Target.Scale += changeAmountPerFrame;
+            Target.Scale += (To - Target.Scale) * GetRatio(frameCounter);
             frameCounter++;
 
             if (frameCounter >= Duration)
             {
                 Stop();
             }
+        }
+
+        private double GetRatio(int count)
+        {
+            if (piPerDur == 0 && Duration != 0)
+            {
+                piPerDur = Math.PI / Duration;
+            }
+
+            var v = Math.Sin(halfPi + piPerDur * count);
+            return Math.Abs((v - 1) / 2);
         }
     }
 }
