@@ -37,5 +37,7 @@ namespace SceneContents
         public Sprite MessageWindowImage { get; set; }
 
         public string SceneDirectoryPath { get; set; }
+
+        public bool Used { get; set; }
     }
 }

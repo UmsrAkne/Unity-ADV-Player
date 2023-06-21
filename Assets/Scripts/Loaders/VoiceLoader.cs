@@ -65,44 +65,74 @@ namespace Loaders
             PartLoadCompleted += (_, _) =>
             {
                 loadCompleteCounter++;
-                if (loadCompleteCounter >= AudioSources.Count)
+                if (loadCompleteCounter < AudioSources.Count)
                 {
-                    AudioSources.Insert(0, null);
-
-                    switch (TargetAudioType)
-                    {
-                        case TargetAudioType.Voice:
-                            Resource.Voices = AudioSources;
-                            Resource.VoicesByName = AudioSourcesByName;
-                            break;
-                        case TargetAudioType.BgVoice:
-                            Resource.BGVoices = AudioSources;
-                            Resource.BGVoicesByName = AudioSourcesByName;
-                            break;
-                        case TargetAudioType.Se:
-                            Resource.Ses = AudioSources;
-                            Resource.SesByName = AudioSourcesByName;
-                            break;
-                    }
-
-                    LoadCompleted?.Invoke(this, EventArgs.Empty);
+                    return;
                 }
+
+                AudioSources.Insert(0, null);
+
+                switch (TargetAudioType)
+                {
+                    case TargetAudioType.Voice:
+                        Resource.Voices = AudioSources;
+                        Resource.VoicesByName = AudioSourcesByName;
+                        break;
+                    case TargetAudioType.BgVoice:
+                        Resource.BGVoices = AudioSources;
+                        Resource.BGVoicesByName = AudioSourcesByName;
+                        break;
+                    case TargetAudioType.Se:
+                        Resource.Ses = AudioSources;
+                        Resource.SesByName = AudioSourcesByName;
+                        break;
+                }
+
+                LoadCompleted?.Invoke(this, EventArgs.Empty);
             };
 
-            foreach (var s in audioPaths)
+            if (Resource is { Used: true })
             {
-                // これって GameObject がメモリから消滅しても大丈夫？
-                var sound = new Sound() { AudioSource = new GameObject().AddComponent<AudioSource>() };
-                AudioSources.Add(sound);
-                AudioSourcesByName.Add(Path.GetFileName(s), sound);
-                AudioSourcesByName.Add(Path.GetFileNameWithoutExtension(s), sound);
+                switch (TargetAudioType)
+                {
+                    case TargetAudioType.Voice:
+                        AudioSources = Resource.Voices;
+                        AudioSourcesByName = Resource.VoicesByName;
+                        break;
+                    case TargetAudioType.BgVoice:
+                        AudioSources = Resource.BGVoices;
+                        AudioSourcesByName = Resource.BGVoicesByName;
+                        break;
+                    case TargetAudioType.Se:
+                        AudioSources = Resource.Ses;
+                        AudioSourcesByName = Resource.SesByName;
+                        break;
+                }
+            }
+            else
+            {
+                // 初回ロード時のみ、AudioSources に Sound を挿入する
+                foreach (var s in audioPaths)
+                {
+                    var sound = new Sound() { AudioSource = new GameObject().AddComponent<AudioSource>() };
+                    AudioSources.Add(sound);
+                    AudioSourcesByName.Add(Path.GetFileName(s), sound);
+                    AudioSourcesByName.Add(Path.GetFileNameWithoutExtension(s), sound);
+                }
             }
 
             AudioClips = Enumerable.Repeat<AudioClip>(null, audioPaths.Count).ToList();
 
             for (var i = 0; i < audioPaths.Count; i++)
             {
+                if (Resource is { Used: true } && AudioSources[i].Available)
+                {
+                    loadCompleteCounter++;
+                    continue;
+                }
+
                 var path = audioPaths[i];
+
                 if (TargetAudioType == TargetAudioType.Voice)
                 {
                     var isUsingNumber = UsingVoiceNumbers.Contains(i);
@@ -166,6 +196,7 @@ namespace Loaders
             }
 
             AudioSources[index].AudioSource.clip = AudioClips[index];
+            AudioSources[index].Available = true;
             PartLoadCompleted?.Invoke(this, EventArgs.Empty);
         }
 

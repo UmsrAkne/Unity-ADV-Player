@@ -31,6 +31,8 @@
             }
         }
 
+        public bool Available { get; set; }
+
         public void Play()
         {
             AudioSource.Play();

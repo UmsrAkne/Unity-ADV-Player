@@ -10,6 +10,12 @@
 
         bool IsPlaying { get; }
 
+        /// <summary>
+        /// このオブジェクトが利用可能であるかを取得します。
+        /// 主に、ロード完了時に true になります。
+        /// </summary>
+        bool Available { get; set; }
+
         void Play();
 
         void Stop();
