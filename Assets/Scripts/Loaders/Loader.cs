@@ -22,7 +22,7 @@ namespace Loaders
         private readonly VoiceLoader seLoader = new GameObject().AddComponent<VoiceLoader>();
         private readonly SceneSettingLoader sceneSettingLoader = new SceneSettingLoader();
 
-        public Resource Resource { get; } = new Resource();
+        public Resource Resource { get; private set; } = new ();
 
         public void LoadMedias(string path)
         {
@@ -85,6 +85,11 @@ namespace Loaders
             textLoader.Resource = Resource;
             textLoader.Load(targetDirectoryPath);
             TextLoadCompleted?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Recycle(Resource res)
+        {
+            Resource = res;
         }
     }
 }

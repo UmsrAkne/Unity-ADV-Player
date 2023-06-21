@@ -1,4 +1,5 @@
 using Loaders;
+using SceneContents;
 using UnityEngine;
 
 namespace SceneLogics
@@ -11,14 +12,26 @@ namespace SceneLogics
     {
         public string TargetDirectoryPath { get; set; } = string.Empty;
 
+        public Resource SceneResource { private get; set; }
+
         // Start is called before the first frame update
         private void Start()
         {
             var loader = new Loader();
             loader.TextLoadCompleted += (_, _) =>
             {
-                System.Diagnostics.Debug.WriteLine($"LoadSceneLogic (15) : {loader.Resource}");
+                loader.MediaLoadCompleted += (_, _) =>
+                {
+                    System.Diagnostics.Debug.WriteLine($"LoadSceneLogic (26) : load completed");
+                };
+
+                loader.LoadMedias(TargetDirectoryPath);
             };
+
+            if (SceneResource != null)
+            {
+                loader.Recycle(SceneResource);
+            }
 
             loader.LoadTexts(TargetDirectoryPath);
         }
