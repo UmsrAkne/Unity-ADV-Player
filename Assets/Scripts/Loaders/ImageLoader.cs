@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Loaders
 {
-    public class ImageLoader
+    public class ImageLoader : IContentsLoader
     {
         public List<string> Log { get; set; } = new();
 
