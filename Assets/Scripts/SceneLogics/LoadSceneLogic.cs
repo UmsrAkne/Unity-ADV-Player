@@ -1,6 +1,7 @@
 using Loaders;
 using SceneContents;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SceneLogics
 {
@@ -23,6 +24,7 @@ namespace SceneLogics
                 loader.MediaLoadCompleted += (_, _) =>
                 {
                     System.Diagnostics.Debug.WriteLine($"LoadSceneLogic (26) : load completed");
+                    SceneManager.LoadScene("ScenarioScene");
                 };
 
                 loader.LoadMedias(TargetDirectoryPath);

@@ -5,24 +5,27 @@ namespace SceneLogics
 {
     public class BootSceneLogic : MonoBehaviour
     {
+        private void Awake()
+        {
+            Application.targetFrameRate = 60;
+        }
+
         [RuntimeInitializeOnLoadMethod]
         private static void Init()
         {
             // このメソッド内の処理はアプリ起動時に実行される。
 
-            SceneManager.sceneLoaded += (_, _) =>
-            {
-                var loadingSceneLogic = GameObject.Find("Main Camera").GetComponent<LoadSceneLogic>();
-                loadingSceneLogic.TargetDirectoryPath = @"scenes\sampleScn001";
-            };
+            SceneManager.sceneLoaded += NextSceneLoaded;
 
             // SceneManager.LoadScene("ScenarioScene");
             SceneManager.LoadScene("LoadScene");
         }
 
-        private void Awake()
+        private static void NextSceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
-            Application.targetFrameRate = 60;
+            var loadingSceneLogic = GameObject.Find("Main Camera").GetComponent<LoadSceneLogic>();
+            loadingSceneLogic.TargetDirectoryPath = @"scenes\sampleScn001";
+            SceneManager.sceneLoaded -= NextSceneLoaded;
         }
     }
 }
