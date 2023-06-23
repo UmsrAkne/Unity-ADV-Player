@@ -16,6 +16,8 @@ namespace SceneLogics
 
         private TextWriter TextWriter { get; } = new();
 
+        private ChapterManager ChapterManager { get; } = new();
+
         private void Start()
         {
             TextWriter.SetUI(new TextField { Field = GameObject.Find("TextField").GetComponent<Text>() });
@@ -33,6 +35,7 @@ namespace SceneLogics
             var list = new List<IScenarioSceneParts>
             {
                 imageDrawer,
+                ChapterManager,
                 new AnimationsManager((ImageContainer)imageContainers[0]),
                 new AnimationsManager((ImageContainer)imageContainers[1]),
                 new AnimationsManager((ImageContainer)imageContainers[2]),
