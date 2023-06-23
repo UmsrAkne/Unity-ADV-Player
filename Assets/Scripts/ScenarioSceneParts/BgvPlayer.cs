@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Loaders;
 using SceneContents;
 
 namespace ScenarioSceneParts
 {
     public class BgvPlayer : IScenarioSceneParts
     {
-        private Dictionary<string, ISound> bgVoicesByName;
+        private readonly TargetAudioType audioType = TargetAudioType.BgVoice;
         private bool mute = true;
         private ISound playingVoice;
 
@@ -41,6 +42,8 @@ namespace ScenarioSceneParts
         }
 
         private bool Playing => voices != null && voices.Any();
+
+        private IResource Resource { get; set; }
 
         public bool NeedExecuteEveryFrame => true;
 
@@ -86,7 +89,10 @@ namespace ScenarioSceneParts
             if (bgvOrder != null)
             {
                 playingVoice?.Stop();
-                voices = bgvOrder.FileNames.Select(n => bgVoicesByName[n]).OrderBy(_ => Guid.NewGuid()).ToList();
+                voices = bgvOrder.FileNames.Select(n => Resource.GetSound(audioType, n))
+                    .OrderBy(_ => Guid.NewGuid())
+                    .ToList();
+
                 Volume = 0;
                 Play(voices.FirstOrDefault());
             }
@@ -108,7 +114,7 @@ namespace ScenarioSceneParts
 
         public void SetResource(Resource resource)
         {
-            bgVoicesByName = resource.BGVoicesByName;
+            Resource = resource;
         }
 
         private void VoicePlayerStartEventHandler(object sender, EventArgs e)
