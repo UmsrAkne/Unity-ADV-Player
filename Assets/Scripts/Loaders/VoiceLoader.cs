@@ -42,10 +42,10 @@ namespace Loaders
                     targetDirectoryPath += $@"\voices";
                     break;
                 case TargetAudioType.BgVoice:
-                    targetDirectoryPath += $@"\bgVoices";
+                    targetDirectoryPath += $@"\bgvs";
                     break;
                 case TargetAudioType.Se:
-                    targetDirectoryPath = @"\commonResource\ses";
+                    targetDirectoryPath = @"commonResource\ses";
                     break;
             }
 

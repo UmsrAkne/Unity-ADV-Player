@@ -1,6 +1,7 @@
 using Loaders;
 using SceneContents;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SceneLogics
 {
@@ -23,6 +24,13 @@ namespace SceneLogics
                 loader.MediaLoadCompleted += (_, _) =>
                 {
                     System.Diagnostics.Debug.WriteLine($"LoadSceneLogic (26) : load completed");
+                    SceneManager.sceneLoaded += (_, _) =>
+                    {
+                        var scenarioSceneLogic = GameObject.Find("Main Camera").GetComponent<ScenarioSceneLogic>();
+                        scenarioSceneLogic.SceneResource = loader.Resource;
+                    };
+
+                    SceneManager.LoadScene("ScenarioScene");
                 };
 
                 loader.LoadMedias(TargetDirectoryPath);

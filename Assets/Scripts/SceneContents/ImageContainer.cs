@@ -10,6 +10,20 @@ namespace SceneContents
 
         private GameObject gameObject;
 
+        public ImageContainer()
+        {
+        }
+
+        /// <summary>
+        /// 生成と同時に、このオブジェクトがもつゲームオブジェクトの親として、引数のゲームオブジェクトを設定します。
+        /// </summary>
+        /// <param name="parentObject">このオブジェクトの親に設定されるオブジェクト</param>
+        public ImageContainer(GameObject parentObject)
+        {
+            GameObject = new GameObject();
+            GameObject.transform.SetParent(parentObject.transform);
+        }
+
         public GameObject GameObject
         {
             get => gameObject;

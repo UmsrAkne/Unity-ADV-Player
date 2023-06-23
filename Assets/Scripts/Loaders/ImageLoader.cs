@@ -25,18 +25,18 @@ namespace Loaders
 
         public void Load(string targetDirectoryPath)
         {
-            // switch (TargetImageType)
-            // {
-            //     case TargetImageType.eventCg:
-            //         targetDirectoryPath += $@"\{ResourcePath.SceneImageDirectoryName}";
-            //         break;
-            //     case TargetImageType.mask:
-            //         targetDirectoryPath += $@"\{ResourcePath.SceneMaskImageDirectoryName}";
-            //         break;
-            //     case TargetImageType.uiImage:
-            //         targetDirectoryPath = ResourcePath.CommonUIDirectoryName;
-            //         break;
-            // }
+            switch (TargetImageType)
+            {
+                case TargetImageType.EventCg:
+                    targetDirectoryPath += $@"\images";
+                    break;
+                // case TargetImageType.Mask:
+                //     targetDirectoryPath += $@"\{ResourcePath.SceneMaskImageDirectoryName}";
+                //     break;
+                // case TargetImageType.UiImage:
+                //     targetDirectoryPath = ResourcePath.CommonUIDirectoryName;
+                //     break;
+            }
 
             if (!Directory.Exists(targetDirectoryPath))
             {

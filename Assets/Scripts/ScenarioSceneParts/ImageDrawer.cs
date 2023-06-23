@@ -11,7 +11,7 @@ namespace ScenarioSceneParts
         private Resource resource;
         private Scenario scenario;
 
-        private List<IDisplayObjectContainer> ImageContainers { get; set; }
+        public List<IDisplayObjectContainer> ImageContainers { get; set; }
 
         public bool NeedExecuteEveryFrame => true;
 

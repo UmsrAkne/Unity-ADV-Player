@@ -63,9 +63,10 @@ namespace Loaders
 
             loaders.ForEach(l =>
             {
-                l.LoadCompleted += (sender, e) =>
+                l.LoadCompleted += (_, e) =>
                 {
                     loadCompleteCount++;
+
                     if (loadCompleteCount >= loaders.Count)
                     {
                         MediaLoadCompleted?.Invoke(this,e);
