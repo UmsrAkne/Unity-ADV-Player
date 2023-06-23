@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using Loaders;
 using SceneContents;
 
 namespace ScenarioSceneParts
 {
     public class SePlayer : IScenarioSceneParts
     {
+        private readonly TargetAudioType audioType = TargetAudioType.Se;
         private StopOrder stopOrder;
-
-        private List<ISound> Ses { get; set; }
-
-        private Dictionary<string, ISound> SeByName { get; set; }
 
         private SoundOrder CurrentOrder { get; set; }
 
@@ -19,6 +16,8 @@ namespace ScenarioSceneParts
         public bool NeedExecuteEveryFrame => false;
 
         public ExecutionPriority Priority => ExecutionPriority.Low;
+
+        private IResource Resource { get; set; }
 
         public void Execute()
         {
@@ -35,14 +34,14 @@ namespace ScenarioSceneParts
 
             PlayingSound?.Stop();
 
-            if (Ses.Count > CurrentOrder.Index && CurrentOrder.Index != 0)
+            if (CurrentOrder.Index != 0)
             {
-                PlayingSound = Ses[CurrentOrder.Index];
+                PlayingSound = Resource.GetSound(audioType, CurrentOrder.Index);
             }
 
             if (!string.IsNullOrWhiteSpace(CurrentOrder.FileName))
             {
-                PlayingSound = SeByName[CurrentOrder.FileName];
+                PlayingSound = Resource.GetSound(audioType, CurrentOrder.FileName);
             }
 
             if (PlayingSound == null)
@@ -65,8 +64,7 @@ namespace ScenarioSceneParts
 
         public void SetResource(Resource resource)
         {
-            Ses = resource.Ses;
-            SeByName = resource.SesByName;
+            Resource = resource;
         }
 
         public void SetScenario(Scenario scenario)

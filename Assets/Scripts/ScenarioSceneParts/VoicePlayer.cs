@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using Loaders;
 using SceneContents;
 
 namespace ScenarioSceneParts
@@ -11,15 +11,13 @@ namespace ScenarioSceneParts
         private SoundOrder nextOrder;
         private bool playRequire;
 
-        public List<ISound> Voices { get; set; }
-
-        public Dictionary<string, ISound> VoicesByName { get; set; }
-
         public int Channel { get; set; }
 
         public bool NeedExecuteEveryFrame => false;
 
         public ExecutionPriority Priority => ExecutionPriority.Low;
+
+        private IResource Resource { get; set; }
 
         public void Execute()
         {
@@ -33,7 +31,9 @@ namespace ScenarioSceneParts
                 currentVoice.Stop();
             }
 
-            currentVoice = nextOrder.Index > 0 ? Voices[nextOrder.Index] : VoicesByName[nextOrder.FileName];
+            currentVoice = nextOrder.Index > 0
+                ? Resource.GetSound(TargetAudioType.Voice, nextOrder.Index)
+                : Resource.GetSound(TargetAudioType.Voice, nextOrder.FileName);
 
             currentVoice.Play();
             SoundStart?.Invoke(this, EventArgs.Empty);
@@ -52,8 +52,7 @@ namespace ScenarioSceneParts
 
         public void SetResource(Resource resource)
         {
-            Voices = resource.Voices;
-            VoicesByName = resource.VoicesByName;
+            Resource = resource;
         }
 
         public void SetScenario(Scenario scenario)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SceneContents
 {
-    public class Resource
+    public class Resource : IResource
     {
         public SceneSetting SceneSetting { get; set; } = new SceneSetting();
 
@@ -39,5 +39,42 @@ namespace SceneContents
         public string SceneDirectoryPath { get; set; }
 
         public bool Used { get; set; }
+
+        public ISound GetSound(TargetAudioType targetAudioType, string targetName)
+        {
+            return targetAudioType switch
+            {
+                TargetAudioType.Voice => VoicesByName[targetName],
+                TargetAudioType.Se => SesByName[targetName],
+                TargetAudioType.BgVoice => BGVoicesByName[targetName],
+                _ => throw new System.NotImplementedException()
+            };
+        }
+
+        public ISound GetSound(TargetAudioType targetAudioType, int index)
+        {
+            return targetAudioType switch
+            {
+                TargetAudioType.Voice => Voices[index],
+                TargetAudioType.Se => Ses[index],
+                TargetAudioType.BgVoice => BGVoices[index],
+                _ => throw new System.NotImplementedException()
+            };
+        }
+
+        public SpriteWrapper GetImage(TargetImageType imageType, string targetName)
+        {
+            return imageType switch
+            {
+                TargetImageType.EventCg => ImagesByName[targetName],
+                TargetImageType.UiImage => throw new System.NotImplementedException(),
+                _ => throw new System.NotImplementedException()
+            };
+        }
+
+        public Scenario GetScenario(int index)
+        {
+            return Scenarios[index];
+        }
     }
 }

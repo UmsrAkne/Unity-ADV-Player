@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Loaders;
 using SceneContents;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace ScenarioSceneParts
     {
         private double drawingDepth = 0.1;
         private IDisplayObject drawingImageSet;
-        private Resource resource;
+        private IResource resource;
         private Scenario scenario;
 
         public List<IDisplayObjectContainer> ImageContainers { get; set; }
@@ -75,7 +76,7 @@ namespace ScenarioSceneParts
                     continue;
                 }
 
-                var sw = new SpriteWrapper { Sprite = resource.ImagesByName[name].Sprite };
+                var sw = new SpriteWrapper { Sprite = resource.GetImage(TargetImageType.EventCg ,name).Sprite };
                 frontImageSet.SetSprite(sw, i, new Color(1.0f, 1.0f, 1.0f, 0));
             }
         }
@@ -89,7 +90,7 @@ namespace ScenarioSceneParts
             var spriteWrappers = new List<SpriteWrapper>();
             order.Names.ForEach(name =>
             {
-                spriteWrappers.Add(!string.IsNullOrEmpty(name) ? resource.ImagesByName[name] : null);
+                spriteWrappers.Add(!string.IsNullOrEmpty(name) ? resource.GetImage(TargetImageType.EventCg, name)  : null);
             });
 
             // InheritStatus が指定されている場合は、最前面の画像の状態をコピーする
