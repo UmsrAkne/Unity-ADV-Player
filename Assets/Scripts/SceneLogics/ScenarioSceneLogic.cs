@@ -18,6 +18,8 @@ namespace SceneLogics
 
         private ChapterManager ChapterManager { get; } = new();
 
+        private BGMPlayer BgmPlayer { get; } = new();
+
         private void Start()
         {
             TextWriter.SetUI(new TextField { Field = GameObject.Find("TextField").GetComponent<Text>() });
@@ -32,6 +34,13 @@ namespace SceneLogics
 
             var imageDrawer = new ImageDrawer() { ImageContainers = imageContainers };
 
+            var voicePlayers = new List<VoicePlayer>()
+            {
+                new() { Channel = 0 },
+                new() { Channel = 1 },
+                new() { Channel = 2 },
+            };
+
             var list = new List<IScenarioSceneParts>
             {
                 imageDrawer,
@@ -39,6 +48,13 @@ namespace SceneLogics
                 new AnimationsManager((ImageContainer)imageContainers[0]),
                 new AnimationsManager((ImageContainer)imageContainers[1]),
                 new AnimationsManager((ImageContainer)imageContainers[2]),
+                new SePlayer(),
+                voicePlayers[0],
+                voicePlayers[1],
+                voicePlayers[2],
+                new BgvPlayer(voicePlayers[0]),
+                new BgvPlayer(voicePlayers[1]),
+                new BgvPlayer(voicePlayers[2]),
             };
 
             list.ForEach(s =>
