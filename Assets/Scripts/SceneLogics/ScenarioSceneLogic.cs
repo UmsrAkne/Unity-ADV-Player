@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using Animations;
+using Loaders;
 using ScenarioSceneParts;
 using SceneContents;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UserInterface;
 
@@ -10,6 +12,9 @@ namespace SceneLogics
 {
     public class ScenarioSceneLogic : MonoBehaviour
     {
+        private Scenario currentScenario;
+        private bool initialized;
+
         public Resource SceneResource { get; set; }
 
         private ScenePartsRunner ScenePartsRunner { get; } = new();
@@ -62,6 +67,84 @@ namespace SceneLogics
                 s.SetResource(SceneResource);
                 ScenePartsRunner.Add(s);
             });
+
+            BgmPlayer.Execute();
+            initialized = true;
+        }
+
+        public void Update()
+        {
+            if (!initialized)
+            {
+                return;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                Forward();
+
+                // if (logWindowObject != null)
+                // {
+                //     Destroy(logWindowObject);
+                //     logWindowObject = null;
+                // }
+            }
+
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                TextWriter.SetScenarioIndex(ChapterManager.GetNextChapterIndex());
+                Forward();
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (Input.GetKeyDown(KeyCode.N))
+                {
+                    TextWriter.SetScenarioIndex(ChapterManager.GetLastChapterIndex());
+                    Forward();
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                #if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+                #else
+                    Application.Quit();
+                #endif
+            }
+
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    SceneManager.sceneLoaded += LoadSceneResource;
+                    SceneManager.LoadScene("LoadScene");
+                }
+            }
+        }
+
+        private void Forward()
+        {
+            TextWriter.Execute();
+
+            if (!TextWriter.Writing)
+            {
+                return;
+            }
+
+            if (currentScenario == null || currentScenario != SceneResource.GetScenario(TextWriter.ScenarioIndex))
+            {
+                currentScenario = SceneResource.GetScenario(TextWriter.ScenarioIndex);
+                ScenePartsRunner.Run(currentScenario);
+            }
+        }
+
+        private void LoadSceneResource(Scene next, LoadSceneMode mode)
+        {
+            var loadSceneLogic = GameObject.Find("Main Camera").GetComponent<LoadSceneLogic>();
+            loadSceneLogic.SceneResource = SceneResource;
+            SceneManager.sceneLoaded -= LoadSceneResource;
         }
     }
 }

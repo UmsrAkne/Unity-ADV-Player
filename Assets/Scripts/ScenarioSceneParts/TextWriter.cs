@@ -10,7 +10,7 @@ namespace ScenarioSceneParts
         private int counter;
         private bool initialExecute = true;
 
-        private bool Writing { get; set; }
+        public bool Writing { get; set; }
 
         public int ScenarioIndex { get; private set; }
 
