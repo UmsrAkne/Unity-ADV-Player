@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Animations;
 using ScenarioSceneParts;
 using SceneContents;
 using UnityEngine;
@@ -20,19 +21,21 @@ namespace SceneLogics
             TextWriter.SetUI(new TextField { Field = GameObject.Find("TextField").GetComponent<Text>() });
             var canvas = GameObject.Find(nameof(Canvas));
 
-            var imageDrawer = new ImageDrawer()
+            var imageContainers = new List<IDisplayObjectContainer>
             {
-                ImageContainers = new List<IDisplayObjectContainer>()
-                {
-                    new ImageContainer(canvas) { Index = 0 },
-                    new ImageContainer(canvas) { Index = 1 },
-                    new ImageContainer(canvas) { Index = 2 },
-                },
+                new ImageContainer(canvas) { Index = 0 },
+                new ImageContainer(canvas) { Index = 1 },
+                new ImageContainer(canvas) { Index = 2 },
             };
+
+            var imageDrawer = new ImageDrawer() { ImageContainers = imageContainers };
 
             var list = new List<IScenarioSceneParts>
             {
                 imageDrawer,
+                new AnimationsManager((ImageContainer)imageContainers[0]),
+                new AnimationsManager((ImageContainer)imageContainers[1]),
+                new AnimationsManager((ImageContainer)imageContainers[2]),
             };
 
             list.ForEach(s =>
