@@ -11,6 +11,7 @@ namespace Loaders
     {
         public event EventHandler TextLoadCompleted;
         public event EventHandler MediaLoadCompleted;
+        public event EventHandler LoadCompleted;
 
         private int loadCompleteCount;
         private readonly TextLoader textLoader = new TextLoader();
@@ -21,6 +22,8 @@ namespace Loaders
         private readonly VoiceLoader bgvLoader = new GameObject().AddComponent<VoiceLoader>();
         private readonly VoiceLoader seLoader = new GameObject().AddComponent<VoiceLoader>();
         private readonly SceneSettingLoader sceneSettingLoader = new SceneSettingLoader();
+        private bool textLoadComplete;
+        private bool mediaLoadComplete;
 
         public Resource Resource { get; private set; } = new ();
 
@@ -91,6 +94,44 @@ namespace Loaders
         public void Recycle(Resource res)
         {
             Resource = res;
+        }
+
+        /// <summary>
+        /// テキスト、メディアを全てロードします。
+        /// ロード完了後、 LoadCompleted が送出されます。
+        /// </summary>
+        /// <param name="targetDirectoryPath">対象のシナリオが格納されているディレクトリのパス</param>
+        public void Load(string targetDirectoryPath)
+        {
+            TextLoadCompleted += OnTextLoadCompleted;
+            LoadTexts(targetDirectoryPath);
+
+            MediaLoadCompleted += OnMediaLoadCompleted;
+            LoadMedias(targetDirectoryPath);
+        }
+
+        private void OnTextLoadCompleted(object sender, EventArgs e)
+        {
+            textLoadComplete = true;
+            if (textLoadComplete && mediaLoadComplete)
+            {
+                LoadCompleted?.Invoke(this, EventArgs.Empty);
+                Resource.Used = true;
+            }
+
+            TextLoadCompleted -= OnTextLoadCompleted;
+        }
+
+        private void OnMediaLoadCompleted(object sender, EventArgs e)
+        {
+            mediaLoadComplete = true;
+            if (textLoadComplete && mediaLoadComplete)
+            {
+                LoadCompleted?.Invoke(this, EventArgs.Empty);
+                Resource.Used = true;
+            }
+
+            MediaLoadCompleted -= OnMediaLoadCompleted;
         }
     }
 }

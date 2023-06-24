@@ -17,14 +17,18 @@ namespace SceneLogics
 
             SceneManager.sceneLoaded += NextSceneLoaded;
 
-            // SceneManager.LoadScene("ScenarioScene");
-            SceneManager.LoadScene("LoadScene");
+            SceneManager.LoadScene("ScenarioScene");
+            // SceneManager.LoadScene("LoadScene");
         }
 
         private static void NextSceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
-            var loadingSceneLogic = GameObject.Find("Main Camera").GetComponent<LoadSceneLogic>();
-            loadingSceneLogic.TargetDirectoryPath = @"scenes\sampleScn001";
+            // var loadingSceneLogic = GameObject.Find("Main Camera").GetComponent<LoadSceneLogic>();
+            // loadingSceneLogic.TargetDirectoryPath = @"scenes\sampleScn001";
+            // SceneManager.sceneLoaded -= NextSceneLoaded;
+
+            var scenarioSceneLogic = GameObject.Find("Main Camera").GetComponent<ScenarioSceneLogic>();
+            scenarioSceneLogic.ScenarioDirectoryPath = @"scenes\sampleScn001";
             SceneManager.sceneLoaded -= NextSceneLoaded;
         }
     }
