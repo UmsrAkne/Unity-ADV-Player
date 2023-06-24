@@ -41,7 +41,6 @@ namespace Loaders
             if (!Directory.Exists(targetDirectoryPath))
             {
                 Log.Add($"{targetDirectoryPath} が見つかりませんでした");
-                return;
             }
 
             GetImageFileLPaths(targetDirectoryPath).ForEach(path =>
