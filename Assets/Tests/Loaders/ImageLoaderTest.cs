@@ -26,6 +26,7 @@ namespace Tests.Loaders
                 MaterialLoader = materialGetter,
                 PathListGen = pathListGen,
                 Resource = res,
+                TargetImageType = TargetImageType.EventCg,
                 UsingFileNames = new HashSet<string>
                 {
                     "a", "b", "c",
@@ -38,6 +39,10 @@ namespace Tests.Loaders
             Assert.NotNull(res.GetImage(TargetImageType.EventCg, "b.png"));
             Assert.NotNull(res.GetImage(TargetImageType.EventCg, "c.png"));
             Assert.AreEqual(res.Images.Count, 3);
+
+            Assert.AreEqual(@"testPath\images\a.png", materialGetter.Paths[0]);
+            Assert.AreEqual(@"testPath\images\b.png", materialGetter.Paths[1]);
+            Assert.AreEqual(@"testPath\images\c.png", materialGetter.Paths[2]);
         }
     }
 }

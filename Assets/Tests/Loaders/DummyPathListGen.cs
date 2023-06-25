@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Loaders;
 
 namespace Tests.Loaders
@@ -11,7 +12,7 @@ namespace Tests.Loaders
 
         public List<string> GetImageFilePaths(string targetDirectoryPath)
         {
-            return ImageFilePaths;
+            return ImageFilePaths.Select(p => $@"{targetDirectoryPath}\{p}").ToList();
         }
 
         public List<string> GetSoundFilePaths(string targetDirectoryPath)
