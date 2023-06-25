@@ -121,5 +121,41 @@ namespace SceneContents
                     throw new System.NotImplementedException();
             }
         }
+
+        public void AddSound(TargetAudioType audioType, ISound sound, string fileName)
+        {
+            switch (audioType)
+            {
+                case TargetAudioType.Voice:
+                    if (Voices.Contains(sound))
+                    {
+                        Voices.Add(sound);
+                    }
+
+                    VoicesByName.TryAdd(fileName, sound);
+                    break;
+
+                case TargetAudioType.BgVoice:
+                    if (BGVoices.Contains(sound))
+                    {
+                        BGVoices.Add(sound);
+                    }
+
+                    BGVoicesByName.TryAdd(fileName, sound);
+                    break;
+
+                case TargetAudioType.Se:
+                    if (Ses.Contains(sound))
+                    {
+                        Ses.Add(sound);
+                    }
+
+                    SesByName.TryAdd(fileName, sound);
+                    break;
+
+                default:
+                    throw new System.NotImplementedException();
+            }
+        }
     }
 }
