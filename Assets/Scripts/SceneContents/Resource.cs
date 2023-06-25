@@ -12,9 +12,9 @@ namespace SceneContents
 
         public List<Scenario> Scenarios { get; set; }
 
-        public List<SpriteWrapper> Images { get; set; }
+        public List<SpriteWrapper> Images { get; set; } = new();
 
-        public Dictionary<string, SpriteWrapper> ImagesByName { get; set; }
+        public Dictionary<string, SpriteWrapper> ImagesByName { get; set; } = new();
 
         // public List<SpriteWrapper> MaskImages { get; set; }
 
@@ -75,6 +75,51 @@ namespace SceneContents
         public Scenario GetScenario(int index)
         {
             return Scenarios[index];
+        }
+
+        /// <summary>
+        /// 指定した種類の画像リソースを、このリソースが既に持っているかを取得します。
+        /// </summary>
+        /// <param name="targetImageType">調査する画像リソースのタイプを入力します</param>
+        /// <param name="name">画像ファイルの名前を入力します</param>
+        /// <returns>指定のリソースを持っているか</returns>
+        /// <exception cref="System.NotImplementedException">
+        /// 調査対象として、TargetImageType.EventCg 以外の種類を指定した場合にスローされます
+        /// </exception>
+        public bool ContainsImage(TargetImageType targetImageType, string name)
+        {
+            return targetImageType switch
+            {
+                TargetImageType.EventCg => ImagesByName.ContainsKey(name),
+                _ => throw new System.NotImplementedException()
+            };
+        }
+
+        /// <summary>
+        /// 入力した画像リソースを、適切な場所に入力、保管します。
+        /// </summary>
+        /// <param name="targetImageType">入力する画像リソースのタイプです。これによって入力先を判定します。</param>
+        /// <param name="spw">画像リソースです</param>
+        /// <param name="fileName">画像リソースを保管する辞書のキーとなり文字列</param>
+        /// <exception cref="System.NotImplementedException">
+        /// リソースのタイプに TargetImageType.EventCg 以外の種類を指定した場合にスローされます
+        /// </exception>
+        public void AddImages(TargetImageType targetImageType, SpriteWrapper spw, string fileName)
+        {
+            switch (targetImageType)
+            {
+                case TargetImageType.EventCg:
+                    if (!Images.Contains(spw))
+                    {
+                        Images.Add(spw);
+                    }
+
+                    ImagesByName.TryAdd(fileName, spw);
+                    break;
+
+                default:
+                    throw new System.NotImplementedException();
+            }
         }
     }
 }
