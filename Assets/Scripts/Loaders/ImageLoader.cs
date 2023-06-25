@@ -53,25 +53,20 @@ namespace Loaders
 
                 if (pathIsUsingFile || TargetImageType != TargetImageType.EventCg)
                 {
-                    var spWrapper = MaterialLoader.LoadImage(path);
-                    Sprites.Add(spWrapper);
-                    SpriteDictionary.Add(fileName, spWrapper);
-                    SpriteDictionary.Add(fileNameWe, spWrapper);
+                    var containsName = Resource.ContainsImage(TargetImageType, fileName);
+                    var containsNameWe = Resource.ContainsImage(TargetImageType, fileNameWe);
+
+                    if (!containsName && !containsNameWe)
+                    {
+                        var spWrapper = MaterialLoader.LoadImage(path);
+                        Resource.AddImages(TargetImageType, spWrapper, fileName);
+                        Resource.AddImages(TargetImageType, spWrapper, fileNameWe);
+                    }
                 }
             });
 
             // 上の LoadImage(path) が非同期的な処理だった場合、この時点ではロード完了していないかも
             LoadCompleted?.Invoke(this, EventArgs.Empty);
-
-            switch (TargetImageType)
-            {
-                case TargetImageType.EventCg:
-                    Resource.Images = Sprites;
-                    Resource.ImagesByName = SpriteDictionary;
-                    break;
-                case TargetImageType.UiImage:
-                    break;
-            }
         }
     }
 
