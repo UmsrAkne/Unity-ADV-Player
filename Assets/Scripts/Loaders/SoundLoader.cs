@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using SceneContents;
 using UnityEngine;
@@ -10,50 +9,46 @@ namespace Loaders
 {
     public class SoundLoader : MonoBehaviour
     {
-        public List<ISound> AudioSources { get; } = new();
+        private int loadCounter;
 
-        private List<AudioClip> AudioClips { get; } = new();
+        public ISound Sound { get; set; } = new Sound() { AudioSource = new GameObject().AddComponent<AudioSource>() };
+
+        private AudioClip AudioClip { get; set; }
 
         public event EventHandler LoadCompleted;
 
-        public void Load(List<string> paths)
+        public void Load(string path)
         {
-            for (int i = 0; i < paths.Count; i++)
+            if (!string.IsNullOrWhiteSpace(path))
             {
-                var path = paths[i];
-                if (!string.IsNullOrWhiteSpace(path))
-                {
-                    StartCoroutine(LoadAudio(path, i));
-                }
+                StartCoroutine(LoadAudio(path));
             }
         }
 
-        private IEnumerator LoadAudio(string path, int index)
+        private IEnumerator LoadAudio(string path)
         {
             if (string.IsNullOrEmpty(path) || !File.Exists(path))
             {
                 yield break;
             }
 
-            using (UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip("file://" + path, AudioType.OGGVORBIS))
+            using UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip("file://" + path, AudioType.OGGVORBIS);
+            req.SendWebRequest();
+
+            while (!req.isDone)
             {
-                req.SendWebRequest();
-
-                while (!req.isDone)
-                {
-                    yield return null;
-                }
-
-                AudioClips[index] = DownloadHandlerAudioClip.GetContent(req);
-
-                if (AudioClips[index].loadState != AudioDataLoadState.Loaded)
-                {
-                    yield break;
-                }
-
-                AudioSources[index].AudioSource.clip = AudioClips[index];
-                LoadCompleted?.Invoke(this, EventArgs.Empty);
+                yield return null;
             }
+
+            AudioClip = DownloadHandlerAudioClip.GetContent(req);
+
+            if (AudioClip.loadState != AudioDataLoadState.Loaded)
+            {
+                yield break;
+            }
+
+            Sound.AudioSource.clip = AudioClip;
+            LoadCompleted?.Invoke(this, EventArgs.Empty);
         }
     }
 }

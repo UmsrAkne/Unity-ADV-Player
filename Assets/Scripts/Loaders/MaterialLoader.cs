@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using SceneContents;
 using UnityEngine;
@@ -6,6 +7,26 @@ namespace Loaders
 {
     public class MaterialLoader : IMaterialGetter
     {
+        private int loadCounter;
+
+        public event EventHandler SoundLoadCompleted;
+
+        public ISound GetSounds(string path)
+        {
+            loadCounter++;
+            var soundLoader = new GameObject().AddComponent<SoundLoader>();
+            soundLoader.Load(path);
+            soundLoader.LoadCompleted += (_, _) =>
+            {
+                if (--loadCounter <= 0)
+                {
+                    SoundLoadCompleted?.Invoke(this, EventArgs.Empty);
+                }
+            };
+
+            return soundLoader.Sound;
+        }
+
         public SpriteWrapper LoadImage(string path)
         {
             var size = GetImageSize(path);

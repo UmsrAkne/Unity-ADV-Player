@@ -17,6 +17,10 @@ namespace Loaders
 
         public Dictionary<string, ISound> AudioSourcesByName { get; private set; } = new();
 
+        public IPathListGen PathListGen { get; set; } = new FilePathListGen();
+
+        public IMaterialGetter MaterialLoader { get; set; } = new MaterialLoader();
+
         private List<AudioClip> AudioClips { get; set; }
 
         public HashSet<string> UsingVoiceFileNames { get; set; } = new();
