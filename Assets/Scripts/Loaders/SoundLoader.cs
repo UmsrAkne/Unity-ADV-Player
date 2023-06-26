@@ -11,7 +11,7 @@ namespace Loaders
     {
         private int loadCounter;
 
-        public ISound Sound { get; set; } = new Sound() { AudioSource = new GameObject().AddComponent<AudioSource>() };
+        public ISound Sound { get; private set; }
 
         private AudioClip AudioClip { get; set; }
 
@@ -21,6 +21,7 @@ namespace Loaders
         {
             if (!string.IsNullOrWhiteSpace(path))
             {
+                Sound = new Sound() { AudioSource = new GameObject().AddComponent<AudioSource>() };
                 StartCoroutine(LoadAudio(path));
             }
         }
@@ -48,6 +49,7 @@ namespace Loaders
             }
 
             Sound.AudioSource.clip = AudioClip;
+            Sound.Available = true;
             LoadCompleted?.Invoke(this, EventArgs.Empty);
         }
     }

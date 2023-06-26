@@ -7,7 +7,7 @@ namespace Loaders
     {
         event EventHandler SoundLoadCompleted;
 
-        ISound GetSounds(string path);
+        ISound GetSound(string path);
 
         SpriteWrapper LoadImage(string path);
     }

@@ -22,17 +22,17 @@ namespace SceneContents
 
         public AudioSource BGMAudioSource { get; set; }
 
-        public List<ISound> Voices { get; set; }
+        public List<ISound> Voices { get; set; } = new();
 
-        public Dictionary<string, ISound> VoicesByName { get; set; }
+        public Dictionary<string, ISound> VoicesByName { get; set; } = new();
 
-        public List<ISound> BGVoices { get; set; }
+        public List<ISound> BGVoices { get; set; } = new();
 
-        public Dictionary<string, ISound> BGVoicesByName { get; set; }
+        public Dictionary<string, ISound> BGVoicesByName { get; set; } = new();
 
-        public List<ISound> Ses { get; set; }
+        public List<ISound> Ses { get; set; } = new();
 
-        public Dictionary<string, ISound> SesByName { get; set; }
+        public Dictionary<string, ISound> SesByName { get; set; } = new();
 
         public Sprite MessageWindowImage { get; set; }
 

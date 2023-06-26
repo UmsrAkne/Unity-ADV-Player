@@ -15,7 +15,9 @@ namespace Loaders
         public List<string> GetSoundFilePaths(string targetDirectoryPath)
         {
             var allFilePaths = new List<string>(Directory.GetFiles(targetDirectoryPath));
-            return allFilePaths.Where(f => Path.GetExtension(f) == ".ogg").ToList();
+            return allFilePaths.Where(f => Path.GetExtension(f) == ".ogg")
+                .Select(f => new FileInfo(f).FullName)
+                .ToList();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Loaders
 
         public event EventHandler SoundLoadCompleted;
 
-        public ISound GetSounds(string path)
+        public ISound GetSound(string path)
         {
             loadCounter++;
             var soundLoader = new GameObject().AddComponent<SoundLoader>();
