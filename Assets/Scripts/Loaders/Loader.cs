@@ -34,11 +34,13 @@ namespace Loaders
 
             if (File.Exists(settingXMLPath))
             {
+                DebugTools.Logger.Add($"Loader : {settingXMLPath} の読み込みを開始します。");
                 Resource.SceneSetting = sceneSettingLoader.LoadSetting(XDocument.Parse(File.ReadAllText(settingXMLPath)));
             }
             else
             {
-                Resource.Log.Add("setting.xml を読み込めませんでした");
+                DebugTools.Logger.Add($"Loader : {settingXMLPath} が見つかりませんでした。");
+                DebugTools.Logger.Add($"Loader : setting.xml を読み込めませんでした");
             }
 
             voiceLoader.TargetAudioType = TargetAudioType.Voice;
@@ -104,6 +106,8 @@ namespace Loaders
         /// <param name="targetDirectoryPath">対象のシナリオが格納されているディレクトリのパス</param>
         public void Load(string targetDirectoryPath)
         {
+            DebugTools.Logger.Add($"Loader : {targetDirectoryPath} からリソースのロードを開始します");
+
             TextLoadCompleted += OnTextLoadCompleted;
             LoadTexts(targetDirectoryPath);
 
@@ -121,6 +125,7 @@ namespace Loaders
             }
 
             TextLoadCompleted -= OnTextLoadCompleted;
+            DebugTools.Logger.Add($"Loader : テキストのロードが完了しました");
         }
 
         private void OnMediaLoadCompleted(object sender, EventArgs e)
@@ -133,6 +138,7 @@ namespace Loaders
             }
 
             MediaLoadCompleted -= OnMediaLoadCompleted;
+            DebugTools.Logger.Add($"Loader : メディアのロードが完了しました。");
         }
     }
 }

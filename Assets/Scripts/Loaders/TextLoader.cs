@@ -42,7 +42,7 @@ namespace Loaders
 
             if (!File.Exists(targetPath))
             {
-                Log.Add($"{targetPath} が見つかりませんでした");
+                DebugTools.Logger.Add($"TextLoader : {targetPath} が見つかりませんでした");
                 Scenarios = new List<Scenario>() { new() { Text = "シナリオの読み込みに失敗しました。" } };
                 return;
             }
@@ -56,7 +56,8 @@ namespace Loaders
             catch (XmlException e)
             {
                 Scenarios = new List<Scenario>() { new() { Text = "シナリオの読み込みに失敗しました。" } };
-                Log.Add($"scenario.xmlのパースに失敗しました。詳細 : {e.Message}");
+                DebugTools.Logger.Add($"TextLoader : Scenario.xmlのパースに失敗しました。");
+                DebugTools.Logger.Add($"{Environment.NewLine}{e.Message}");
                 return;
             }
 
@@ -114,6 +115,8 @@ namespace Loaders
             // Converters.ForEach(c => Log.AddRange(c.Log));
 
             Resource.Scenarios = Scenarios;
+            DebugTools.Logger.Add($"TextLoader : Scenarios.Count = {Scenarios.Count}");
+            DebugTools.Logger.Add($"TextLoader : Scenario.xml のパースが完了しました。");
             LoadCompleted?.Invoke(this, EventArgs.Empty);
         }
 

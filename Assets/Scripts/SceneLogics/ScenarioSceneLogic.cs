@@ -7,6 +7,7 @@ using SceneContents;
 using UnityEngine;
 using UnityEngine.UI;
 using UserInterface;
+using Logger = DebugTools.Logger;
 
 namespace SceneLogics
 {
@@ -29,6 +30,7 @@ namespace SceneLogics
 
         private void Start()
         {
+            Logger.Add("ScenarioSceneLogic.Start が実行されます");
             LoadResource();
         }
 
