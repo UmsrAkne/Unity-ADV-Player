@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using SceneContents;
-using UnityEngine;
 
 namespace Loaders
 {
-    public class VoiceLoader : MonoBehaviour, IContentsLoader
+    public class VoiceLoader : IContentsLoader
     {
         private int loadCompleteCounter;
 
