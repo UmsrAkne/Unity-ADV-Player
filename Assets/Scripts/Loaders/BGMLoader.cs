@@ -92,6 +92,7 @@ namespace Loaders
 
             AudioSource.clip = ac;
             Resource.BGMAudioSource = AudioSource;
+            DebugTools.Logger.Add($"BGMLoader : {path} のロードが完了しました。");
             LoadCompleted?.Invoke(this, EventArgs.Empty);
         }
     }

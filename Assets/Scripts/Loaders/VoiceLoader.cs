@@ -45,7 +45,7 @@ namespace Loaders
 
             if (!Directory.Exists(targetDirectoryPath))
             {
-                Log.Add($"{targetDirectoryPath} が見つかりませんでした");
+                DebugTools.Logger.Add($"VoiceLoader : {targetDirectoryPath} が見つかりませんでした。");
             }
 
             var audioPaths = PathListGen.GetSoundFilePaths(targetDirectoryPath);
@@ -55,11 +55,18 @@ namespace Loaders
                 LoadCompleted?.Invoke(this, EventArgs.Empty);
             }
 
+            MaterialLoader.SoundLoadCompleted += (_, _) =>
+            {
+                DebugTools.Logger.Add($"VoiceLoader : {TargetAudioType} のロードが完了しました。");
+                LoadCompleted?.Invoke(this, EventArgs.Empty);
+            };
+
             foreach (var s in audioPaths)
             {
                 var sound = MaterialLoader.GetSound(s);
                 Resource.AddSound(TargetAudioType, sound, Path.GetFileName(s));
                 Resource.AddSound(TargetAudioType, sound, Path.GetFileNameWithoutExtension(s));
+                DebugTools.Logger.Add($"VoiceLoader : {s} のロードを開始しました。");
             }
         }
 

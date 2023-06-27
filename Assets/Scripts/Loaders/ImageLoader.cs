@@ -61,10 +61,13 @@ namespace Loaders
                         var spWrapper = MaterialLoader.LoadImage(path);
                         Resource.AddImages(TargetImageType, spWrapper, fileName);
                         Resource.AddImages(TargetImageType, spWrapper, fileNameWe);
+                        DebugTools.Logger.Add($"ImageLoader : {path} をロードしました");
                     }
                 }
             });
 
+            DebugTools.Logger.Add($"ImageLoader : {targetDirectoryPath} から画像のロードを完了しました");
+            
             // 上の LoadImage(path) が非同期的な処理だった場合、この時点ではロード完了していないかも
             LoadCompleted?.Invoke(this, EventArgs.Empty);
         }

@@ -48,6 +48,9 @@
                 setting.BGMVolume = bgmVolume != null ? float.Parse(bgmVolume) : setting.BGMVolume;
             }
 
+            DebugTools.Logger.Add($"SceneSettingLoader : シーン設定ファイルを読み込みました。");
+            DebugTools.Logger.Add($"{setting}");
+
             return setting;
         }
     }
