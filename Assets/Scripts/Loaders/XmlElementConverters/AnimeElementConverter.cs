@@ -7,9 +7,9 @@ using SceneContents;
 
 namespace Loaders.XmlElementConverters
 {
-    public class AnimeElementConverter // : IAnimeElementConverter
+    public class AnimeElementConverter : IXMLElementConverter
     {
-        private string TargetElementName => "anime";
+        public string TargetElementName => "anime";
 
         public List<string> Log { get; } = new List<string>();
 
@@ -102,8 +102,7 @@ namespace Loaders.XmlElementConverters
                 case "scaleChange": return new ScaleChange();
             }
 
-            Log.Add($"アニメーションの生成に失敗。 name={animationName}");
-
+            DebugTools.Logger.Add($"AnimeElementConverter : アニメーションの生成に失敗。 name={animationName}");
             return null;
         }
     }
