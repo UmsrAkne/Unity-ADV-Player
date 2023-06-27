@@ -13,7 +13,8 @@ namespace Tests.Loaders
 
         public ISound GetSound(string path)
         {
-            throw new NotImplementedException();
+            Paths.Add(path);
+            return new DummySound();
         }
 
         public SpriteWrapper LoadImage(string path)

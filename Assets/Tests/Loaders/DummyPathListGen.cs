@@ -17,7 +17,7 @@ namespace Tests.Loaders
 
         public List<string> GetSoundFilePaths(string targetDirectoryPath)
         {
-            return SoundFilePaths;
+            return SoundFilePaths.Select(p => $@"{targetDirectoryPath}\{p}").ToList();
         }
     }
 }
