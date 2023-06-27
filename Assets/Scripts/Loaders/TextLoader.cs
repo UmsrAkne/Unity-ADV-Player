@@ -1,4 +1,5 @@
 ﻿using System;
+using Loaders.XmlElementConverters;
 
 namespace Loaders
 {
@@ -32,13 +33,12 @@ namespace Loaders
 
         public event EventHandler LoadCompleted;
 
-        // private List<IXMLElementConverter> Converters { get; set; } = new List<IXMLElementConverter>();
+        private List<IXMLElementConverter> Converters { get; set; } = new();
 
         public void Load(string targetPath)
         {
             // ReSharper disable once StringLiteralTypo
             targetPath += @"\texts\scenario.xml";
-            // targetPath += $@"\{ResourcePath.SceneTextDirectoryName}\scenario.xml";
 
             if (!File.Exists(targetPath))
             {
@@ -61,14 +61,14 @@ namespace Loaders
                 return;
             }
 
-            // Converters.Add(new ChapterElementConverter());
-            // Converters.Add(new ImageElementConverter());
-            // Converters.Add(new DrawElementConverter());
-            // Converters.Add(new VoiceElementConverter());
-            // Converters.Add(new SEElementConverter());
-            // Converters.Add(new AnimeElementConverter());
-            // Converters.Add(new BackgroundVoiceElementConverter());
-            // Converters.Add(new StopElementConverter());
+            Converters.Add(new ChapterElementConverter());
+            Converters.Add(new ImageElementConverter());
+            Converters.Add(new DrawElementConverter());
+            Converters.Add(new VoiceElementConverter());
+            Converters.Add(new SeElementConverter());
+            Converters.Add(new BackgroundVoiceElementConverter());
+            Converters.Add(new StopElementConverter());
+            Converters.Add(new AnimeElementConverter());
 
             var scenarioIndex = 0;
             var scenarioList =
@@ -89,17 +89,15 @@ namespace Loaders
 
                     if (x.Element(textAttribute)?.Attribute(strAttribute) != null)
                     {
-                        // scenario.Text = x.Element(textAttribute).Attribute(strAttribute).Value;
                         scenario.Text = GetChildAttributeValue(x, textAttribute, strAttribute);
                     }
 
                     if (x.Element(textAttribute)?.Attribute(stringAttribute) != null)
                     {
-                        // scenario.Text = x.Element(textAttribute).Attribute(stringAttribute).Value;
                         scenario.Text = GetChildAttributeValue(x, textAttribute, stringAttribute);
                     }
 
-                    // Converters.ForEach(c => c.Convert(x, scenario));
+                    Converters.ForEach(c => c.Convert(x, scenario));
                     return scenario;
                 }).ToList();
 
