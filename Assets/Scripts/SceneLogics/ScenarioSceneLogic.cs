@@ -15,6 +15,8 @@ namespace SceneLogics
     {
         private Scenario currentScenario;
         private bool initialized;
+        private GameObject overImage;
+        private int counter;
 
         public Resource SceneResource { get; set; }
 
@@ -132,7 +134,10 @@ namespace SceneLogics
             BgmPlayer.Execute();
 
             TextWriter.SetResource(SceneResource);
-            initialized = true;
+            TextWriter.Execute();
+
+            InvokeRepeating(nameof(EraseOverImage), 0, 0.025f);
+            InvokeRepeating(nameof(ExecuteEveryFrames), 0, 0.025f);
         }
 
         private void LoadResource()
@@ -168,6 +173,40 @@ namespace SceneLogics
             {
                 currentScenario = SceneResource.GetScenario(TextWriter.ScenarioIndex);
                 ScenePartsRunner.Run(currentScenario);
+            }
+        }
+
+        private void ExecuteEveryFrames()
+        {
+            if (!initialized)
+            {
+                return;
+            }
+
+            TextWriter.ExecuteEveryFrame();
+            ScenePartsRunner.RunEveryFrame();
+        }
+
+        private void EraseOverImage()
+        {
+            if (overImage == null)
+            {
+                overImage = GameObject.Find("OverBlack");
+            }
+
+            counter++;
+            if (counter < 40)
+            {
+                return;
+            }
+
+            var r = overImage.GetComponent<SpriteRenderer>();
+            var a = r.color.a - 0.03f;
+            r.color = new Color(0, 0, 0, a);
+            if (a <= 0)
+            {
+                initialized = true;
+                CancelInvoke(nameof(EraseOverImage));
             }
         }
     }

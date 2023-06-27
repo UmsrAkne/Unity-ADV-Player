@@ -94,12 +94,7 @@ namespace ScenarioSceneParts
 
         public void SetUI(IWritable ui)
         {
-            // var component = GameObject.Find("TextField").GetComponent<Text>();
-
-            // if (component != null)
-            // {
-            //     SetText(component);
-            // }
+            TextField = ui;
         }
 
         /// <summary>
