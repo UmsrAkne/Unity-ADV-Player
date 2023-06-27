@@ -30,7 +30,7 @@ namespace Loaders
         public void LoadMedias(string path)
         {
             // ReSharper disable once StringLiteralTypo
-            var settingXMLPath = $@"{path}\tests\setting.xml";
+            var settingXMLPath = $@"{path}\texts\setting.xml";
 
             if (File.Exists(settingXMLPath))
             {
