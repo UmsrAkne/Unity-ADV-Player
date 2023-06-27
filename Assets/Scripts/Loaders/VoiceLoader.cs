@@ -55,6 +55,12 @@ namespace Loaders
                 LoadCompleted?.Invoke(this, EventArgs.Empty);
             }
 
+            MaterialLoader.SoundLoadCompleted += (_, _) =>
+            {
+                LoadCompleted?.Invoke(this, EventArgs.Empty);
+                DebugTools.Logger.Add($"VoiceLoader : {TargetAudioType} のロードが完了しました。");
+            };
+
             foreach (var s in audioPaths)
             {
                 var sound = MaterialLoader.GetSound(s);
