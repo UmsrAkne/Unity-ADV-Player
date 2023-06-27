@@ -18,9 +18,9 @@ namespace Loaders
         private readonly ImageLoader imageLoader = new ImageLoader{TargetImageType = TargetImageType.EventCg};
         // private readonly ImageLoader maskLoader = new ImageLoader{TargetImageType = TargetImageType.mask};
         private readonly BGMLoader bgmLoader = new GameObject().AddComponent<BGMLoader>();
-        private readonly VoiceLoader voiceLoader = new GameObject().AddComponent<VoiceLoader>();
-        private readonly VoiceLoader bgvLoader = new GameObject().AddComponent<VoiceLoader>();
-        private readonly VoiceLoader seLoader = new GameObject().AddComponent<VoiceLoader>();
+        private readonly VoiceLoader voiceLoader = new();
+        private readonly VoiceLoader bgvLoader = new();
+        private readonly VoiceLoader seLoader = new();
         private readonly SceneSettingLoader sceneSettingLoader = new SceneSettingLoader();
         private bool textLoadComplete;
         private bool mediaLoadComplete;

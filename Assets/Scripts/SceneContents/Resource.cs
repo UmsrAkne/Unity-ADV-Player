@@ -22,17 +22,17 @@ namespace SceneContents
 
         public AudioSource BGMAudioSource { get; set; }
 
-        public List<ISound> Voices { get; set; }
+        public List<ISound> Voices { get; set; } = new();
 
-        public Dictionary<string, ISound> VoicesByName { get; set; }
+        public Dictionary<string, ISound> VoicesByName { get; set; } = new();
 
-        public List<ISound> BGVoices { get; set; }
+        public List<ISound> BGVoices { get; set; } = new();
 
-        public Dictionary<string, ISound> BGVoicesByName { get; set; }
+        public Dictionary<string, ISound> BGVoicesByName { get; set; } = new();
 
-        public List<ISound> Ses { get; set; }
+        public List<ISound> Ses { get; set; } = new();
 
-        public Dictionary<string, ISound> SesByName { get; set; }
+        public Dictionary<string, ISound> SesByName { get; set; } = new();
 
         public Sprite MessageWindowImage { get; set; }
 
@@ -115,6 +115,42 @@ namespace SceneContents
                     }
 
                     ImagesByName.TryAdd(fileName, spw);
+                    break;
+
+                default:
+                    throw new System.NotImplementedException();
+            }
+        }
+
+        public void AddSound(TargetAudioType audioType, ISound sound, string fileName)
+        {
+            switch (audioType)
+            {
+                case TargetAudioType.Voice:
+                    if (Voices.Contains(sound))
+                    {
+                        Voices.Add(sound);
+                    }
+
+                    VoicesByName.TryAdd(fileName, sound);
+                    break;
+
+                case TargetAudioType.BgVoice:
+                    if (BGVoices.Contains(sound))
+                    {
+                        BGVoices.Add(sound);
+                    }
+
+                    BGVoicesByName.TryAdd(fileName, sound);
+                    break;
+
+                case TargetAudioType.Se:
+                    if (Ses.Contains(sound))
+                    {
+                        Ses.Add(sound);
+                    }
+
+                    SesByName.TryAdd(fileName, sound);
                     break;
 
                 default:
