@@ -56,12 +56,13 @@ namespace Loaders
 
             var loaders = new List<IContentsLoader>()
             {
+                // bgm のロードを最後にすると、読み込む前にシーンが始まる？
+                bgmLoader,
                 imageLoader,
                 // maskLoader,
                 voiceLoader,
                 bgvLoader,
                 seLoader,
-                bgmLoader,
             };
 
             loaders.ForEach(l =>
