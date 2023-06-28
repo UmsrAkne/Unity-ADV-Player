@@ -17,6 +17,13 @@ namespace Tests.Loaders
             return new DummySound();
         }
 
+        public ISound GetSound(string path, ISound sound)
+        {
+            Paths.Add(path);
+            sound.Available = true;
+            return sound;
+        }
+
         public SpriteWrapper LoadImage(string path)
         {
             Paths.Add(path);
