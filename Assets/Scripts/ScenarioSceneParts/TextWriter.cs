@@ -85,6 +85,11 @@ namespace ScenarioSceneParts
         public void SetResource(Resource resource)
         {
             Scenarios = resource.Scenarios;
+            CurrentText = string.Empty;
+            TextField.Text = string.Empty;
+            ScenarioIndex = 0;
+            Writing = false;
+            initialExecute = true;
         }
 
         public void SetText(IWritable writable)
