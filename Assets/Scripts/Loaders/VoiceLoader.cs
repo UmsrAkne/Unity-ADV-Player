@@ -63,9 +63,19 @@ namespace Loaders
 
             foreach (var s in audioPaths)
             {
-                var sound = MaterialLoader.GetSound(s);
-                Resource.AddSound(TargetAudioType, sound, Path.GetFileName(s));
-                Resource.AddSound(TargetAudioType, sound, Path.GetFileNameWithoutExtension(s));
+                var soundFileName = Path.GetFileName(s);
+                var soundFileNameWe = Path.GetFileNameWithoutExtension(s);
+
+                var loaded = Resource.ContainsSoundKey(TargetAudioType, soundFileName);
+
+                // loaded == true の場合は既に空のサウンドオブジェクトが入っているので、それを使用する。
+                // そうでない場合は GetSound(string) で新しいサウンドオブジェクトを生成する。
+                var sound = loaded
+                    ? MaterialLoader.GetSound(s, Resource.GetSound(TargetAudioType, soundFileName))
+                    : MaterialLoader.GetSound(s);
+
+                Resource.AddSound(TargetAudioType, sound, soundFileName);
+                Resource.AddSound(TargetAudioType, sound, soundFileNameWe);
                 DebugTools.Logger.Add($"VoiceLoader : {s} のロードを開始しました。");
             }
         }
