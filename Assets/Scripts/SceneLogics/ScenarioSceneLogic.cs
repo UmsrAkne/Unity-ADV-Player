@@ -13,10 +13,11 @@ namespace SceneLogics
 {
     public class ScenarioSceneLogic : MonoBehaviour
     {
+        private GameObject canvas;
+        private int counter;
         private Scenario currentScenario;
         private bool initialized;
         private GameObject overImage;
-        private int counter;
 
         public Resource SceneResource { get; set; }
 
@@ -71,11 +72,11 @@ namespace SceneLogics
 
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                #if UNITY_EDITOR
-                    UnityEditor.EditorApplication.isPlaying = false;
-                #else
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
                     Application.Quit();
-                #endif
+#endif
             }
 
             if (Input.GetKey(KeyCode.LeftControl))
@@ -90,7 +91,20 @@ namespace SceneLogics
         private void Init()
         {
             TextWriter.SetUI(new TextField { Field = GameObject.Find("TextField").GetComponent<Text>() });
-            var canvas = GameObject.Find(nameof(Canvas));
+            TextWriter.SetResource(SceneResource);
+            TextWriter.Execute();
+
+            if (initialized)
+            {
+                foreach (var s in ScenePartsRunner.ScenePartsList)
+                {
+                    s.SetResource(SceneResource);
+                }
+
+                return;
+            }
+
+            canvas = GameObject.Find(nameof(Canvas));
 
             var imageContainers = new List<IDisplayObjectContainer>
             {
@@ -133,15 +147,14 @@ namespace SceneLogics
             BgmPlayer.SetResource(SceneResource);
             BgmPlayer.Execute();
 
-            TextWriter.SetResource(SceneResource);
-            TextWriter.Execute();
-
             InvokeRepeating(nameof(EraseOverImage), 0, 0.025f);
             InvokeRepeating(nameof(ExecuteEveryFrames), 0, 0.025f);
         }
 
         private void LoadResource()
         {
+            currentScenario = null;
+
             var loader = new Loader();
             loader.LoadCompleted += LoaderOnLoadCompleted;
             loader.Load(ScenarioDirectoryPath);
