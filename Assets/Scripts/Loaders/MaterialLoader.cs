@@ -16,9 +16,16 @@ namespace Loaders
             return LoadSound(path, null);
         }
 
+        /// <summary>
+        /// 入力されたサウンドオブジェクトに、パスが示すサウンドファイルのデータをロードして返却します。
+        /// ただし、入力されたサウンドオブジェクトの Available が true だった場合、何も処理せずそのまま返却します。
+        /// </summary>
+        /// <param name="path">サウンドファイルのパス</param>
+        /// <param name="sound">データを入力するサウンドオブジェクト。 Available == true の場合はロードは行われません。</param>
+        /// <returns>パラメーターに入力したサウンドオブジェクトを返却します。</returns>
         public ISound GetSound(string path, ISound sound)
         {
-            return LoadSound(path, sound);
+            return sound.Available ? sound : LoadSound(path, sound);
         }
 
         public SpriteWrapper LoadImage(string path)
