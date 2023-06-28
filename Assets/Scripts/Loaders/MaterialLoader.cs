@@ -13,18 +13,12 @@ namespace Loaders
 
         public ISound GetSound(string path)
         {
-            loadCounter++;
-            var soundLoader = new GameObject().AddComponent<SoundLoader>();
-            soundLoader.Load(path);
-            soundLoader.LoadCompleted += (_, _) =>
-            {
-                if (--loadCounter <= 0)
-                {
-                    SoundLoadCompleted?.Invoke(this, EventArgs.Empty);
-                }
-            };
+            return LoadSound(path, null);
+        }
 
-            return soundLoader.Sound;
+        public ISound GetSound(string path, ISound sound)
+        {
+            return LoadSound(path, sound);
         }
 
         public SpriteWrapper LoadImage(string path)
@@ -54,6 +48,23 @@ namespace Loaders
             var width = ((uint)buf[0] << 24) | ((uint)buf[1] << 16) | ((uint)buf[2] << 8) | buf[3];
             var height = ((uint)buf[4] << 24) | ((uint)buf[5] << 16) | ((uint)buf[6] << 8) | buf[7];
             return new Vector2(width, height);
+        }
+
+        private ISound LoadSound(string path, ISound sound)
+        {
+            loadCounter++;
+            var soundLoader = new GameObject().AddComponent<SoundLoader>();
+            soundLoader.Sound = sound;
+            soundLoader.Load(path);
+            soundLoader.LoadCompleted += (_, _) =>
+            {
+                if (--loadCounter <= 0)
+                {
+                    SoundLoadCompleted?.Invoke(this, EventArgs.Empty);
+                }
+            };
+
+            return soundLoader.Sound;
         }
     }
 }

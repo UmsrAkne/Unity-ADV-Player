@@ -157,5 +157,23 @@ namespace SceneContents
                     throw new System.NotImplementedException();
             }
         }
+
+        /// <summary>
+        /// 指定したタイプのオーディオが、指定したキーで辞書に登録されているかを取得します。
+        /// </summary>
+        /// <param name="targetAudioType"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public bool ContainsSoundKey(TargetAudioType targetAudioType, string key)
+        {
+            return targetAudioType switch
+            {
+                TargetAudioType.Voice => VoicesByName.ContainsKey(key),
+                TargetAudioType.Se => SesByName.ContainsKey(key),
+                TargetAudioType.BgVoice => BGVoicesByName.ContainsKey(key),
+                _ => throw new System.NotImplementedException()
+            };
+        }
     }
 }

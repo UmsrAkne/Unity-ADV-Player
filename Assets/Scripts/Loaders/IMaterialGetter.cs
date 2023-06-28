@@ -9,6 +9,8 @@ namespace Loaders
 
         ISound GetSound(string path);
 
+        ISound GetSound(string path, ISound sound);
+
         SpriteWrapper LoadImage(string path);
     }
 }
