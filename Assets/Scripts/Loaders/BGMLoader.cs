@@ -14,6 +14,7 @@ namespace Loaders
         // ReSharper disable once StringLiteralTypo
         private readonly string commonBgmDirectoryName = @"commonResource/bgms";
         private AudioClip ac;
+        private bool isFirstLoad = true;
 
         public AudioSource AudioSource { get; private set; }
 
@@ -33,6 +34,13 @@ namespace Loaders
         /// <param name="targetDirectoryPath"></param>
         public void Load(string targetDirectoryPath)
         {
+            if (!isFirstLoad)
+            {
+                DebugTools.Logger.Add($"BGMLoader : 初回ロードではないため、 BGM のロードを中断しました。");
+                LoadCompleted?.Invoke(this, EventArgs.Empty);
+                return;
+            }
+
             if (!Directory.Exists(commonBgmDirectoryName))
             {
                 Log.Add($"{commonBgmDirectoryName} が見つかりませんでした");
@@ -92,6 +100,7 @@ namespace Loaders
 
             AudioSource.clip = ac;
             Resource.BGMAudioSource = AudioSource;
+            isFirstLoad = false;
             DebugTools.Logger.Add($"BGMLoader : {path} のロードが完了しました。");
             LoadCompleted?.Invoke(this, EventArgs.Empty);
         }
