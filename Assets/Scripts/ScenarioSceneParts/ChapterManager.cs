@@ -26,6 +26,12 @@ namespace ScenarioSceneParts
             scenarios = resource.Scenarios;
         }
 
+        public void Reload(Resource resource)
+        {
+            scenarios = resource.Scenarios;
+            currentIndex = 0;
+        }
+
         public void SetScenario(Scenario scenario)
         {
             currentIndex = scenario.Index;

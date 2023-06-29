@@ -55,6 +55,14 @@ namespace ScenarioSceneParts
             Resource = resource;
         }
 
+        public void Reload(Resource resource)
+        {
+            currentVoice?.Stop();
+            currentVoice = null;
+            nextOrder = null;
+            playRequire = false;
+        }
+
         public void SetScenario(Scenario scenario)
         {
             if (!scenario.VoiceOrders.Any())

@@ -52,6 +52,16 @@ namespace Animations
         {
         }
 
+        public void Reload(Resource resource)
+        {
+            foreach (var a in Animations)
+            {
+                a.Stop();
+            }
+
+            scn = null;
+        }
+
         public void SetScenario(Scenario scenario)
         {
             scn = scenario;

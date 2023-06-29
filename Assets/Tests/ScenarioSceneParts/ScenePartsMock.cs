@@ -33,5 +33,9 @@ namespace Tests.ScenarioSceneParts
         public void SetResource(Resource resource)
         {
         }
+
+        public void Reload(Resource resource)
+        {
+        }
     }
 }

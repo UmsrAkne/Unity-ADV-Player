@@ -91,16 +91,12 @@ namespace SceneLogics
         private void Init()
         {
             TextWriter.SetUI(new TextField { Field = GameObject.Find("TextField").GetComponent<Text>() });
-            TextWriter.SetResource(SceneResource);
+            TextWriter.Reload(SceneResource);
             TextWriter.Execute();
 
             if (initialized)
             {
-                foreach (var s in ScenePartsRunner.ScenePartsList)
-                {
-                    s.SetResource(SceneResource);
-                }
-
+                ScenePartsRunner.ScenePartsList.ForEach(s => s.Reload(SceneResource));
                 return;
             }
 
