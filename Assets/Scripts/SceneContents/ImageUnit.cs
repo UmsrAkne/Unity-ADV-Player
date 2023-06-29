@@ -46,7 +46,7 @@ namespace SceneContents
         {
             get
             {
-                gameObject = gameObject ? gameObject : new GameObject();
+                gameObject = gameObject ? gameObject : new GameObject("ImageUnit-Container");
                 return gameObject;
             }
         }

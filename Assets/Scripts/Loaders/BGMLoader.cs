@@ -44,11 +44,11 @@ namespace Loaders
             if (!Directory.Exists(commonBgmDirectoryName))
             {
                 Log.Add($"{commonBgmDirectoryName} が見つかりませんでした");
-                AudioSource = new GameObject().AddComponent<AudioSource>();
+                AudioSource = new GameObject("AudioSource-Generator").AddComponent<AudioSource>();
                 return;
             }
 
-            AudioSource = new GameObject().AddComponent<AudioSource>();
+            AudioSource = new GameObject("AudioSource-Generator").AddComponent<AudioSource>();
             StartCoroutine(LoadAudio(GetSoundFilePath(commonBgmDirectoryName)));
         }
 

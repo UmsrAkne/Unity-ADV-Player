@@ -60,7 +60,7 @@ namespace Loaders
         private ISound LoadSound(string path, ISound sound)
         {
             loadCounter++;
-            var soundLoader = new GameObject().AddComponent<SoundLoader>();
+            var soundLoader = new GameObject("SoundLoader-Generator").AddComponent<SoundLoader>();
             soundLoader.Sound = sound;
             soundLoader.Load(path);
             soundLoader.LoadCompleted += (_, _) =>

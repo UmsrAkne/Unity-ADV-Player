@@ -20,7 +20,7 @@ namespace SceneContents
         /// <param name="parentObject">このオブジェクトの親に設定されるオブジェクト</param>
         public ImageContainer(GameObject parentObject)
         {
-            GameObject = new GameObject();
+            GameObject = new GameObject("ImageContainerChild");
             GameObject.transform.SetParent(parentObject.transform);
         }
 
