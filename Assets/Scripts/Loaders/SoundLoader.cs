@@ -19,7 +19,7 @@ namespace Loaders
 
         public void Load(string path)
         {
-            Sound ??= new Sound() { AudioSource = new GameObject().AddComponent<AudioSource>() };
+            Sound ??= new Sound() { AudioSource = new GameObject("AudioSource-Generator").AddComponent<AudioSource>() };
 
             if (!string.IsNullOrWhiteSpace(path))
             {

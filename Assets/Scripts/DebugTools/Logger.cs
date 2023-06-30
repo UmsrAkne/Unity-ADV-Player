@@ -15,7 +15,7 @@ namespace DebugTools
             System.Diagnostics.Debug.WriteLine(str);
 
             var sw = new StreamWriter("playLog.txt", true);
-            sw.WriteLine(text);
+            sw.WriteLine(str);
             sw.Flush();
             sw.Close();
         }

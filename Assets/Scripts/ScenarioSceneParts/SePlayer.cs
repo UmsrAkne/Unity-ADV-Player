@@ -67,6 +67,15 @@ namespace ScenarioSceneParts
             Resource = resource;
         }
 
+        public void Reload(Resource resource)
+        {
+            PlayingSound?.Stop();
+            PlayingSound = null;
+            CurrentOrder = null;
+            stopOrder = null;
+            Resource = resource;
+        }
+
         public void SetScenario(Scenario scenario)
         {
             scenario.StopOrders.ForEach(order =>

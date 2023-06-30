@@ -38,6 +38,11 @@ namespace ScenarioSceneParts
             SceneSetting = resource.SceneSetting;
         }
 
+        public void Reload(Resource resource)
+        {
+            // BGM の切り替えは行わないので、何の動作も行わない。
+        }
+
         public void SetScenario(Scenario scenario)
         {
         }

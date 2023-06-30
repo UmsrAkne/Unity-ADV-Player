@@ -117,6 +117,13 @@ namespace ScenarioSceneParts
             Resource = resource;
         }
 
+        public void Reload(Resource resource)
+        {
+            mute = true;
+            playingVoice = null;
+            volume = 1.0;
+        }
+
         private void VoicePlayerStartEventHandler(object sender, EventArgs e)
         {
             mute = true;

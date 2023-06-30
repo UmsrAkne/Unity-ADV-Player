@@ -56,6 +56,13 @@ namespace ScenarioSceneParts
             resource = res;
         }
 
+        public void Reload(Resource res)
+        {
+            drawingImageSet = null;
+            scenario = null;
+            resource = res;
+        }
+
         public void SetScenario(Scenario scn)
         {
             scenario = scn;
