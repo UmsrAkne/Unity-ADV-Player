@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 1688528091}
   - component: {fileID: 1688528092}
   m_Layer: 0
-  m_Name: messageWindow
+  m_Name: MessageWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
