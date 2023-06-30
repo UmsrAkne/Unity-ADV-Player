@@ -13,11 +13,9 @@ namespace SceneLogics
 {
     public class ScenarioSceneLogic : MonoBehaviour
     {
-        private GameObject canvas;
         private int counter;
         private Scenario currentScenario;
         private bool initialized;
-        private GameObject overImage;
 
         public Resource SceneResource { get; set; }
 
@@ -29,7 +27,7 @@ namespace SceneLogics
 
         private ChapterManager ChapterManager { get; } = new();
 
-        private BGMPlayer BgmPlayer { get; } = new();
+        private UiContainer UiContainer { get; set; }
 
         private void Start()
         {
@@ -100,7 +98,7 @@ namespace SceneLogics
                 return;
             }
 
-            canvas = GameObject.Find(nameof(Canvas));
+            var canvas = GameObject.Find(nameof(Canvas));
 
             var imageContainers = new List<IDisplayObjectContainer>
             {
@@ -140,8 +138,14 @@ namespace SceneLogics
                 ScenePartsRunner.Add(s);
             });
 
-            BgmPlayer.SetResource(SceneResource);
-            BgmPlayer.Execute();
+            UiContainer = new UiContainer()
+            {
+                BGMPlayer = new BGMPlayer(),
+            };
+
+            UiContainer.OverWhite.SetActive(false);
+            UiContainer.BGMPlayer.SetResource(SceneResource);
+            UiContainer.BGMPlayer.Execute();
 
             InvokeRepeating(nameof(EraseOverImage), 0, 0.025f);
             InvokeRepeating(nameof(ExecuteEveryFrames), 0, 0.025f);
@@ -198,9 +202,10 @@ namespace SceneLogics
 
         private void EraseOverImage()
         {
-            if (overImage == null)
+            if (UiContainer.OverBlack == null)
             {
-                overImage = GameObject.Find("OverBlack");
+                initialized = true;
+                CancelInvoke(nameof(EraseOverImage));
             }
 
             counter++;
@@ -209,7 +214,7 @@ namespace SceneLogics
                 return;
             }
 
-            var r = overImage.GetComponent<SpriteRenderer>();
+            var r = UiContainer.OverBlack.GetComponent<SpriteRenderer>();
             var a = r.color.a - 0.03f;
             r.color = new Color(0, 0, 0, a);
             if (a <= 0)
