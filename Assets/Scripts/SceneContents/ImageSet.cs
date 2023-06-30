@@ -122,7 +122,7 @@ namespace SceneContents
 
         public void Draw(List<SpriteWrapper> spriteWrappers)
         {
-            parentUnit.SortingGroup.sortingLayerName = $"Layer_{SortingLayerIndex}";
+            parentUnit.SortingGroup.sortingLayerName = "ImageLayer";
 
             for (var i = 0; i < spriteWrappers.Count; i++)
             {
