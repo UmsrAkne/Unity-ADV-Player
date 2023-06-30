@@ -44,6 +44,9 @@ TagManager:
   - name: UiImageLayer
     uniqueID: 1133094817
     locked: 0
+  - name: EffectLayer
+    uniqueID: 1455700525
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
