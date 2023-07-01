@@ -752,7 +752,7 @@ GameObject:
   - component: {fileID: 2022547196}
   - component: {fileID: 2022547197}
   m_Layer: 0
-  m_Name: Lefframe
+  m_Name: LeftFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -841,7 +841,7 @@ GameObject:
   - component: {fileID: 2094121137}
   - component: {fileID: 2094121138}
   m_Layer: 0
-  m_Name: Rightframe
+  m_Name: RightFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

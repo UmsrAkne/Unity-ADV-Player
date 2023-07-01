@@ -13,7 +13,7 @@ namespace UserInterface
 
         public GameObject OverWhite { get; } = GameObject.Find(nameof(OverWhite));
 
-        public GameObject LefFrame { get; } = GameObject.Find(nameof(LefFrame));
+        public GameObject LeftFrame { get; } = GameObject.Find(nameof(LeftFrame));
 
         public GameObject RightFrame { get; } = GameObject.Find(nameof(RightFrame));
 
