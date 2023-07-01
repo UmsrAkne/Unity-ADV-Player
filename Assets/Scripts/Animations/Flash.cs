@@ -16,8 +16,12 @@ namespace Animations
             set => effectImageSet = value;
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
+        // リフレクションによってセットを行うため公開している。
         public int Duration { get; set; } = 40;
 
+        // ReSharper disable once MemberCanBePrivate.Global
+        // リフレクションによってセットを行うため公開している。
         public double Alpha { get; set; } = 1.0f;
 
         public string AnimationName => "flash";

@@ -24,7 +24,7 @@ namespace SceneContents
         {
             get
             {
-                spriteRenderer = spriteRenderer ? spriteRenderer : GameObject.AddComponent<SpriteRenderer>();
+                spriteRenderer ??= GameObject.AddComponent<SpriteRenderer>();
                 return spriteRenderer;
             }
         }
@@ -33,7 +33,7 @@ namespace SceneContents
         {
             get
             {
-                sortingGroup = sortingGroup ? sortingGroup : GameObject.AddComponent<SortingGroup>();
+                sortingGroup ??= GameObject.AddComponent<SortingGroup>();
                 return sortingGroup;
             }
         }

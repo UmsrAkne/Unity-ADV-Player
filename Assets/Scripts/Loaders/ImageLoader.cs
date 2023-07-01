@@ -19,10 +19,6 @@ namespace Loaders
 
         public IMaterialGetter MaterialLoader { get; set; } = new MaterialLoader();
 
-        private List<SpriteWrapper> Sprites { get; set; } = new();
-
-        private Dictionary<string, SpriteWrapper> SpriteDictionary { get; set; } = new();
-
         public event EventHandler LoadCompleted;
 
         public void Load(string targetDirectoryPath)
