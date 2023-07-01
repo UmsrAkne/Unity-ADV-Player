@@ -13,12 +13,29 @@ namespace UserInterface
 
         public GameObject OverWhite { get; } = GameObject.Find(nameof(OverWhite));
 
-        public GameObject LefFrame { get; } = GameObject.Find(nameof(LefFrame));
+        public GameObject LeftFrame { get; } = GameObject.Find(nameof(LeftFrame));
 
         public GameObject RightFrame { get; } = GameObject.Find(nameof(RightFrame));
 
         public GameObject MessageWindow { get; } = GameObject.Find(nameof(MessageWindow));
 
         public BGMPlayer BGMPlayer { get; set; }
+
+        /// <summary>
+        /// 入力された画面の幅に合わせて、フレームの位置を調節します。
+        /// </summary>
+        /// <param name="width">画面の幅を入力します。</param>
+        public void SetScreenWidth(int width)
+        {
+            const int normalScreenWidth = 1280;
+            var horizontalFramePos = (width - normalScreenWidth) / 2;
+            var leftPos = LeftFrame.transform.position;
+            leftPos = new Vector2(leftPos.x - horizontalFramePos, leftPos.y);
+            LeftFrame.transform.position = leftPos;
+
+            var rightPos = RightFrame.transform.position;
+            rightPos = new Vector2(rightPos.x + horizontalFramePos, rightPos.y);
+            RightFrame.transform.position = rightPos;
+        }
     }
 }

@@ -145,6 +145,7 @@ namespace SceneLogics
             UiContainer.OverWhite.SetActive(false);
             UiContainer.BGMPlayer.SetResource(SceneResource);
             UiContainer.BGMPlayer.Execute();
+            UiContainer.SetScreenWidth(SceneResource.SceneSetting.DefaultImageWidth);
 
             InvokeRepeating(nameof(EraseOverImage), 0, 0.025f);
             InvokeRepeating(nameof(ExecuteEveryFrames), 0, 0.025f);
