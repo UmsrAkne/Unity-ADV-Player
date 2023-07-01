@@ -14,25 +14,11 @@ namespace SceneContents
 
         public List<SpriteWrapper> Images { get; set; } = new();
 
-        public Dictionary<string, SpriteWrapper> ImagesByName { get; set; } = new();
-
         // public List<SpriteWrapper> MaskImages { get; set; }
 
         public Dictionary<string, SpriteWrapper> MaskImagesByName { get; set; }
 
         public AudioSource BGMAudioSource { get; set; }
-
-        public List<ISound> Voices { get; set; } = new();
-
-        public Dictionary<string, ISound> VoicesByName { get; set; } = new();
-
-        public List<ISound> BGVoices { get; set; } = new();
-
-        public Dictionary<string, ISound> BGVoicesByName { get; set; } = new();
-
-        public List<ISound> Ses { get; set; } = new();
-
-        public Dictionary<string, ISound> SesByName { get; set; } = new();
 
         public Sprite MessageWindowImage { get; set; }
 
@@ -40,13 +26,27 @@ namespace SceneContents
 
         public bool Used { get; set; }
 
+        private Dictionary<string, SpriteWrapper> ImagesByName { get; set; } = new();
+
+        private List<ISound> Voices { get; set; } = new();
+
+        private Dictionary<string, ISound> VoicesByName { get; set; } = new();
+
+        private List<ISound> BgVoices { get; set; } = new();
+
+        private Dictionary<string, ISound> BgVoicesByName { get; set; } = new();
+
+        private List<ISound> Ses { get; set; } = new();
+
+        private Dictionary<string, ISound> SesByName { get; set; } = new();
+
         public ISound GetSound(TargetAudioType targetAudioType, string targetName)
         {
             return targetAudioType switch
             {
                 TargetAudioType.Voice => VoicesByName[targetName],
                 TargetAudioType.Se => SesByName[targetName],
-                TargetAudioType.BgVoice => BGVoicesByName[targetName],
+                TargetAudioType.BgVoice => BgVoicesByName[targetName],
                 _ => throw new System.NotImplementedException()
             };
         }
@@ -57,7 +57,7 @@ namespace SceneContents
             {
                 TargetAudioType.Voice => Voices[index],
                 TargetAudioType.Se => Ses[index],
-                TargetAudioType.BgVoice => BGVoices[index],
+                TargetAudioType.BgVoice => BgVoices[index],
                 _ => throw new System.NotImplementedException()
             };
         }
@@ -136,12 +136,12 @@ namespace SceneContents
                     break;
 
                 case TargetAudioType.BgVoice:
-                    if (BGVoices.Contains(sound))
+                    if (BgVoices.Contains(sound))
                     {
-                        BGVoices.Add(sound);
+                        BgVoices.Add(sound);
                     }
 
-                    BGVoicesByName.TryAdd(fileName, sound);
+                    BgVoicesByName.TryAdd(fileName, sound);
                     break;
 
                 case TargetAudioType.Se:
@@ -171,7 +171,7 @@ namespace SceneContents
             {
                 TargetAudioType.Voice => VoicesByName.ContainsKey(key),
                 TargetAudioType.Se => SesByName.ContainsKey(key),
-                TargetAudioType.BgVoice => BGVoicesByName.ContainsKey(key),
+                TargetAudioType.BgVoice => BgVoicesByName.ContainsKey(key),
                 _ => throw new System.NotImplementedException()
             };
         }
