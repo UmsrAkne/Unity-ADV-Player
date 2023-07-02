@@ -142,7 +142,8 @@ namespace SceneLogics
                 BGMPlayer = new BGMPlayer(),
             };
 
-            UiContainer.OverWhite.SetActive(false);
+            UiContainer.OverWhite.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+            // UiContainer.OverWhite.SetActive(false);
             UiContainer.BGMPlayer.SetResource(SceneResource);
             UiContainer.BGMPlayer.Execute();
             UiContainer.SetScreenWidth(SceneResource.SceneSetting.DefaultImageWidth);
