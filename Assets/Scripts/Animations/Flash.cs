@@ -9,6 +9,7 @@ namespace Animations
         private int frameCounter;
         private int intervalCounter;
         private ImageContainer targetContainer;
+        private double changeValuePerOne;
 
         public IDisplayObject EffectImageSet
         {
@@ -41,6 +42,8 @@ namespace Animations
         public string GroupName { get; set; } = string.Empty;
 
         public ImageContainer TargetContainer { get => targetContainer; set => targetContainer ??= value; }
+
+        public IEffectLayerGettable EffectLayerGettable { private get; set; } = new EffectLayerProvider();
 
         public void Execute()
         {
@@ -82,6 +85,7 @@ namespace Animations
         public void Start()
         {
             // effectImageSet = TargetContainer.EffectImageSet;
+            effectImageSet = EffectLayerGettable.GetWhiteLayer(TargetLayerIndex);
         }
 
         public void Stop()
@@ -92,8 +96,13 @@ namespace Animations
 
         private float GetAlpha()
         {
-            var rad = frameCounter * (180.0 / Duration) * (Math.PI / 180);
-            return (float)Math.Abs(Math.Sin(rad)) * (float)Alpha;
+            if (changeValuePerOne == 0)
+            {
+                changeValuePerOne = (Math.PI * 2) / Duration;
+            }
+
+            var p = changeValuePerOne * frameCounter;
+            return (float)(Math.Cos(p + Math.PI) + 1.0) / 2;
         }
     }
 }
