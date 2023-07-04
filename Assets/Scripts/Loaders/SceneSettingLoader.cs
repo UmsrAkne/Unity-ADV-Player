@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using Loaders.XmlElementConverters;
 using SceneContents;
 
@@ -64,6 +65,13 @@ namespace Loaders
             return setting;
         }
 
+        /// <summary>
+        /// imageLocation 要素を子に持つ要素から ImageLocation オブジェクトのリストを生成します。
+        /// imageLocation 要素の name 属性にはファイル名を入力します。
+        /// このファイル名は拡張子を含むかどうかに関わらず、拡張子を除いたファイル名が採用されます。
+        /// </summary>
+        /// <param name="xml">imageLocation 要素を子にもつ XElement</param>
+        /// <returns>XElement を読み込んで生成された ImageLocation オブジェクトのリスト</returns>
         public List<ImageLocation> LoadImageLocations(XElement xml)
         {
             var locations = new List<ImageLocation>();
@@ -74,11 +82,17 @@ namespace Loaders
             }
 
             locations.AddRange(xml.Elements("imageLocation")
-                .Select(locationTag => new ImageLocation
+                .Select(locationTag =>
                 {
-                    Name = XElementHelper.GetStringFromAttribute(locationTag, nameAttribute),
-                    X = XElementHelper.GetIntFromAttribute(locationTag, xAttribute),
-                    Y = XElementHelper.GetIntFromAttribute(locationTag, yAttribute),
+                    var rawName = XElementHelper.GetStringFromAttribute(locationTag, nameAttribute);
+                    var fileNameWe = Path.GetFileNameWithoutExtension(new FileInfo(rawName).FullName);
+
+                    return new ImageLocation
+                    {
+                        Name = fileNameWe,
+                        X = XElementHelper.GetIntFromAttribute(locationTag, xAttribute),
+                        Y = XElementHelper.GetIntFromAttribute(locationTag, yAttribute),
+                    };
                 }));
 
             return locations;

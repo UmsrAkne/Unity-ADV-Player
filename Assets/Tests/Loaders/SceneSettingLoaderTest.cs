@@ -56,6 +56,7 @@ namespace Tests.Loaders
                 @"<setting>
                     <imageLocation name=""testImageA"" x=""100"" y=""200"" />
                     <imageLocation name=""testImageB"" x=""300"" y=""400"" />
+                    <imageLocation name=""testImageC.png"" x=""300"" y=""400"" />
                 </setting>";
 
             var xDocument = XDocument.Parse(xmlText);
@@ -68,6 +69,8 @@ namespace Tests.Loaders
             Assert.AreEqual(locations[1].Name, "testImageB");
             Assert.AreEqual(locations[1].X, 300);
             Assert.AreEqual(locations[1].Y, 400);
+
+            Assert.AreEqual(locations[2].Name, "testImageC", "拡張子を含むファイル名でも、拡張子のない名前が読み込まれる。");
         }
 
         [Test]
