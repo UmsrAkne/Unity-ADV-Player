@@ -48,6 +48,29 @@ namespace Tests.Loaders
         }
 
         [Test]
+        public void ImageLocationが書いてある場合のテスト()
+        {
+            var loader = new SceneSettingLoader();
+
+            const string xmlText =
+                @"<setting>
+                    <imageLocation name=""testImageA"" x=""100"" y=""200"" />
+                    <imageLocation name=""testImageB"" x=""300"" y=""400"" />
+                </setting>";
+
+            var xDocument = XDocument.Parse(xmlText);
+            var locations = loader.LoadImageLocations(xDocument.Root);
+
+            Assert.AreEqual(locations[0].Name, "testImageA");
+            Assert.AreEqual(locations[0].X, 100);
+            Assert.AreEqual(locations[0].Y, 200);
+
+            Assert.AreEqual(locations[1].Name, "testImageB");
+            Assert.AreEqual(locations[1].X, 300);
+            Assert.AreEqual(locations[1].Y, 400);
+        }
+
+        [Test]
         public void 設定に何も書いてない場合のテスト()
         {
             var loader = new SceneSettingLoader();
