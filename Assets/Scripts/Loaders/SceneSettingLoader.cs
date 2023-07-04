@@ -1,4 +1,8 @@
-﻿namespace Loaders
+﻿using System.Linq;
+using Loaders.XmlElementConverters;
+using SceneContents;
+
+namespace Loaders
 {
     using System.Collections.Generic;
     using System.Xml.Linq;
@@ -9,10 +13,14 @@
         private readonly string defaultSizeElementName = "defaultSize";
         private readonly string fileNameAttribute = "fileName";
         private readonly string heightAttribute = "height";
+
+        private readonly string nameAttribute = "name";
         private readonly string numberAttribute = "number";
         private readonly string volumeAttribute = "volume";
 
         private readonly string widthAttribute = "width";
+        private readonly string xAttribute = "x";
+        private readonly string yAttribute = "y";
 
         public List<string> Log { get; private set; } = new List<string>();
 
@@ -51,7 +59,29 @@
             DebugTools.Logger.Add($"SceneSettingLoader : シーン設定ファイルを読み込みました。");
             DebugTools.Logger.Add($"{setting}");
 
+            setting.ImageLocations = LoadImageLocations(settingTag);
+
             return setting;
+        }
+
+        public List<ImageLocation> LoadImageLocations(XElement xml)
+        {
+            var locations = new List<ImageLocation>();
+
+            if (xml == null || !xml.Elements("imageLocation").Any())
+            {
+                return locations;
+            }
+
+            locations.AddRange(xml.Elements("imageLocation")
+                .Select(locationTag => new ImageLocation
+                {
+                    Name = XElementHelper.GetStringFromAttribute(locationTag, nameAttribute),
+                    X = XElementHelper.GetIntFromAttribute(locationTag, xAttribute),
+                    Y = XElementHelper.GetIntFromAttribute(locationTag, yAttribute),
+                }));
+
+            return locations;
         }
     }
 }

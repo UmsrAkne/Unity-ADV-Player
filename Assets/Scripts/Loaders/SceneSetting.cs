@@ -1,4 +1,7 @@
-﻿namespace Loaders
+﻿using System.Collections.Generic;
+using SceneContents;
+
+namespace Loaders
 {
     public class SceneSetting
     {
@@ -11,6 +14,8 @@
         public string BGMFileName { get; set; } = string.Empty;
 
         public float BGMVolume { get; set; } = 1.0f;
+
+        public List<ImageLocation> ImageLocations { get; set; } = new();
 
         public override string ToString()
         {
