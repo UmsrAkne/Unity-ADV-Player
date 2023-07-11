@@ -121,7 +121,7 @@ namespace ScenarioSceneParts
             imageSet.Angle = order.Angle;
             imageSet.SortingLayerIndex = order.TargetLayerIndex;
             imageSet.SetSortingOrder(addedImageCounter++);
-            targetContainer.AddChild(imageSet);
+            targetContainer.AddChild(imageSet, order);
 
             imageSet.Draw(spriteWrappers);
 

@@ -14,6 +14,6 @@ namespace SceneContents
 
         event ImageContainer.ImageAddedEventHandler Added;
 
-        void AddChild(IDisplayObject childObject);
+        void AddChild(IDisplayObject childObject, ImageOrder order);
     }
 }

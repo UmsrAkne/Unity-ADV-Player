@@ -108,7 +108,10 @@ namespace Animations
             if (!scn.Animations.Any(a =>
                     a.AnimationName == nameof(AlphaChanger) && a.TargetLayerIndex == TargetImageContainer.Index))
             {
-                Animations.Add(new AlphaChanger());
+                Animations.Add(new AlphaChanger()
+                {
+                    Amount = e.CurrentOrder.Depth
+                });
             }
 
             foreach (var a in Animations)
