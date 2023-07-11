@@ -119,9 +119,9 @@ namespace SceneLogics
             {
                 imageDrawer,
                 ChapterManager,
-                new AnimationsManager((ImageContainer)imageContainers[0]),
-                new AnimationsManager((ImageContainer)imageContainers[1]),
-                new AnimationsManager((ImageContainer)imageContainers[2]),
+                new AnimationsManager((ImageContainer)imageContainers[0]) { ImageDrawer = imageDrawer },
+                new AnimationsManager((ImageContainer)imageContainers[1]) { ImageDrawer = imageDrawer },
+                new AnimationsManager((ImageContainer)imageContainers[2]) { ImageDrawer = imageDrawer },
                 new SePlayer(),
                 voicePlayers[0],
                 voicePlayers[1],

@@ -64,6 +64,7 @@ namespace Animations
 
             if (!drawed)
             {
+                System.Diagnostics.Debug.WriteLine($"aaaaaaaaaaaaaaaaaaaa(Image : 67)");
                 drawed = true;
                 var imageOrder = new ImageOrder()
                 {

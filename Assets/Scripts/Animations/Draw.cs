@@ -8,12 +8,6 @@ namespace Animations
     {
         private bool drawed;
 
-        public int X { get; set; }
-
-        public int Y { get; set; }
-
-        public double Scale { get; set; } = 1.0;
-
         public string A { get; set; } = string.Empty;
 
         public string B { get; set; } = string.Empty;
@@ -65,15 +59,13 @@ namespace Animations
             if (!drawed)
             {
                 drawed = true;
-                var imageOrder = new ImageOrder()
+                var drawOrder = new ImageOrder()
                 {
-                    X = X,
-                    Y = Y,
                     Names = { A, B, C, D },
-                    Scale = Scale,
+                    IsDrawOrder = true,
                 };
 
-                var scenario = new Scenario() { ImageOrders = new List<ImageOrder>() { imageOrder } };
+                var scenario = new Scenario() { DrawOrders = new List<ImageOrder>() { drawOrder } };
                 ImageDrawer.SetScenario(scenario);
                 ImageDrawer.Execute();
             }

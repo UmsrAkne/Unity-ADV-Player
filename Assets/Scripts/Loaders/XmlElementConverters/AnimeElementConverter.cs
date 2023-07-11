@@ -99,6 +99,7 @@ namespace Loaders.XmlElementConverters
                 case "chain": return new AnimationChain();
                 case "animationChain": return new AnimationChain();
                 case "draw": return new Draw();
+                case "image": return new Image();
                 case "scaleChange": return new ScaleChange();
             }
 
