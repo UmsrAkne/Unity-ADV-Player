@@ -62,6 +62,11 @@
                 {
                     order.Angle = XElementHelper.GetIntFromAttribute(imageTag, "angle");
                 }
+                
+                if (imageTag.Attribute("depth") != null)
+                {
+                    order.Depth = XElementHelper.GetDoubleFromAttribute(imageTag, "depth");
+                }
 
                 if (imageTag.Attribute("mask") != null)
                 {
