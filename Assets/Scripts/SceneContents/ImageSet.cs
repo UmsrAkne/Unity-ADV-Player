@@ -102,7 +102,7 @@ namespace SceneContents
         public void Dispose()
         {
             GameObject.SetActive(false);
-            MaskObject.SetActive(false);
+            // MaskObject.SetActive(false);
 
             ImageUnits.ForEach(u =>
             {
