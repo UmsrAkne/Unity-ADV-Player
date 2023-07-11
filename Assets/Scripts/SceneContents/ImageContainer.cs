@@ -52,7 +52,7 @@ namespace SceneContents
 
         public event ImageAddedEventHandler Added;
 
-        public void AddChild(IDisplayObject childObject)
+        public void AddChild(IDisplayObject childObject, ImageOrder order)
         {
             // childObject.GameObject.name = "children";
             childObject.SetParent(GameObject.transform);
@@ -60,7 +60,8 @@ namespace SceneContents
 
             var e = new ImageAddedEventArgs
             {
-                CurrentImageSet = childObject
+                CurrentImageSet = childObject,
+                CurrentOrder = order,
             };
 
             Added?.Invoke(this, e);

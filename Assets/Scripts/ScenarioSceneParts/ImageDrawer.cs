@@ -11,6 +11,7 @@ namespace ScenarioSceneParts
         private IDisplayObject drawingImageSet;
         private IResource resource;
         private Scenario scenario;
+        private int addedImageCounter;
 
         public List<IDisplayObjectContainer> ImageContainers { get; set; }
 
@@ -119,7 +120,8 @@ namespace ScenarioSceneParts
             imageSet.Y = order.Y;
             imageSet.Angle = order.Angle;
             imageSet.SortingLayerIndex = order.TargetLayerIndex;
-            targetContainer.AddChild(imageSet);
+            imageSet.SetSortingOrder(addedImageCounter++);
+            targetContainer.AddChild(imageSet, order);
 
             imageSet.Draw(spriteWrappers);
 

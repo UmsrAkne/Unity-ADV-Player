@@ -4,9 +4,17 @@ using SceneContents;
 
 namespace Animations
 {
-    public class Draw : IAnimation
+    public class Image : IAnimation
     {
+        public string AnimationName => "image";
+        
         private bool drawed;
+
+        public int X { get; set; }
+
+        public int Y { get; set; }
+
+        public double Scale { get; set; } = 1.0;
 
         public string A { get; set; } = string.Empty;
 
@@ -19,8 +27,6 @@ namespace Animations
         public int Wait { get; set; }
 
         public static ImageDrawer ImageDrawer { private get; set; }
-
-        public string AnimationName { get; } = "draw";
 
         public bool IsWorking { get; private set; } = true;
 
@@ -58,14 +64,17 @@ namespace Animations
 
             if (!drawed)
             {
+                System.Diagnostics.Debug.WriteLine($"aaaaaaaaaaaaaaaaaaaa(Image : 67)");
                 drawed = true;
-                var drawOrder = new ImageOrder()
+                var imageOrder = new ImageOrder()
                 {
+                    X = X,
+                    Y = Y,
                     Names = { A, B, C, D },
-                    IsDrawOrder = true,
+                    Scale = Scale,
                 };
 
-                var scenario = new Scenario() { DrawOrders = new List<ImageOrder>() { drawOrder } };
+                var scenario = new Scenario() { ImageOrders = new List<ImageOrder>() { imageOrder } };
                 ImageDrawer.SetScenario(scenario);
                 ImageDrawer.Execute();
             }

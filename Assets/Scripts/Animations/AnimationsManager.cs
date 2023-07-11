@@ -18,6 +18,18 @@ namespace Animations
 
         public ImageContainer TargetImageContainer { get; }
 
+        /// <summary>
+        /// Draw.ImageDrawer, Image.ImageDrawer に 値をセットします。
+        /// </summary>
+        public ImageDrawer ImageDrawer
+        {
+            set
+            {
+                Draw.ImageDrawer = value;
+                Image.ImageDrawer = value;
+            }
+        }
+
         private ConcurrentBag<IAnimation> Animations { get; set; } = new ConcurrentBag<IAnimation>();
 
         public bool NeedExecuteEveryFrame => true;
@@ -96,7 +108,10 @@ namespace Animations
             if (!scn.Animations.Any(a =>
                     a.AnimationName == nameof(AlphaChanger) && a.TargetLayerIndex == TargetImageContainer.Index))
             {
-                Animations.Add(new AlphaChanger());
+                Animations.Add(new AlphaChanger()
+                {
+                    Amount = e.CurrentOrder.Depth
+                });
             }
 
             foreach (var a in Animations)

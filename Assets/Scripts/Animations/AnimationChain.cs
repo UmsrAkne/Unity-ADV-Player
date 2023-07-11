@@ -117,7 +117,7 @@ namespace Animations
                 return;
             }
 
-            if (playingAnimations.Any(a => a is Draw))
+            if (playingAnimations.Any(a => a is Draw or Image))
             {
                 // 実行アニメーションが Draw の場合は、ターゲット画像の変更が発生する可能性があるため、セッターを許可する。
                 canChangeTarget = true;
