@@ -82,6 +82,7 @@ namespace Loaders
             }
 
             locations.AddRange(xml.Elements("imageLocation")
+                .Where(locationTag => !string.IsNullOrWhiteSpace(XElementHelper.GetStringFromAttribute(locationTag, nameAttribute)))
                 .Select(locationTag =>
                 {
                     var rawName = XElementHelper.GetStringFromAttribute(locationTag, nameAttribute);
