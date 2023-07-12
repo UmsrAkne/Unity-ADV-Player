@@ -56,6 +56,12 @@ namespace Animations
                 return;
             }
 
+            if (Delay > 0)
+            {
+                Delay--;
+                return;
+            }
+
             Target.Alpha += amount;
 
             if (Target.Alpha > 1.0f)
