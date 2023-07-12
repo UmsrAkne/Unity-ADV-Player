@@ -9,6 +9,15 @@
     {
         private readonly List<string> charAttribute = new() { "a", "b", "c", "d" };
 
+        private readonly string xAttributeName = nameof(ImageOrder.X).ToLower(0);
+        private readonly string yAttributeName = nameof(ImageOrder.Y).ToLower(0);
+        
+        private readonly string scaleAttributeName = nameof(ImageOrder.Scale).ToLower(0);
+        private readonly string angleAttributeName = nameof(ImageOrder.Angle).ToLower(0);
+        private readonly string depthAttributeName = nameof(ImageOrder.Depth).ToLower(0);
+        private readonly string delayAttributeName = nameof(ImageOrder.Delay).ToLower(0);
+        private readonly string inheritStatusAttributeName = nameof(ImageOrder.InheritStatus).ToLower(0);
+
         public string TargetElementName => "image";
 
         public List<string> Log { get; } = new();
@@ -43,46 +52,46 @@
                     Log.Add($"image要素に a, b. c, d 属性が含まれていません。Index={scenario.Index}");
                 }
 
-                if (imageTag.Attribute("scale") != null)
+                if (XElementHelper.HasAttribute(imageTag, scaleAttributeName))
                 {
-                    order.Scale = XElementHelper.GetDoubleFromAttribute(imageTag, "scale");
-                }
-
-                if (imageTag.Attribute("x") != null)
-                {
-                    order.X = XElementHelper.GetIntFromAttribute(imageTag, "x");
-                }
-
-                if (imageTag.Attribute("y") != null)
-                {
-                    order.Y = XElementHelper.GetIntFromAttribute(imageTag, "y");
-                }
-
-                if (imageTag.Attribute("angle") != null)
-                {
-                    order.Angle = XElementHelper.GetIntFromAttribute(imageTag, "angle");
+                    order.Scale = XElementHelper.GetDoubleFromAttribute(imageTag, scaleAttributeName);
                 }
                 
-                if (imageTag.Attribute("depth") != null)
+                if (XElementHelper.HasAttribute(imageTag, xAttributeName))
                 {
-                    order.Depth = XElementHelper.GetDoubleFromAttribute(imageTag, "depth");
+                    order.X = XElementHelper.GetIntFromAttribute(imageTag, xAttributeName);
                 }
                 
-                if (imageTag.Attribute("delay") != null)
+                if (XElementHelper.HasAttribute(imageTag, yAttributeName))
                 {
-                    order.Delay = XElementHelper.GetIntFromAttribute(imageTag, "delay");
+                    order.Y = XElementHelper.GetIntFromAttribute(imageTag, yAttributeName);
                 }
                 
-                if (imageTag.Attribute("mask") != null)
+                if (XElementHelper.HasAttribute(imageTag, angleAttributeName))
+                {
+                    order.Angle = XElementHelper.GetIntFromAttribute(imageTag, angleAttributeName);
+                }
+                
+                if (XElementHelper.HasAttribute(imageTag, depthAttributeName))
+                {
+                    order.Depth = XElementHelper.GetDoubleFromAttribute(imageTag, depthAttributeName);
+                }
+                
+                if (XElementHelper.HasAttribute(imageTag, delayAttributeName))
+                {
+                    order.Delay = XElementHelper.GetIntFromAttribute(imageTag, delayAttributeName);
+                }
+                
+                if (XElementHelper.HasAttribute(imageTag, inheritStatusAttributeName))
+                {
+                    order.InheritStatus = bool.Parse(XElementHelper.GetStringFromAttribute(imageTag, inheritStatusAttributeName));
+                }
+                
+                if (XElementHelper.HasAttribute(imageTag, "mask"))
                 {
                     order.MaskImageName = XElementHelper.GetStringFromAttribute(imageTag, "mask");
                 }
-
-                if (imageTag.Attribute("inheritStatus") != null)
-                {
-                    order.InheritStatus = bool.Parse(XElementHelper.GetStringFromAttribute(imageTag, "inheritStatus"));
-                }
-
+                
                 scenario.ImageOrders.Add(order);
             }
         }
