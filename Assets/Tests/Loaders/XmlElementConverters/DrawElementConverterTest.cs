@@ -14,7 +14,7 @@ namespace Tests.Loaders.XmlElementConverters
             var scenario = new Scenario();
 
             const string xmlText = @"<scenario>" +
-                                   @"<draw a=""imgA"" b=""imgB"" c=""imgC"" d="""" depth=""0.5"" targetLayerIndex=""2""/>" +
+                                   @"<draw a=""imgA"" b=""imgB"" c=""imgC"" d="""" depth=""0.5"" delay=""20"" targetLayerIndex=""2""/>" +
                                    @"</scenario>";
 
             var drawElement = XElement.Parse(xmlText);
@@ -26,6 +26,7 @@ namespace Tests.Loaders.XmlElementConverters
             Assert.AreEqual("imgC", scenario.DrawOrders[0].Names[2]);
             Assert.IsTrue(string.IsNullOrEmpty(scenario.DrawOrders[0].Names[3]));
             Assert.AreEqual(0.5, scenario.DrawOrders[0].Depth);
+            Assert.AreEqual(20, scenario.DrawOrders[0].Delay);
             Assert.AreEqual(2, scenario.DrawOrders[0].TargetLayerIndex);
             Assert.IsTrue(scenario.DrawOrders[0].IsDrawOrder);
         }
