@@ -110,7 +110,8 @@ namespace Animations
             {
                 Animations.Add(new AlphaChanger()
                 {
-                    Amount = e.CurrentOrder.Depth
+                    Amount = e.CurrentOrder.Depth,
+                    Delay = e.CurrentOrder.Delay,
                 });
             }
 

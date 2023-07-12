@@ -12,6 +12,7 @@ namespace ScenarioSceneParts
         private IResource resource;
         private Scenario scenario;
         private int addedImageCounter;
+        private int drawingDelayCounter;
 
         public List<IDisplayObjectContainer> ImageContainers { get; set; }
 
@@ -41,6 +42,12 @@ namespace ScenarioSceneParts
         {
             if (drawingImageSet == null)
             {
+                return;
+            }
+
+            if (drawingDelayCounter > 0)
+            {
+                drawingDelayCounter--;
                 return;
             }
 
@@ -75,6 +82,7 @@ namespace ScenarioSceneParts
             var frontImageSet = targetContainer.FrontChild;
             drawingImageSet = frontImageSet;
             drawingDepth = order.Depth;
+            drawingDelayCounter = order.Delay;
 
             for (var i = 0; i < order.Names.Count; i++)
             {

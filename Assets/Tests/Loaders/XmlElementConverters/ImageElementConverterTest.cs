@@ -49,7 +49,9 @@ namespace Tests.Loaders.XmlElementConverters
             var converter = new ImageElementConverter();
             var scenarioElement = XDocument
                 .Parse(
-                    "<scenario> <image a=\"A01\" x=\"100\" y=\"200\" angle=\"10\" scale=\"2.0\" mask=\"maskImageName\"/> </scenario>")
+                    "<scenario> "
+                    + "<image a=\"A01\" x=\"100\" y=\"200\" angle=\"10\" scale=\"2.0\" mask=\"maskImageName\" delay=\"20\"/> "
+                    + "</scenario>")
                 .Root;
             var scenario = new Scenario();
             converter.Convert(scenarioElement, scenario);
@@ -60,6 +62,7 @@ namespace Tests.Loaders.XmlElementConverters
             Assert.AreEqual(scenario.ImageOrders.First().Y, 200);
             Assert.AreEqual(scenario.ImageOrders.First().Angle, 10);
             Assert.AreEqual(scenario.ImageOrders.First().Scale, 2.0);
+            Assert.AreEqual(scenario.ImageOrders.First().Delay, 20);
             Assert.AreEqual(scenario.ImageOrders.First().MaskImageName, "maskImageName");
         }
 

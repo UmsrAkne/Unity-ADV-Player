@@ -67,7 +67,12 @@
                 {
                     order.Depth = XElementHelper.GetDoubleFromAttribute(imageTag, "depth");
                 }
-
+                
+                if (imageTag.Attribute("delay") != null)
+                {
+                    order.Delay = XElementHelper.GetIntFromAttribute(imageTag, "delay");
+                }
+                
                 if (imageTag.Attribute("mask") != null)
                 {
                     order.MaskImageName = XElementHelper.GetStringFromAttribute(imageTag, "mask");
