@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Loaders;
 using SceneContents;
 using UnityEngine;
@@ -13,12 +14,25 @@ namespace ScenarioSceneParts
         private Scenario scenario;
         private int addedImageCounter;
         private int drawingDelayCounter;
-
-        public List<IDisplayObjectContainer> ImageContainers { get; set; }
+        private IDisplayObjectContainer imageContainer;
+        private int targetLayerIndex;
 
         public bool NeedExecuteEveryFrame => true;
 
         public ExecutionPriority Priority { get; } = ExecutionPriority.Middle;
+
+        public IDisplayObjectContainer ImageContainer
+        {
+            private get => imageContainer;
+            set
+            {
+                imageContainer = value;
+                if (imageContainer is ImageContainer container)
+                {
+                    targetLayerIndex = container.Index;
+                }
+            }
+        }
 
         public void Execute()
         {
@@ -26,13 +40,18 @@ namespace ScenarioSceneParts
             {
                 return;
             }
+            
+            if (ImageContainer == null)
+            {
+                return;
+            }
 
-            foreach (var order in scenario.ImageOrders)
+            foreach (var order in scenario.ImageOrders.Where(o => o.TargetLayerIndex == targetLayerIndex))
             {
                 AddBaseImage(order);
             }
 
-            foreach (var order in scenario.DrawOrders)
+            foreach (var order in scenario.DrawOrders.Where(o => o.TargetLayerIndex == targetLayerIndex))
             {
                 DrawImage(order);
             }
@@ -78,8 +97,7 @@ namespace ScenarioSceneParts
 
         public void DrawImage(ImageOrder order)
         {
-            var targetContainer = ImageContainers[order.TargetLayerIndex];
-            var frontImageSet = targetContainer.FrontChild;
+            var frontImageSet = imageContainer.FrontChild;
             drawingImageSet = frontImageSet;
             drawingDepth = order.Depth;
             drawingDelayCounter = order.Delay;
@@ -100,7 +118,6 @@ namespace ScenarioSceneParts
         public void AddBaseImage(ImageOrder order)
         {
             // Canvas の子である ImageContainer に、空のゲームオブジェクトを乗せる。
-            var targetContainer = ImageContainers[order.TargetLayerIndex];
             var imageSet = new ImageSet();
 
             var spriteWrappers = new List<SpriteWrapper>();
@@ -112,7 +129,7 @@ namespace ScenarioSceneParts
             // InheritStatus が指定されている場合は、最前面の画像の状態をコピーする
             if (order.InheritStatus)
             {
-                var f = targetContainer.FrontChild;
+                var f = imageContainer.FrontChild;
                 if (f != null)
                 {
                     order.Scale = f.Scale;
@@ -129,7 +146,7 @@ namespace ScenarioSceneParts
             imageSet.Angle = order.Angle;
             imageSet.SortingLayerIndex = order.TargetLayerIndex;
             imageSet.SetSortingOrder(addedImageCounter++);
-            targetContainer.AddChild(imageSet, order);
+            imageContainer.AddChild(imageSet, order);
 
             imageSet.Draw(spriteWrappers);
 
