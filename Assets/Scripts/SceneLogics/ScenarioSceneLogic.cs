@@ -106,7 +106,12 @@ namespace SceneLogics
                 new ImageContainer(canvas) { Index = 2 },
             };
 
-            var imageDrawer = new ImageDrawer() { ImageContainers = imageContainers };
+            var imageDrawers = new List<ImageDrawer>()
+            {
+                new () { ImageContainer = imageContainers[0] },
+                new () { ImageContainer = imageContainers[1] },
+                new () { ImageContainer = imageContainers[2] },
+            };
 
             var voicePlayers = new List<VoicePlayer>()
             {
@@ -117,11 +122,13 @@ namespace SceneLogics
 
             var list = new List<IScenarioSceneParts>
             {
-                imageDrawer,
+                imageDrawers[0],
+                imageDrawers[1],
+                imageDrawers[2],
                 ChapterManager,
-                new AnimationsManager((ImageContainer)imageContainers[0]) { ImageDrawer = imageDrawer },
-                new AnimationsManager((ImageContainer)imageContainers[1]) { ImageDrawer = imageDrawer },
-                new AnimationsManager((ImageContainer)imageContainers[2]) { ImageDrawer = imageDrawer },
+                new AnimationsManager((ImageContainer)imageContainers[0]) { ImageDrawer = imageDrawers[0] },
+                new AnimationsManager((ImageContainer)imageContainers[1]) { ImageDrawer = imageDrawers[1] },
+                new AnimationsManager((ImageContainer)imageContainers[2]) { ImageDrawer = imageDrawers[2] },
                 new SePlayer(),
                 voicePlayers[0],
                 voicePlayers[1],
