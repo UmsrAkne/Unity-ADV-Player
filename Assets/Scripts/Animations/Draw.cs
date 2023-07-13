@@ -18,8 +18,6 @@ namespace Animations
 
         public int Wait { get; set; }
 
-        public static ImageDrawer ImageDrawer { private get; set; }
-
         public string AnimationName { get; } = "draw";
 
         public bool IsWorking { get; private set; } = true;
@@ -38,12 +36,16 @@ namespace Animations
 
         public string GroupName { get; set; } = string.Empty;
 
+        private ImageDrawer ImageDrawer { get; set; }
+
         public void Execute()
         {
-            if (ImageDrawer == null || !IsWorking)
+            if (!IsWorking)
             {
                 return;
             }
+
+            ImageDrawer ??= ScenePartsProvider.GetImageDrawer(TargetLayerIndex);
 
             if (Delay-- > 0)
             {

@@ -18,18 +18,6 @@ namespace Animations
 
         public ImageContainer TargetImageContainer { get; }
 
-        /// <summary>
-        /// Draw.ImageDrawer, Image.ImageDrawer に 値をセットします。
-        /// </summary>
-        public ImageDrawer ImageDrawer
-        {
-            set
-            {
-                Draw.ImageDrawer = value;
-                Image.ImageDrawer = value;
-            }
-        }
-
         private ConcurrentBag<IAnimation> Animations { get; set; } = new ConcurrentBag<IAnimation>();
 
         public bool NeedExecuteEveryFrame => true;
