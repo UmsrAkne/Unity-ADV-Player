@@ -108,10 +108,14 @@ namespace SceneLogics
 
             var imageDrawers = new List<ImageDrawer>()
             {
-                new () { ImageContainer = imageContainers[0] },
-                new () { ImageContainer = imageContainers[1] },
-                new () { ImageContainer = imageContainers[2] },
+                ScenePartsProvider.GetImageDrawer(0),
+                ScenePartsProvider.GetImageDrawer(1),
+                ScenePartsProvider.GetImageDrawer(2),
             };
+
+            imageDrawers[0].ImageContainer = imageContainers[0];
+            imageDrawers[1].ImageContainer = imageContainers[1];
+            imageDrawers[2].ImageContainer = imageContainers[2];
 
             var voicePlayers = new List<VoicePlayer>()
             {
