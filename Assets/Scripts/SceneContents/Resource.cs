@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Loaders;
 using UnityEngine;
 
@@ -174,6 +175,11 @@ namespace SceneContents
                 TargetAudioType.BgVoice => BgVoicesByName.ContainsKey(key),
                 _ => throw new System.NotImplementedException()
             };
+        }
+
+        public ImageLocation GetImageLocationFromName(string name)
+        {
+            return SceneSetting?.ImageLocations.FirstOrDefault(loc => loc.Name == name);
         }
     }
 }

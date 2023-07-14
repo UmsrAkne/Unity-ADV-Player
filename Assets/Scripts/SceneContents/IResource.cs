@@ -10,6 +10,8 @@ namespace SceneContents
 
         SpriteWrapper GetImage(TargetImageType imageType, string targetName);
 
+        public ImageLocation GetImageLocationFromName(string name);
+
         Scenario GetScenario(int index);
 
         bool Used { get; set; }

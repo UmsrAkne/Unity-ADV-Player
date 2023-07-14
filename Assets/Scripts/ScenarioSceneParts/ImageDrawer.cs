@@ -123,7 +123,16 @@ namespace ScenarioSceneParts
             var spriteWrappers = new List<SpriteWrapper>();
             order.Names.ForEach(name =>
             {
-                spriteWrappers.Add(!string.IsNullOrEmpty(name) ? resource.GetImage(TargetImageType.EventCg, name)  : null);
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    spriteWrappers.Add(null);
+                }
+                else
+                {
+                    var sp = resource.GetImage(TargetImageType.EventCg, name);
+                    sp.ImageLocation = resource.GetImageLocationFromName(name);
+                    spriteWrappers.Add(sp);
+                }
             });
 
             // InheritStatus が指定されている場合は、最前面の画像の状態をコピーする
