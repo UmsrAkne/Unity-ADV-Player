@@ -138,6 +138,15 @@ namespace SceneContents
                 imageUnit.SetParent(GameObject);
                 // imageUnit.SpriteRenderer.sprite = spw.Sprite;
 
+                if (spw.ImageLocation != null)
+                {
+                    var transform = imageUnit.SpriteRenderer.transform;
+                    var pos = transform.localPosition;
+                    pos.x = spw.ImageLocation.X;
+                    pos.y = spw.ImageLocation.Y;
+                    transform.localPosition = pos;
+                }
+
                 if (i == 0)
                 {
                     imageUnit.SpriteRenderer.sortingOrder = -1;

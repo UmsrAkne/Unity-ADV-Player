@@ -61,6 +61,7 @@ namespace Loaders
             DebugTools.Logger.Add($"{setting}");
 
             setting.ImageLocations = LoadImageLocations(settingTag);
+            FixImageLocations(setting.ImageLocations, setting);
 
             return setting;
         }
@@ -93,10 +94,26 @@ namespace Loaders
                         Name = fileNameWe,
                         X = XElementHelper.GetIntFromAttribute(locationTag, xAttribute),
                         Y = XElementHelper.GetIntFromAttribute(locationTag, yAttribute),
+                        Width = XElementHelper.GetIntFromAttribute(locationTag, widthAttribute),
+                        Height = XElementHelper.GetIntFromAttribute(locationTag, heightAttribute),
                     };
                 }));
 
             return locations;
+        }
+
+        /// <summary>
+        /// 画面左上を基準として記述された ImageLocation の座標を、画面中心を基準とした座標に修正します。
+        /// </summary>
+        /// <param name="locations"></param>
+        /// <param name="setting"></param>
+        private void FixImageLocations(List<ImageLocation> locations, SceneSetting setting)
+        {
+            foreach (var loc in locations.Where(l => l.Y != 0 || l.X != 0))
+            {
+                loc.X += (setting.DefaultImageWidth - loc.Width) / 2;
+                loc.Y += (setting.DefaultImageWidth - loc.Height) / 2;
+            }
         }
     }
 }

@@ -9,5 +9,7 @@ namespace SceneContents
         public int Height { get; set; }
 
         public Sprite Sprite { get; set; }
+
+        public ImageLocation ImageLocation { get; set; }
     }
 }
