@@ -174,6 +174,15 @@ namespace SceneContents
             var imageUnit = new ImageUnit(spw);
             TemporaryImages[index] = imageUnit;
             imageUnit.SetParent(GameObject);
+            
+            if (spw.ImageLocation != null)
+            {
+                var transform = imageUnit.SpriteRenderer.transform;
+                var pos = transform.localPosition;
+                pos.x = spw.ImageLocation.X;
+                pos.y = spw.ImageLocation.Y;
+                transform.localPosition = pos;
+            }
 
             // sprite の上書きを常に最前面に対して行う。
             imageUnit.SpriteRenderer.sortingOrder = ++overwriteLayerIndex;

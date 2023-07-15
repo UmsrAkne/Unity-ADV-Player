@@ -102,16 +102,29 @@ namespace ScenarioSceneParts
             drawingDepth = order.Depth;
             drawingDelayCounter = order.Delay;
 
-            for (var i = 0; i < order.Names.Count; i++)
+            var spriteWrappers = new List<SpriteWrapper>();
+            foreach (var name in order.Names)
             {
-                var name = order.Names[i];
-                if (string.IsNullOrEmpty(name))
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    spriteWrappers.Add(null);
+                }
+                else
+                {
+                    var sp = resource.GetImage(TargetImageType.EventCg, name);
+                    sp.ImageLocation = resource.GetImageLocationFromName(name);
+                    spriteWrappers.Add(sp);
+                }
+            }
+            
+            for (int i = 0; i < spriteWrappers.Count; i++)
+            {
+                if (spriteWrappers[i] == null)
                 {
                     continue;
                 }
 
-                var sw = new SpriteWrapper { Sprite = resource.GetImage(TargetImageType.EventCg ,name).Sprite };
-                frontImageSet.SetSprite(sw, i, new Color(1.0f, 1.0f, 1.0f, 0));
+                frontImageSet.SetSprite(spriteWrappers[i], i, new Color(1.0f, 1.0f, 1.0f, 0));
             }
         }
 
