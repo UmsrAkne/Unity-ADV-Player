@@ -111,8 +111,9 @@ namespace Loaders
         {
             foreach (var loc in locations.Where(l => l.Y != 0 || l.X != 0))
             {
-                loc.X += (setting.DefaultImageWidth - loc.Width) / 2;
-                loc.Y += (setting.DefaultImageWidth - loc.Height) / 2;
+                loc.X -= (setting.DefaultImageWidth - loc.Width) / 2;
+                loc.Y -= (setting.DefaultImageHeight - loc.Height) / 2;
+                loc.Y = -loc.Y;
             }
         }
     }
