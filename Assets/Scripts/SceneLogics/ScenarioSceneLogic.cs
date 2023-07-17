@@ -119,9 +119,9 @@ namespace SceneLogics
 
             var voicePlayers = new List<VoicePlayer>()
             {
-                new() { Channel = 0 },
-                new() { Channel = 1 },
-                new() { Channel = 2 },
+                ScenePartsProvider.GetVoicePlayer(0),
+                ScenePartsProvider.GetVoicePlayer(1),
+                ScenePartsProvider.GetVoicePlayer(2),
             };
 
             var list = new List<IScenarioSceneParts>
