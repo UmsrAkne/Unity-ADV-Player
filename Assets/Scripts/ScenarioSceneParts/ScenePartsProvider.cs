@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace ScenarioSceneParts
 {
-    public class ScenePartsProvider
+    public static class ScenePartsProvider
     {
         private static List<ImageDrawer> ImageDrawers { get; } = new ();
 
