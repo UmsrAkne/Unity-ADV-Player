@@ -117,13 +117,6 @@ namespace SceneLogics
             imageDrawers[1].ImageContainer = imageContainers[1];
             imageDrawers[2].ImageContainer = imageContainers[2];
 
-            var voicePlayers = new List<VoicePlayer>()
-            {
-                ScenePartsProvider.GetVoicePlayer(0),
-                ScenePartsProvider.GetVoicePlayer(1),
-                ScenePartsProvider.GetVoicePlayer(2),
-            };
-
             var list = new List<IScenarioSceneParts>
             {
                 imageDrawers[0],
@@ -134,12 +127,12 @@ namespace SceneLogics
                 new AnimationsManager((ImageContainer)imageContainers[1]),
                 new AnimationsManager((ImageContainer)imageContainers[2]),
                 new SePlayer(),
-                voicePlayers[0],
-                voicePlayers[1],
-                voicePlayers[2],
-                new BgvPlayer(voicePlayers[0]),
-                new BgvPlayer(voicePlayers[1]),
-                new BgvPlayer(voicePlayers[2]),
+                ScenePartsProvider.GetVoicePlayer(0),
+                ScenePartsProvider.GetVoicePlayer(1),
+                ScenePartsProvider.GetVoicePlayer(2),
+                ScenePartsProvider.GetBgvPlayer(0),
+                ScenePartsProvider.GetBgvPlayer(1),
+                ScenePartsProvider.GetBgvPlayer(2),
             };
 
             list.ForEach(s =>

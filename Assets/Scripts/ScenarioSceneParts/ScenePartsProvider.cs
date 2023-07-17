@@ -6,6 +6,7 @@ namespace ScenarioSceneParts
     {
         private static List<ImageDrawer> ImageDrawers { get; } = new ();
         private static List<VoicePlayer> VoicePlayers { get; } = new ();
+        private static List<BgvPlayer> BgvPlayers { get; } = new ();
 
         public static ImageDrawer GetImageDrawer(int index)
         {
@@ -42,6 +43,28 @@ namespace ScenarioSceneParts
             }
 
             return VoicePlayers[channel];
+        }
+        
+        /// <summary>
+        /// 指定したチャンネルの VoicePlayer　をセットした BgvPlayer を取得します。
+        /// このメソッドでは、BgvPlayer を生成する際、内部で保持されている VoicePlayer をコンストラクタの引数にします。
+        /// 指定したチャンネルの VoicePlayer が存在しない場合は、新たに生成してそれを引数とします。
+        /// </summary>
+        /// <param name="channel">BgvPlayer にセットする VoicePlayer のチャンネルをセットします</param>
+        /// <returns>指定したチャンネルの VoicePlayer がセットされた BgvPlayer</returns>
+        public static BgvPlayer GetBgvPlayer(int channel)
+        {
+            if (channel < BgvPlayers.Count)
+            {
+                return BgvPlayers[channel];
+            }
+
+            while (BgvPlayers.Count <= channel)
+            {
+                BgvPlayers.Add(new BgvPlayer(GetVoicePlayer(channel)));
+            }
+
+            return BgvPlayers[channel];
         }
     }
 }
