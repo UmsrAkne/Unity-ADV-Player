@@ -32,17 +32,13 @@ namespace ScenarioSceneParts
         /// <returns>指定したチャンネルが設定された VoicePlayer</returns>
         public static VoicePlayer GetVoicePlayer(int channel)
         {
-            if (channel < VoicePlayers.Count)
+            var vps = VoicePlayers;
+            while (vps.Count <= channel)
             {
-                return VoicePlayers[channel];
+                vps.Add(null);
             }
 
-            while (VoicePlayers.Count <= channel)
-            {
-                VoicePlayers.Add(new VoicePlayer() { Channel = channel });
-            }
-
-            return VoicePlayers[channel];
+            return vps[channel] ?? (vps[channel] = new VoicePlayer() { Channel = channel });
         }
         
         /// <summary>
