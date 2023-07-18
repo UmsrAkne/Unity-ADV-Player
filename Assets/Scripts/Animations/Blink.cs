@@ -1,4 +1,5 @@
 using System;
+using ScenarioSceneParts;
 using SceneContents;
 
 namespace Animations
@@ -23,9 +24,22 @@ namespace Animations
 
         public string GroupName { get; set; }
 
+        private ImageDrawer ImageDrawer { get; set; }
+
         public void Execute()
         {
-            throw new NotImplementedException();
+            if (!IsWorking)
+            {
+                return;
+            }
+
+            ImageDrawer ??= ScenePartsProvider.GetImageDrawer(TargetLayerIndex);
+
+            if (--Interval <= 0)
+            {
+                Interval = 100;
+                // ImageDrawer.DrawImage();
+            }
         }
 
         public void Start()
