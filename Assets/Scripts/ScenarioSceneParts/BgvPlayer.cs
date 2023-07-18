@@ -22,7 +22,7 @@ namespace ScenarioSceneParts
             VoicePlayer.SoundStart += VoicePlayerStartEventHandler;
         }
 
-        private VoicePlayer VoicePlayer { get; }
+        public VoicePlayer VoicePlayer { get; }
 
         private double Volume
         {

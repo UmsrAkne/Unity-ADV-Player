@@ -36,5 +36,20 @@ namespace Tests.ScenarioSceneParts
             Assert.AreEqual(v0.Channel, 0);
             Assert.AreEqual(v1.Channel, 1);
         }
+
+        [Test]
+        public void GetBgvPlayerTest()
+        {
+            var v1 = ScenePartsProvider.GetBgvPlayer(1);
+            var v0 = ScenePartsProvider.GetBgvPlayer(0);
+
+            Assert.NotNull(v0);
+            Assert.NotNull(v1);
+
+            Assert.AreEqual(v0, ScenePartsProvider.GetBgvPlayer(0));
+            Assert.AreEqual(v1, ScenePartsProvider.GetBgvPlayer(1));
+            Assert.AreEqual(v0.VoicePlayer, ScenePartsProvider.GetVoicePlayer(0));
+            Assert.AreEqual(v1.VoicePlayer, ScenePartsProvider.GetVoicePlayer(1));
+        }
     }
 }

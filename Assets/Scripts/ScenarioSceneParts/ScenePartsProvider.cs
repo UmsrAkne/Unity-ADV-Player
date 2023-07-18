@@ -50,17 +50,13 @@ namespace ScenarioSceneParts
         /// <returns>指定したチャンネルの VoicePlayer がセットされた BgvPlayer</returns>
         public static BgvPlayer GetBgvPlayer(int channel)
         {
-            if (channel < BgvPlayers.Count)
+            var vps = BgvPlayers;
+            while (vps.Count <= channel)
             {
-                return BgvPlayers[channel];
+                vps.Add(null);
             }
 
-            while (BgvPlayers.Count <= channel)
-            {
-                BgvPlayers.Add(new BgvPlayer(GetVoicePlayer(channel)));
-            }
-
-            return BgvPlayers[channel];
+            return vps[channel] ?? (vps[channel] = new BgvPlayer(GetVoicePlayer(channel)));
         }
     }
 }
