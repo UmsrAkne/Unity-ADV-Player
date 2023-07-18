@@ -6,16 +6,21 @@ namespace Animations
 {
     public class Draw : IAnimation
     {
-        private bool drawed;
+        private bool drew;
 
+        // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public string A { get; set; } = string.Empty;
 
+        // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public string B { get; set; } = string.Empty;
 
+        // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public string C { get; set; } = string.Empty;
 
+        // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public string D { get; set; } = string.Empty;
 
+        // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public int Wait { get; set; }
 
         public string AnimationName { get; } = "draw";
@@ -52,15 +57,15 @@ namespace Animations
                 return;
             }
 
-            if (Wait > 0 && drawed)
+            if (Wait > 0 && drew)
             {
                 Wait--;
                 return;
             }
 
-            if (!drawed)
+            if (!drew)
             {
-                drawed = true;
+                drew = true;
                 var drawOrder = new ImageOrder()
                 {
                     Names = { A, B, C, D },
