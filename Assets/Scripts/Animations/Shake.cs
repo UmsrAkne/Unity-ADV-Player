@@ -12,6 +12,7 @@ namespace Animations
 
         public int StrengthY { get; set; }
 
+        // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public int Duration { get; set; } = 60;
 
         public string AnimationName => "shake";

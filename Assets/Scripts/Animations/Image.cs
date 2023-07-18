@@ -7,23 +7,29 @@ namespace Animations
     public class Image : IAnimation
     {
         public string AnimationName => "image";
-        
-        private bool drawed;
+
+        private bool drew;
 
         public int X { get; set; }
 
         public int Y { get; set; }
 
+        // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public double Scale { get; set; } = 1.0;
 
+        // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public string A { get; set; } = string.Empty;
 
+        // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public string B { get; set; } = string.Empty;
 
+        // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public string C { get; set; } = string.Empty;
 
+        // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public string D { get; set; } = string.Empty;
 
+        // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public int Wait { get; set; }
 
         public bool IsWorking { get; private set; } = true;
@@ -58,16 +64,15 @@ namespace Animations
                 return;
             }
 
-            if (Wait > 0 && drawed)
+            if (Wait > 0 && drew)
             {
                 Wait--;
                 return;
             }
 
-            if (!drawed)
+            if (!drew)
             {
-                System.Diagnostics.Debug.WriteLine($"aaaaaaaaaaaaaaaaaaaa(Image : 67)");
-                drawed = true;
+                drew = true;
                 var imageOrder = new ImageOrder()
                 {
                     X = X,
