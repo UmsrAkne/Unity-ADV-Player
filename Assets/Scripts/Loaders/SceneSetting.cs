@@ -17,6 +17,8 @@ namespace Loaders
 
         public List<ImageLocation> ImageLocations { get; set; } = new();
 
+        public List<BlinkOrder> BlinkOrders { get; set; } = new ();
+
         public override string ToString()
         {
             return $"BGMNumber={BGMNumber}, BGMFileName={BGMFileName}, BGMVolume={BGMVolume},";

@@ -22,6 +22,7 @@ namespace Loaders
         private readonly string widthAttribute = "width";
         private readonly string xAttribute = "x";
         private readonly string yAttribute = "y";
+        private readonly XName blinkElementName = "blink";
 
         public List<string> Log { get; private set; } = new List<string>();
 
@@ -55,6 +56,13 @@ namespace Loaders
 
                 var bgmVolume = bgmElement.Attribute(volumeAttribute)?.Value;
                 setting.BGMVolume = bgmVolume != null ? float.Parse(bgmVolume) : setting.BGMVolume;
+            }
+
+            var blinkElement = settingTag.Element(blinkElementName);
+            if (blinkElement != null)
+            {
+                setting.BlinkOrders = new BlinkElementConverter().Convert(blinkElement);
+                DebugTools.Logger.Add($"SceneSettingLoader : Blink order をロードしました。");
             }
 
             DebugTools.Logger.Add($"SceneSettingLoader : シーン設定ファイルを読み込みました。");
