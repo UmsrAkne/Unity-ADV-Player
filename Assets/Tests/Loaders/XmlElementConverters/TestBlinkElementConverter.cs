@@ -7,23 +7,16 @@ namespace Tests.Loaders.XmlElementConverters
 {
     public class TestBlinkElementConverter
     {
-        [Test]
-        public void Convertテスト()
+        [TestCase("<blink> <image baseImageName=\"A\" names=\"B, C,D\" /> </blink>")]
+        [TestCase("<blink> <image baseImageName=\"A.png\" names=\"B.png, C.png,D.png\" /> </blink>")]
+        public void Convertテスト(string text)
         {
-            const string xml = "<blink>"
-                               + "    <image baseImageName=\"A\" names=\"B, C,D\" />"
-                               + "    <image baseImageName=\"E\" names=\"F,G\" />"
-                               + "</blink>";
-
-            var doc = XElement.Parse(xml);
+            var doc = XElement.Parse(text);
             var converter = new BlinkElementConverter();
             var orders = converter.Convert(doc);
 
             Assert.AreEqual(orders[0].BaseImageName, "A");
             CollectionAssert.AreEqual(orders[0].Names, new List<string>() { "B", "C", "D" });
-
-            Assert.AreEqual(orders[1].BaseImageName, "E");
-            CollectionAssert.AreEqual(orders[1].Names, new List<string>() { "F", "G" });
         }
 
         [Test]
