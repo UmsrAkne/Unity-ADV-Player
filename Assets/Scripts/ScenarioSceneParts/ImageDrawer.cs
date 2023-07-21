@@ -21,6 +21,8 @@ namespace ScenarioSceneParts
 
         public ExecutionPriority Priority { get; } = ExecutionPriority.Middle;
 
+        public ImageOrder LastOrder { get; set; }
+
         public IDisplayObjectContainer ImageContainer
         {
             private get => imageContainer;
@@ -49,11 +51,19 @@ namespace ScenarioSceneParts
             foreach (var order in scenario.ImageOrders.Where(o => o.TargetLayerIndex == targetLayerIndex))
             {
                 AddBaseImage(order);
+                if (!order.IsExpressionOrder)
+                {
+                    LastOrder = order;
+                }
             }
 
             foreach (var order in scenario.DrawOrders.Where(o => o.TargetLayerIndex == targetLayerIndex))
             {
                 DrawImage(order);
+                if (!order.IsExpressionOrder)
+                {
+                    LastOrder = order;
+                }
             }
         }
 

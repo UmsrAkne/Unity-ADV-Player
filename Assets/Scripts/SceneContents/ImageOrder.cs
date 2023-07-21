@@ -25,5 +25,7 @@ namespace SceneContents
         public string MaskImageName { get; set; } = string.Empty;
 
         public bool InheritStatus { get; set; }
+
+        public bool IsExpressionOrder { get; set; }
     }
 }
