@@ -12,6 +12,8 @@ namespace SceneContents
 
         ImageLocation GetImageLocationFromName(string name);
 
+        BlinkOrder GetBlinkOrderFromName(string name);
+
         Scenario GetScenario(int index);
 
         bool Used { get; set; }

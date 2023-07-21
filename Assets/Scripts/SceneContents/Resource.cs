@@ -74,6 +74,17 @@ namespace SceneContents
             };
         }
 
+        public BlinkOrder GetBlinkOrderFromName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return new BlinkOrder();
+            }
+
+            return SceneSetting.BlinkOrders.FirstOrDefault(b => b.BaseImageName == name)
+                   ?? new BlinkOrder();
+        }
+
         public Scenario GetScenario(int index)
         {
             return Scenarios[index];
