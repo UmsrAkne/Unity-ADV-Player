@@ -55,14 +55,7 @@ namespace Animations
                 CurrentOrder = Resource.GetBlinkOrderFromName(LastImageOrder.Names[eyeImageIndex]);
             }
 
-            var imageOrder = new ImageOrder()
-            {
-                Names = { string.Empty, CurrentOrder.Names[0], string.Empty, string.Empty },
-                IsExpressionOrder = true,
-                IsDrawOrder = true,
-            };
-
-            ImageDrawer.DrawImage(imageOrder);
+            ImageDrawer.DrawImage(new ImageOrder(CurrentOrder, drawCounter));
             drawCounter++;
 
             if (drawCounter++ > CurrentOrder.Names.Count * 2)

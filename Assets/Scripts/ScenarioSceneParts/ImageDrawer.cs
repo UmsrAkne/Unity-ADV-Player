@@ -92,6 +92,11 @@ namespace ScenarioSceneParts
         {
             resource = res;
         }
+        
+        public void SetResource(IResource res)
+        {
+            resource = res;
+        }
 
         public void Reload(Resource res)
         {
