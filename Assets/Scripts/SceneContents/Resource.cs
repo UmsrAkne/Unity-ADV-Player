@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Loaders;
@@ -48,7 +49,7 @@ namespace SceneContents
                 TargetAudioType.Voice => VoicesByName[targetName],
                 TargetAudioType.Se => SesByName[targetName],
                 TargetAudioType.BgVoice => BgVoicesByName[targetName],
-                _ => throw new System.NotImplementedException()
+                _ => throw new NotImplementedException()
             };
         }
 
@@ -59,7 +60,7 @@ namespace SceneContents
                 TargetAudioType.Voice => Voices[index],
                 TargetAudioType.Se => Ses[index],
                 TargetAudioType.BgVoice => BgVoices[index],
-                _ => throw new System.NotImplementedException()
+                _ => throw new NotImplementedException()
             };
         }
 
@@ -68,8 +69,8 @@ namespace SceneContents
             return imageType switch
             {
                 TargetImageType.EventCg => ImagesByName[targetName],
-                TargetImageType.UiImage => throw new System.NotImplementedException(),
-                _ => throw new System.NotImplementedException()
+                TargetImageType.UiImage => throw new NotImplementedException(),
+                _ => throw new NotImplementedException()
             };
         }
 
@@ -92,7 +93,7 @@ namespace SceneContents
             return targetImageType switch
             {
                 TargetImageType.EventCg => ImagesByName.ContainsKey(name),
-                _ => throw new System.NotImplementedException()
+                _ => throw new NotImplementedException()
             };
         }
 
@@ -119,7 +120,7 @@ namespace SceneContents
                     break;
 
                 default:
-                    throw new System.NotImplementedException();
+                    throw new NotImplementedException();
             }
         }
 
@@ -155,7 +156,7 @@ namespace SceneContents
                     break;
 
                 default:
-                    throw new System.NotImplementedException();
+                    throw new NotImplementedException();
             }
         }
 
@@ -173,7 +174,7 @@ namespace SceneContents
                 TargetAudioType.Voice => VoicesByName.ContainsKey(key),
                 TargetAudioType.Se => SesByName.ContainsKey(key),
                 TargetAudioType.BgVoice => BgVoicesByName.ContainsKey(key),
-                _ => throw new System.NotImplementedException()
+                _ => throw new NotImplementedException()
             };
         }
 
