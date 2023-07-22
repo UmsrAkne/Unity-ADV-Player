@@ -29,5 +29,27 @@ namespace Tests.ScenarioSceneParts
 
             CollectionAssert.AreEqual(new List<string> { "A0", "B0", "C0", }, res.RequestedImageNames);
         }
+
+        [Test]
+        public void DrawTest_最初から呼び出し()
+        {
+            var res = new DummyResource() { SpriteWrappers = new List<SpriteWrapper>() { new (), new (), new (), }, };
+
+            var imageDrawer = new ImageDrawer() { ImageContainer = new DisplayObjectContainerMock(), };
+            imageDrawer.SetResource(res);
+
+            var scenario = new Scenario();
+            scenario.DrawOrders.Add(new ImageOrder()
+            {
+                IsDrawOrder = true,
+                Names = { "A0", "B0", "C0", string.Empty, },
+                TargetLayerIndex = 0,
+            });
+
+            imageDrawer.SetScenario(scenario);
+            imageDrawer.Execute();
+
+            CollectionAssert.AreEqual(new List<string> { "A0", "B0", "C0", }, res.RequestedImageNames);
+        }
     }
 }

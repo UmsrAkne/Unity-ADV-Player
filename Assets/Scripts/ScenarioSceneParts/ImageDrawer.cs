@@ -42,7 +42,7 @@ namespace ScenarioSceneParts
             {
                 return;
             }
-            
+
             if (ImageContainer == null)
             {
                 return;
@@ -92,7 +92,7 @@ namespace ScenarioSceneParts
         {
             resource = res;
         }
-        
+
         public void SetResource(IResource res)
         {
             resource = res;
@@ -112,7 +112,14 @@ namespace ScenarioSceneParts
 
         public void DrawImage(ImageOrder order)
         {
+            if (imageContainer.Children.Count == 0)
+            {
+                var imageSet = new ImageSet();
+                imageContainer.AddChild(imageSet, new ImageOrder());
+            }
+
             var frontImageSet = imageContainer.FrontChild;
+
             drawingImageSet = frontImageSet;
             drawingDepth = order.Depth;
             drawingDelayCounter = order.Delay;
@@ -131,8 +138,8 @@ namespace ScenarioSceneParts
                     spriteWrappers.Add(sp);
                 }
             }
-            
-            for (int i = 0; i < spriteWrappers.Count; i++)
+
+            for (var i = 0; i < spriteWrappers.Count; i++)
             {
                 if (spriteWrappers[i] == null)
                 {
