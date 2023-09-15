@@ -164,6 +164,8 @@ namespace SceneContents
 
         public void SetSprite(SpriteWrapper spw, int index, Color color)
         {
+            parentUnit.SortingGroup.sortingLayerName = "ImageLayer";
+
             Overwriting = true;
 
             if (TemporaryImages[index] != null)
