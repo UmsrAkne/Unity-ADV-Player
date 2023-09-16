@@ -14,21 +14,21 @@ namespace SceneContents
         private float scale = 1.0f;
 
         /// <summary>
-        /// ImageSet に追加される ImageUnit のまとめるための親ユニット
-        /// この Unit 自体に画像の情報は入らないが、描画順やマスクなど、描画に関する内容を管理するのに必須。
+        ///     ImageSet に追加される ImageUnit のまとめるための親ユニット
+        ///     この Unit 自体に画像の情報は入らないが、描画順やマスクなど、描画に関する内容を管理するのに必須。
         /// </summary>
-        private readonly ImageUnit parentUnit = new ImageUnit();
+        private readonly ImageUnit parentUnit = new ();
 
         /// <summary>
-        /// 現在の X座標(ワールド座標) を取得します。
-        /// ローカル座標は setParent の時点で値がずれるため、現在の画像のポジションを外側で利用する場合は、このプロパティを利用します。
+        ///     現在の X座標(ワールド座標) を取得します。
+        ///     ローカル座標は setParent の時点で値がずれるため、現在の画像のポジションを外側で利用する場合は、このプロパティを利用します。
         /// </summary>
         public float Wx
             => GameObject.transform.parent.TransformPoint(GameObject.transform.localPosition).x;
 
         /// <summary>
-        /// 現在の Y座標(ワールド座標) を取得します。
-        /// ローカル座標は setParent の時点で値がずれるため、現在の画像のポジションを外側で利用する場合は、このプロパティを利用します。
+        ///     現在の Y座標(ワールド座標) を取得します。
+        ///     ローカル座標は setParent の時点で値がずれるため、現在の画像のポジションを外側で利用する場合は、このプロパティを利用します。
         /// </summary>
         public float Wy
             => GameObject.transform.parent.TransformPoint(GameObject.transform.localPosition).y;
@@ -43,9 +43,9 @@ namespace SceneContents
 
         public bool Overwriting { get; set; }
 
-        private List<ImageUnit> ImageUnits { get; set; } = new List<ImageUnit>(4) { null, null, null, null };
+        private List<ImageUnit> ImageUnits { get; set; } = new (4) { null, null, null, null, };
 
-        private List<ImageUnit> TemporaryImages { get; set; } = new List<ImageUnit>(4) { null, null, null, null };
+        private List<ImageUnit> TemporaryImages { get; set; } = new (4) { null, null, null, null, };
 
         public float Alpha
         {
@@ -97,7 +97,7 @@ namespace SceneContents
         }
 
         /// <summary>
-        /// この ImageSet が参照している GameObject を SetActive(false) に設定します。
+        ///     この ImageSet が参照している GameObject を SetActive(false) に設定します。
         /// </summary>
         public void Dispose()
         {
@@ -120,9 +120,9 @@ namespace SceneContents
             SortingGroup.sortingOrder = order;
         }
 
-        public void Draw(List<SpriteWrapper> spriteWrappers)
+        public void Draw(List<SpriteWrapper> spriteWrappers, string layerName = "ImageLayer")
         {
-            parentUnit.SortingGroup.sortingLayerName = "ImageLayer";
+            parentUnit.SortingGroup.sortingLayerName = layerName;
 
             for (var i = 0; i < spriteWrappers.Count; i++)
             {
@@ -176,7 +176,7 @@ namespace SceneContents
             var imageUnit = new ImageUnit(spw);
             TemporaryImages[index] = imageUnit;
             imageUnit.SetParent(GameObject);
-            
+
             if (spw.ImageLocation != null)
             {
                 var transform = imageUnit.SpriteRenderer.transform;
