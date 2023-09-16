@@ -18,8 +18,8 @@ namespace SceneContents
 
             var whiteImage = new ImageSet();
             var oveWhiteSprite = GameObject.Find(nameof(UiContainer.OverWhite)).GetComponent<SpriteRenderer>().sprite;
-            var spw = new SpriteWrapper() { Sprite = oveWhiteSprite };
-            whiteImage.Draw(new List<SpriteWrapper>() { spw });
+            var spw = new SpriteWrapper() { Sprite = oveWhiteSprite, };
+            whiteImage.Draw(new List<SpriteWrapper>() { spw, }, "EffectLayer");
             overWhite = whiteImage;
             return whiteImage;
         }
@@ -33,8 +33,8 @@ namespace SceneContents
 
             var blackImage = new ImageSet();
             var oveWhiteSprite = GameObject.Find(nameof(UiContainer.OverBlack)).GetComponent<SpriteRenderer>().sprite;
-            var spw = new SpriteWrapper() { Sprite = oveWhiteSprite };
-            blackImage.Draw(new List<SpriteWrapper>() { spw });
+            var spw = new SpriteWrapper() { Sprite = oveWhiteSprite, };
+            blackImage.Draw(new List<SpriteWrapper>() { spw, }, "EffectLayer");
             overBlack = blackImage;
             return blackImage;
         }
