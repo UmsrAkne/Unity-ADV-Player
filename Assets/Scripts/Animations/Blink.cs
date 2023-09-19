@@ -1,4 +1,5 @@
 using System;
+using DebugTools;
 using ScenarioSceneParts;
 using SceneContents;
 
@@ -31,6 +32,8 @@ namespace Animations
 
         public IDrawer ImageDrawer { private get; set; }
 
+        public RandomGen RandomGen { private get; set; } = new ();
+
         private ImageOrder LastImageOrder { get; set; }
 
         private BlinkOrder CurrentOrder { get; set; }
@@ -42,7 +45,7 @@ namespace Animations
                 return;
             }
 
-            if (--Interval >= 0)
+            if (--Interval > 0)
             {
                 return;
             }
@@ -63,7 +66,7 @@ namespace Animations
             else
             {
                 drawCounter = 0;
-                Interval = 100;
+                Interval = RandomGen.GetInt(20, 100);
             }
         }
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Animations;
+using DebugTools;
 using NUnit.Framework;
 using SceneContents;
 using Tests.ScenarioSceneParts;
@@ -24,7 +25,15 @@ namespace Tests.Animations
                 { "b", new BlinkOrder() { Names = new List<string>() { "blink1", "blink2", "blink3", }, } },
             };
 
-            var blink = new Blink { ImageDrawer = drawer, Resource = resource, };
+            var randomGen = new RandomGen();
+            randomGen.SetInt(2);
+
+            var blink = new Blink
+            {
+                ImageDrawer = drawer,
+                Resource = resource,
+                RandomGen = randomGen,
+            };
 
             blink.Execute();
             blink.Execute();
@@ -33,6 +42,20 @@ namespace Tests.Animations
             Assert.That(drawer.ImageOrderHistories[0].Names[1], Is.EqualTo("blink1"));
             Assert.That(drawer.ImageOrderHistories[1].Names[1], Is.EqualTo("blink2"));
             Assert.That(drawer.ImageOrderHistories[2].Names[1], Is.EqualTo("blink3"));
+
+            // Interval の消化 (2回分)
+            blink.Execute();
+            blink.Execute();
+
+            Assert.That(drawer.ImageOrderHistories.Count, Is.EqualTo(3), "前の実行から要素数は増えていないはず");
+
+            blink.Execute();
+            blink.Execute();
+            blink.Execute();
+
+            Assert.That(drawer.ImageOrderHistories[3].Names[1], Is.EqualTo("blink1"));
+            Assert.That(drawer.ImageOrderHistories[4].Names[1], Is.EqualTo("blink2"));
+            Assert.That(drawer.ImageOrderHistories[5].Names[1], Is.EqualTo("blink3"));
         }
     }
 }
