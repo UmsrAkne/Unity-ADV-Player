@@ -21,7 +21,11 @@ namespace ScenarioSceneParts
 
         public ExecutionPriority Priority { get; } = ExecutionPriority.Middle;
 
-        public ImageOrder LastOrder { get; set; }
+        /// <summary>
+        ///     最後の描画に使用した order を保持しています。
+        ///     このプロパティは、 Execute() で order を読み込んで実行した場合だけ記録されます。
+        /// </summary>
+        public ImageOrder LastOrder { get; private set; }
 
         public IDisplayObjectContainer ImageContainer
         {
@@ -150,7 +154,7 @@ namespace ScenarioSceneParts
             }
         }
 
-        public void AddBaseImage(ImageOrder order)
+        private void AddBaseImage(ImageOrder order)
         {
             // Canvas の子である ImageContainer に、空のゲームオブジェクトを乗せる。
             var imageSet = new ImageSet();
@@ -199,10 +203,5 @@ namespace ScenarioSceneParts
                 // imageSet.SetMask(resource.MaskImagesByName[order.MaskImageName].Sprite);
             }
         }
-
-        // public void SetUI(UI ui)
-        // {
-        //     ImageContainers = ui.ImageContainers;
-        // }
     }
 }
