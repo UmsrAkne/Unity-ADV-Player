@@ -32,12 +32,12 @@ namespace Animations
 
         public void Execute()
         {
-            if (Delay-- > 0)
+            if (--Delay >= 0)
             {
                 return;
             }
 
-            if (Duration-- <= 0)
+            if (--Duration <= 0)
             {
                 Stop();
             }
