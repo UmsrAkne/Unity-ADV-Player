@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ScenarioSceneParts;
 using SceneContents;
 
@@ -11,6 +12,8 @@ namespace Tests.ScenarioSceneParts
         public bool NeedExecuteEveryFrame => true;
 
         public ImageOrder LastOrder { get; set; }
+
+        public List<ImageOrder> ImageOrderHistories { get; set; } = new ();
 
         public void Execute()
         {
@@ -44,7 +47,7 @@ namespace Tests.ScenarioSceneParts
 
         public void DrawImage(ImageOrder order)
         {
-            throw new NotImplementedException();
+            ImageOrderHistories.Add(order);
         }
     }
 }

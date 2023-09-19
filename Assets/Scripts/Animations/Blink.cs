@@ -42,12 +42,12 @@ namespace Animations
                 return;
             }
 
-            ImageDrawer ??= ScenePartsProvider.GetImageDrawer(TargetLayerIndex);
-
             if (--Interval >= 0)
             {
                 return;
             }
+
+            ImageDrawer ??= ScenePartsProvider.GetImageDrawer(TargetLayerIndex);
 
             if (ImageDrawer.LastOrder != null && LastImageOrder != ImageDrawer.LastOrder)
             {
@@ -55,10 +55,12 @@ namespace Animations
                 CurrentOrder = Resource.GetBlinkOrderFromName(LastImageOrder.Names[EyeImageIndex]);
             }
 
-            ImageDrawer.DrawImage(new ImageOrder(CurrentOrder, drawCounter));
-            drawCounter++;
-
-            if (drawCounter++ > CurrentOrder.Names.Count * 2)
+            if (drawCounter < CurrentOrder.Names.Count)
+            {
+                ImageDrawer.DrawImage(new ImageOrder(CurrentOrder, drawCounter));
+                drawCounter++;
+            }
+            else
             {
                 drawCounter = 0;
                 Interval = 100;

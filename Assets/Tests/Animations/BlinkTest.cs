@@ -15,7 +15,7 @@ namespace Tests.Animations
         {
             var drawer = new DummyDrawer()
             {
-                LastOrder = new ImageOrder(),
+                LastOrder = new ImageOrder() { Names = { string.Empty, "b", string.Empty, string.Empty, }, },
             };
 
             var resource = new DummyResource();
@@ -27,6 +27,12 @@ namespace Tests.Animations
             var blink = new Blink { ImageDrawer = drawer, Resource = resource, };
 
             blink.Execute();
+            blink.Execute();
+            blink.Execute();
+
+            Assert.That(drawer.ImageOrderHistories[0].Names[1], Is.EqualTo("blink1"));
+            Assert.That(drawer.ImageOrderHistories[1].Names[1], Is.EqualTo("blink2"));
+            Assert.That(drawer.ImageOrderHistories[2].Names[1], Is.EqualTo("blink3"));
         }
     }
 }
