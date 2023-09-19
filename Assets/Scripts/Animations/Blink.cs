@@ -7,7 +7,8 @@ namespace Animations
     public class Blink : IAnimation
     {
         private int drawCounter;
-        
+        private const int EyeImageIndex = 1;
+
         public string AnimationName => "blink";
 
         public bool IsWorking { get; private set; } = true;
@@ -28,7 +29,7 @@ namespace Animations
 
         public IResource Resource { get; set; }
 
-        private ImageDrawer ImageDrawer { get; set; }
+        public IDrawer ImageDrawer { private get; set; }
 
         private ImageOrder LastImageOrder { get; set; }
 
@@ -51,8 +52,7 @@ namespace Animations
             if (ImageDrawer.LastOrder != null && LastImageOrder != ImageDrawer.LastOrder)
             {
                 LastImageOrder = ImageDrawer.LastOrder;
-                const int eyeImageIndex = 1;
-                CurrentOrder = Resource.GetBlinkOrderFromName(LastImageOrder.Names[eyeImageIndex]);
+                CurrentOrder = Resource.GetBlinkOrderFromName(LastImageOrder.Names[EyeImageIndex]);
             }
 
             ImageDrawer.DrawImage(new ImageOrder(CurrentOrder, drawCounter));
