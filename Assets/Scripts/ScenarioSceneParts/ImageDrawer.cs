@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ScenarioSceneParts
 {
-    public class ImageDrawer : IScenarioSceneParts
+    public class ImageDrawer : IScenarioSceneParts, IDrawer
     {
         private double drawingDepth = 0.1;
         private IDisplayObject drawingImageSet;

@@ -1,4 +1,5 @@
 using System;
+using DebugTools;
 using ScenarioSceneParts;
 using SceneContents;
 
@@ -7,7 +8,8 @@ namespace Animations
     public class Blink : IAnimation
     {
         private int drawCounter;
-        
+        private const int EyeImageIndex = 1;
+
         public string AnimationName => "blink";
 
         public bool IsWorking { get; private set; } = true;
@@ -28,7 +30,9 @@ namespace Animations
 
         public IResource Resource { get; set; }
 
-        private ImageDrawer ImageDrawer { get; set; }
+        public IDrawer ImageDrawer { private get; set; }
+
+        public RandomGen RandomGen { private get; set; } = new ();
 
         private ImageOrder LastImageOrder { get; set; }
 
@@ -41,27 +45,28 @@ namespace Animations
                 return;
             }
 
-            ImageDrawer ??= ScenePartsProvider.GetImageDrawer(TargetLayerIndex);
-
-            if (--Interval >= 0)
+            if (--Interval > 0)
             {
                 return;
             }
 
+            ImageDrawer ??= ScenePartsProvider.GetImageDrawer(TargetLayerIndex);
+
             if (ImageDrawer.LastOrder != null && LastImageOrder != ImageDrawer.LastOrder)
             {
                 LastImageOrder = ImageDrawer.LastOrder;
-                const int eyeImageIndex = 1;
-                CurrentOrder = Resource.GetBlinkOrderFromName(LastImageOrder.Names[eyeImageIndex]);
+                CurrentOrder = Resource.GetBlinkOrderFromName(LastImageOrder.Names[EyeImageIndex]);
             }
 
-            ImageDrawer.DrawImage(new ImageOrder(CurrentOrder, drawCounter));
-            drawCounter++;
-
-            if (drawCounter++ > CurrentOrder.Names.Count * 2)
+            if (drawCounter < CurrentOrder.Names.Count)
+            {
+                ImageDrawer.DrawImage(new ImageOrder(CurrentOrder, drawCounter));
+                drawCounter++;
+            }
+            else
             {
                 drawCounter = 0;
-                Interval = 100;
+                Interval = RandomGen.GetInt(20, 100);
             }
         }
 
