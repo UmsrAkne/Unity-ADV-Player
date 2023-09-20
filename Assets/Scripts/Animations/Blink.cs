@@ -72,7 +72,6 @@ namespace Animations
 
         public void Start()
         {
-            throw new NotImplementedException();
         }
 
         public void Stop()
