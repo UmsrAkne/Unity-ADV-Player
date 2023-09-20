@@ -4,9 +4,11 @@ using Animations;
 using Loaders;
 using ScenarioSceneParts;
 using SceneContents;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UserInterface;
+using Logger = DebugTools.Logger;
 
 namespace SceneLogics
 {
@@ -20,17 +22,17 @@ namespace SceneLogics
 
         public string ScenarioDirectoryPath { get; set; }
 
-        private ScenePartsRunner ScenePartsRunner { get; } = new();
+        private ScenePartsRunner ScenePartsRunner { get; } = new ();
 
-        private TextWriter TextWriter { get; } = new();
+        private TextWriter TextWriter { get; } = new ();
 
-        private ChapterManager ChapterManager { get; } = new();
+        private ChapterManager ChapterManager { get; } = new ();
 
         private UiContainer UiContainer { get; set; }
 
         private void Start()
         {
-            DebugTools.Logger.Add($"ScenarioSceneLogic : Start() が実行されます");
+            Logger.Add($"ScenarioSceneLogic : Start() が実行されます");
             LoadResource();
         }
 
@@ -70,7 +72,7 @@ namespace SceneLogics
             if (Input.GetKeyDown(KeyCode.Q))
             {
 #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
+                EditorApplication.isPlaying = false;
 #else
                     Application.Quit();
 #endif
@@ -87,7 +89,7 @@ namespace SceneLogics
 
         private void Init()
         {
-            TextWriter.SetUI(new TextField { Field = GameObject.Find("TextField").GetComponent<Text>() });
+            TextWriter.SetUI(new TextField { Field = GameObject.Find("TextField").GetComponent<Text>(), });
             TextWriter.Reload(SceneResource);
             TextWriter.Execute();
 
@@ -101,9 +103,9 @@ namespace SceneLogics
 
             var imageContainers = new List<IDisplayObjectContainer>
             {
-                new ImageContainer(canvas) { Index = 0 },
-                new ImageContainer(canvas) { Index = 1 },
-                new ImageContainer(canvas) { Index = 2 },
+                new ImageContainer(canvas) { Index = 0, },
+                new ImageContainer(canvas) { Index = 1, },
+                new ImageContainer(canvas) { Index = 2, },
             };
 
             var imageDrawers = new List<ImageDrawer>()
@@ -117,15 +119,33 @@ namespace SceneLogics
             imageDrawers[1].ImageContainer = imageContainers[1];
             imageDrawers[2].ImageContainer = imageContainers[2];
 
+            var animationsManagers = new List<AnimationsManager>()
+            {
+                new ((ImageContainer)imageContainers[0]),
+                new ((ImageContainer)imageContainers[1]),
+                new ((ImageContainer)imageContainers[2]),
+            };
+
+            animationsManagers.ForEach(a =>
+            {
+                a.SetScenario(new Scenario()
+                {
+                    Animations = new List<IAnimation>()
+                    {
+                        new Blink() { Resource = SceneResource, },
+                    },
+                });
+            });
+
             var list = new List<IScenarioSceneParts>
             {
                 imageDrawers[0],
                 imageDrawers[1],
                 imageDrawers[2],
                 ChapterManager,
-                new AnimationsManager((ImageContainer)imageContainers[0]),
-                new AnimationsManager((ImageContainer)imageContainers[1]),
-                new AnimationsManager((ImageContainer)imageContainers[2]),
+                animationsManagers[0],
+                animationsManagers[1],
+                animationsManagers[2],
                 new SePlayer(),
                 ScenePartsProvider.GetVoicePlayer(0),
                 ScenePartsProvider.GetVoicePlayer(1),
