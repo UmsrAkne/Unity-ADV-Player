@@ -71,7 +71,7 @@ namespace Animations
             else
             {
                 drawCounter = 0;
-                Interval = RandomGen.GetInt(20, 100);
+                Interval = RandomGen.GetInt(40, 400);
             }
         }
 
