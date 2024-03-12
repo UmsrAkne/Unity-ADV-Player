@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using ScenarioSceneParts;
 using SceneContents;
@@ -18,11 +19,17 @@ namespace Animations
 
         public ImageContainer TargetImageContainer { get; }
 
-        private ConcurrentBag<IAnimation> Animations { get; set; } = new ConcurrentBag<IAnimation>();
+        private List<IAnimation> Animations { get; set; } = new List<IAnimation>();
 
         public bool NeedExecuteEveryFrame => true;
 
         public ExecutionPriority Priority => ExecutionPriority.Low;
+
+        /// <summary>
+        /// Animations に追加されるまで待機している Animation です。
+        /// Animations を for each で回している間は、Animations に要素を追加することができないため、一時的に退避させるためのプロパティです。
+        /// </summary>
+        private List<IAnimation> WaitingAnimations { get; } = new List<IAnimation>();
 
         public void Execute()
         {
@@ -44,7 +51,13 @@ namespace Animations
 
             if (deleteFlag)
             {
-                Animations = new ConcurrentBag<IAnimation>(Animations.Where(anime => anime.IsWorking));
+                Animations = new List<IAnimation>(Animations.Where(anime => anime.IsWorking));
+            }
+
+            while (WaitingAnimations.Count > 0)
+            {
+                Animations.Add(WaitingAnimations.FirstOrDefault());
+                WaitingAnimations.RemoveAt(0);
             }
         }
 
@@ -96,11 +109,14 @@ namespace Animations
             if (!scn.Animations.Any(a =>
                     a.AnimationName == nameof(AlphaChanger) && a.TargetLayerIndex == TargetImageContainer.Index))
             {
-                Animations.Add(new AlphaChanger()
+                var alphaChanger = new AlphaChanger()
                 {
                     Amount = e.CurrentOrder.Depth,
                     Delay = e.CurrentOrder.Delay,
-                });
+                    Target = TargetImageContainer.FrontChild,
+                };
+
+                WaitingAnimations.Add(alphaChanger);
             }
 
             foreach (var a in Animations)
