@@ -19,6 +19,8 @@ namespace ScenarioSceneParts
 
         private IResource Resource { get; set; }
 
+        private float BaseVolume { get; set; }
+
         public void Execute()
         {
             if (stopOrder != null)
@@ -54,6 +56,7 @@ namespace ScenarioSceneParts
                 PlayingSound.AudioSource.loop = true;
             }
 
+            PlayingSound.Volume = BaseVolume;
             PlayingSound.Play();
             CurrentOrder = null;
         }
@@ -65,6 +68,7 @@ namespace ScenarioSceneParts
         public void SetResource(Resource resource)
         {
             Resource = resource;
+            BaseVolume = resource.SceneSetting.SeVolume;
         }
 
         public void Reload(Resource resource)

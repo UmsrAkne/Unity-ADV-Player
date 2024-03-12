@@ -11,6 +11,7 @@ namespace Loaders
     public class SceneSettingLoader
     {
         private readonly string bgmElementName = "bgm";
+        private readonly string seElementName = "se";
         private readonly string defaultSizeElementName = "defaultSize";
         private readonly string fileNameAttribute = "fileName";
         private readonly string heightAttribute = "height";
@@ -56,6 +57,14 @@ namespace Loaders
 
                 var bgmVolume = bgmElement.Attribute(volumeAttribute)?.Value;
                 setting.BGMVolume = bgmVolume != null ? float.Parse(bgmVolume) : setting.BGMVolume;
+            }
+
+            // se 要素が記述されていれば、効果音のボリュームを設定する。
+            var seElement = settingTag.Element(seElementName);
+            if (seElement != null)
+            {
+                var seVolume = seElement.Attribute(volumeAttribute)?.Value;
+                setting.SeVolume = seVolume != null ? float.Parse(seVolume) : setting.SeVolume;
             }
 
             var blinkElement = settingTag.Element(blinkElementName);
