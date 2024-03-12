@@ -19,6 +19,8 @@ namespace ScenarioSceneParts
 
         private IResource Resource { get; set; }
 
+        public float BaseVolume { get; set; } = 1.0f;
+
         public void Execute()
         {
             if (!playRequire)
@@ -35,6 +37,7 @@ namespace ScenarioSceneParts
                 ? Resource.GetSound(TargetAudioType.Voice, nextOrder.Index)
                 : Resource.GetSound(TargetAudioType.Voice, nextOrder.FileName);
 
+            currentVoice.Volume = BaseVolume;
             currentVoice.Play();
             SoundStart?.Invoke(this, EventArgs.Empty);
             nextOrder = null;
@@ -53,6 +56,7 @@ namespace ScenarioSceneParts
         public void SetResource(Resource resource)
         {
             Resource = resource;
+            BaseVolume = resource.SceneSetting.VoiceVolume;
         }
 
         public void Reload(Resource resource)
