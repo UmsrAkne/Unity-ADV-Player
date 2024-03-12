@@ -12,6 +12,7 @@ namespace Loaders
     {
         private readonly string bgmElementName = "bgm";
         private readonly string seElementName = "se";
+        private readonly string voiceElementName = "se";
         private readonly string defaultSizeElementName = "defaultSize";
         private readonly string fileNameAttribute = "fileName";
         private readonly string heightAttribute = "height";
@@ -65,6 +66,14 @@ namespace Loaders
             {
                 var seVolume = seElement.Attribute(volumeAttribute)?.Value;
                 setting.SeVolume = seVolume != null ? float.Parse(seVolume) : setting.SeVolume;
+            }
+
+            // voice 要素が記述されていれば、ボイスのボリュームを設定する。
+            var voiceElement = settingTag.Element(voiceElementName);
+            if (voiceElement != null)
+            {
+                var voiceVolume = voiceElement.Attribute(volumeAttribute)?.Value;
+                setting.VoiceVolume = voiceVolume != null ? float.Parse(voiceVolume) : setting.VoiceVolume;
             }
 
             var blinkElement = settingTag.Element(blinkElementName);

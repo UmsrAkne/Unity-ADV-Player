@@ -17,13 +17,15 @@ namespace Loaders
 
         public float SeVolume { get; set; } = 1.0f;
 
+        public float VoiceVolume { get; set; } = 1.0f;
+
         public List<ImageLocation> ImageLocations { get; set; } = new();
 
         public List<BlinkOrder> BlinkOrders { get; set; } = new ();
 
         public override string ToString()
         {
-            return $"BGMNumber={BGMNumber}, BGMFileName={BGMFileName}, BGMVolume={BGMVolume}, SeVolume={SeVolume}, ImageWidth={DefaultImageWidth}";
+            return $"BGMNumber={BGMNumber}, BGMFileName={BGMFileName}, BGMVolume={BGMVolume}, VcVolume={VoiceVolume}, SeVolume={SeVolume}, ImageWidth={DefaultImageWidth}";
         }
     }
 }
