@@ -62,6 +62,27 @@ namespace Loaders.XmlElementConverters
         }
 
         /// <summary>
+        /// 指定した XElement に含まれる attribute の値を float で取得します。
+        /// </summary>
+        /// <param name="x">float に変換可能な属性を持つ XElement</param>
+        /// <param name="attributeName">float に変換可能な属性名</param>
+        /// <returns>
+        /// 指定した属性名で、変換可能な属性値が XElement に含まれる場合は、その値を返します。
+        /// 指定した属性名が見つからない場合、見つかっても値を変換できない場合は 0 を返します。
+        /// </returns>
+        public static float GetFloatFromAttribute([NotNull] XElement x, string attributeName)
+        {
+            var att = x.Attribute(attributeName);
+
+            if (att == null)
+            {
+                return 0;
+            }
+
+            return float.TryParse(att.Value, out var n) ? n : 0;
+        }
+
+        /// <summary>
         /// 指定した XElement が、指定した属性名の属性を持つかどうかを調べます。
         /// </summary>
         /// <param name="x"></param>

@@ -8,7 +8,13 @@
 
         public int RepeatCount { get; set; }
 
-        public double Volume { get; set; } = 1.0;
+        /// <summary>
+        /// オブジェクトの音量を表すプロパティです。
+        /// デフォルトの値は null であり、この場合、音量が設定されていないことを示します。
+        /// </summary>
+        public double? Volume { get; set; }
+
+        public bool ChangedVolume { get; set; }
 
         public int Channel { get; set; }
 
