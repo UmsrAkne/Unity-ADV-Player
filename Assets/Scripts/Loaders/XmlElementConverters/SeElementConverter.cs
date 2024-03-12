@@ -9,6 +9,7 @@
     {
         private readonly string fileNameAttribute = "fileName";
         private readonly string numberAttribute = "number";
+        private readonly string volumeAttribute = "volume";
         private readonly string repeatCountAttribute = "repeatCount";
 
         public string TargetElementName => "se";
@@ -46,6 +47,12 @@
                 if (XElementHelper.HasAttribute(seTag, repeatCountAttribute))
                 {
                     order.RepeatCount = XElementHelper.GetIntFromAttribute(seTag, repeatCountAttribute);
+                }
+
+                if (XElementHelper.HasAttribute(seTag, volumeAttribute))
+                {
+                    var v = XElementHelper.GetFloatFromAttribute(seTag, volumeAttribute);
+                    order.Volume = v != 0 ? XElementHelper.GetFloatFromAttribute(seTag, volumeAttribute) : order.Volume;
                 }
 
                 scenario.SeOrders.Add(order);
