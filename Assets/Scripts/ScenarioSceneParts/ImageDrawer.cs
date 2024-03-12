@@ -8,7 +8,7 @@ namespace ScenarioSceneParts
 {
     public class ImageDrawer : IScenarioSceneParts, IDrawer
     {
-        private double drawingDepth = 0.1;
+        private double drawingDepth = 0.01;
         private IDisplayObject drawingImageSet;
         private IResource resource;
         private Scenario scenario;
