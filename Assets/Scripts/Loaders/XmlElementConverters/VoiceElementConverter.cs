@@ -10,6 +10,7 @@ namespace Loaders.XmlElementConverters
         private readonly string numberAttribute = "number";
         private readonly string fileNameAttribute = "fileName";
         private readonly string channelAttribute = "channel";
+        private readonly string volumeAttribute = "volume";
 
         public string TargetElementName => "voice";
 
@@ -41,6 +42,11 @@ namespace Loaders.XmlElementConverters
                 if (XElementHelper.HasAttribute(voiceTag, fileNameAttribute))
                 {
                     order.FileName = XElementHelper.GetStringFromAttribute(voiceTag, fileNameAttribute);
+                }
+
+                if (XElementHelper.HasAttribute(voiceTag, volumeAttribute))
+                {
+                    order.Volume = XElementHelper.GetDoubleFromAttribute(voiceTag, volumeAttribute);
                 }
 
                 if (XElementHelper.HasAttribute(voiceTag, channelAttribute))
