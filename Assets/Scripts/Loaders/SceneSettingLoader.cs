@@ -12,7 +12,7 @@ namespace Loaders
     {
         private readonly string bgmElementName = "bgm";
         private readonly string seElementName = "se";
-        private readonly string voiceElementName = "se";
+        private readonly string voiceElementName = "voice";
         private readonly string defaultSizeElementName = "defaultSize";
         private readonly string fileNameAttribute = "fileName";
         private readonly string heightAttribute = "height";
