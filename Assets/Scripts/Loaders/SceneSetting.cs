@@ -19,6 +19,8 @@ namespace Loaders
 
         public float VoiceVolume { get; set; } = 1.0f;
 
+        public float BgvVolume { get; set; } = 1.0f;
+
         public List<ImageLocation> ImageLocations { get; set; } = new();
 
         public List<BlinkOrder> BlinkOrders { get; set; } = new ();

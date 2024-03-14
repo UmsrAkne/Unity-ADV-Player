@@ -37,7 +37,7 @@ namespace ScenarioSceneParts
                 ? Resource.GetSound(TargetAudioType.Voice, nextOrder.Index)
                 : Resource.GetSound(TargetAudioType.Voice, nextOrder.FileName);
 
-            currentVoice.Volume = BaseVolume;
+            currentVoice.Volume = nextOrder.Volume ?? BaseVolume;
             currentVoice.Play();
             SoundStart?.Invoke(this, EventArgs.Empty);
             nextOrder = null;
