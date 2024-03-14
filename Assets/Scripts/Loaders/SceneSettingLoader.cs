@@ -13,6 +13,8 @@ namespace Loaders
         private readonly string bgmElementName = "bgm";
         private readonly string seElementName = "se";
         private readonly string voiceElementName = "voice";
+        private readonly string bgvElementName1 = "bgv";
+        private readonly string bgvElementName2 = "backgroundVoice";
         private readonly string defaultSizeElementName = "defaultSize";
         private readonly string fileNameAttribute = "fileName";
         private readonly string heightAttribute = "height";
@@ -74,6 +76,14 @@ namespace Loaders
             {
                 var voiceVolume = voiceElement.Attribute(volumeAttribute)?.Value;
                 setting.VoiceVolume = voiceVolume != null ? float.Parse(voiceVolume) : setting.VoiceVolume;
+            }
+
+            var bgvElement = settingTag.Element(bgvElementName1) ?? settingTag.Element(bgvElementName2);
+
+            if (bgvElement != null)
+            {
+                var bgvVolume = bgvElement.Attribute(volumeAttribute)?.Value;
+                setting.BgvVolume = bgvVolume != null ? float.Parse(bgvVolume) : setting.BgvVolume;
             }
 
             var blinkElement = settingTag.Element(blinkElementName);

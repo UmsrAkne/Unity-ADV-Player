@@ -24,12 +24,14 @@ namespace ScenarioSceneParts
 
         public VoicePlayer VoicePlayer { get; }
 
+        public double BaseVolume { get; set; } = 1.0f;
+
         private double Volume
         {
             get => volume;
             set
             {
-                if (value is >= 0 and <= 1.0)
+                if (value >= 0 && value <= BaseVolume)
                 {
                     if (playingVoice != null)
                     {
@@ -115,6 +117,7 @@ namespace ScenarioSceneParts
         public void SetResource(Resource resource)
         {
             Resource = resource;
+            BaseVolume = resource.SceneSetting.BgvVolume;
         }
 
         public void Reload(Resource resource)
