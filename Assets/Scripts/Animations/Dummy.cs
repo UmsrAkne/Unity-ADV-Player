@@ -24,6 +24,8 @@ namespace Animations
 
         public int Delay { get; set; }
 
+        public bool PlayOnce { get; set; }
+
         public int Interval { get; set; }
 
         public int Duration { get; set; }

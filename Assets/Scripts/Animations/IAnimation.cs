@@ -18,6 +18,8 @@ namespace Animations
 
         int Delay { get; set; }
 
+        bool PlayOnce { get; set; }
+
         int Interval { get; set; }
 
         string GroupName { get; set; }
