@@ -81,6 +81,11 @@ namespace Loaders.XmlElementConverters
                     {
                         propInfo.SetValue(anime, attribute.Value);
                     }
+
+                    if (propInfo.PropertyType == typeof(bool))
+                    {
+                        propInfo.SetValue(anime, bool.Parse(attribute.Value));
+                    }
                 }
             }
 

@@ -12,7 +12,7 @@ namespace Animations
         private readonly AnimeElementConverter converter = new AnimeElementConverter();
         private List<IAnimation> animations = new List<IAnimation>();
         private bool canChangeTarget = true;
-        private bool initialGenerate;
+        private bool initialGenerate = true;
         private List<IAnimation> playingAnimations = new List<IAnimation>();
         private IDisplayObject target;
 
@@ -30,6 +30,8 @@ namespace Animations
         public string AnimationName => "AnimationChain";
 
         public bool IsWorking { get; private set; } = true;
+
+        public bool PlayOnce { get; set; }
 
         public IDisplayObject Target
         {
@@ -147,6 +149,11 @@ namespace Animations
             if (anime is AnimationChain)
             {
                 throw new ArgumentException("AnimationChain に AnimationChain は含められません");
+            }
+
+            if (anime.PlayOnce && !initialGenerate)
+            {
+                return;
             }
 
             animations.Add(anime);

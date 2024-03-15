@@ -30,6 +30,8 @@ namespace Animations
 
         public int RepeatCount { get; set; }
 
+        public bool PlayOnce { get; set; }
+
         public int Interval { get; set; }
 
         public string GroupName { get; set; } = string.Empty;
