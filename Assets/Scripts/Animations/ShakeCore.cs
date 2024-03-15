@@ -37,6 +37,8 @@ namespace Animations
 
         public string GroupName { get; set; } = string.Empty;
 
+        public bool PlayOnce { get; set; }
+
         public void Execute()
         {
             if (Target == null || !IsWorking)
