@@ -21,6 +21,8 @@ namespace Loaders
 
         public float BgvVolume { get; set; } = 1.0f;
 
+        public float MessageWindowAlpha { get; set; } = 0.6f;
+
         public List<ImageLocation> ImageLocations { get; set; } = new();
 
         public List<BlinkOrder> BlinkOrders { get; set; } = new ();
