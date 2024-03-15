@@ -37,5 +37,18 @@ namespace UserInterface
             rightPos = new Vector2(rightPos.x + horizontalFramePos, rightPos.y);
             RightFrame.transform.position = rightPos;
         }
+
+        /// <summary>
+        /// MessageWindow の透明度を設定します。
+        /// </summary>
+        /// <param name="value">入力値は 0 - 1.0 の範囲で入力します。</param>
+        public void SetMsgWindowOpacity(float value)
+        {
+            var comp = MessageWindow.GetComponent<SpriteRenderer>();
+            if (comp != null)
+            {
+                comp.color = new Color(1f, 1f, 1f, value);
+            }
+        }
     }
 }
