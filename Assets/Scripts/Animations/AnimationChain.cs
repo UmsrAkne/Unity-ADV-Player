@@ -10,6 +10,7 @@ namespace Animations
     public class AnimationChain : IAnimation
     {
         private readonly AnimeElementConverter converter = new AnimeElementConverter();
+        private readonly List<XElement> animeTags = new List<XElement>();
         private List<IAnimation> animations = new List<IAnimation>();
         private bool canChangeTarget = true;
         private bool initialGenerate = true;
@@ -24,8 +25,6 @@ namespace Animations
         {
             converter = aec;
         }
-
-        public List<XElement> AnimeTags { get; private set; } = new List<XElement>();
 
         public string AnimationName => "AnimationChain";
 
@@ -81,7 +80,7 @@ namespace Animations
 
             if (animations.Count(a => a.IsWorking) == 0 && RepeatCount >= 0)
             {
-                foreach (var tag in AnimeTags)
+                foreach (var tag in animeTags)
                 {
                     AddAnimation(converter.GenerateAnimation(tag));
                 }
@@ -144,7 +143,7 @@ namespace Animations
             }
         }
 
-        public void AddAnimation(IAnimation anime)
+        private void AddAnimation(IAnimation anime)
         {
             if (anime is AnimationChain)
             {
@@ -166,7 +165,7 @@ namespace Animations
 
         public void AddAnimationTag(XElement tag)
         {
-            AnimeTags.Add(tag);
+            animeTags.Add(tag);
         }
     }
 }
