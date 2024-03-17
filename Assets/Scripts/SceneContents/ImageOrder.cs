@@ -41,7 +41,9 @@ namespace SceneContents
         public bool IsDrawOrder { get; set; }
 
         public double Depth { get; set; } = 0.1;
-        
+
+        public int Duration { get; set; }
+
         public int Delay { get; set; }
 
         public string MaskImageName { get; set; } = string.Empty;

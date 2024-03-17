@@ -11,11 +11,12 @@
 
         private readonly string xAttributeName = nameof(ImageOrder.X).ToLower(0);
         private readonly string yAttributeName = nameof(ImageOrder.Y).ToLower(0);
-        
+
         private readonly string scaleAttributeName = nameof(ImageOrder.Scale).ToLower(0);
         private readonly string angleAttributeName = nameof(ImageOrder.Angle).ToLower(0);
         private readonly string depthAttributeName = nameof(ImageOrder.Depth).ToLower(0);
         private readonly string delayAttributeName = nameof(ImageOrder.Delay).ToLower(0);
+        private readonly string durationAttributeName = nameof(ImageOrder.Duration).ToLower(0);
         private readonly string inheritStatusAttributeName = nameof(ImageOrder.InheritStatus).ToLower(0);
 
         public string TargetElementName => "image";
@@ -76,7 +77,12 @@
                 {
                     order.Depth = XElementHelper.GetDoubleFromAttribute(imageTag, depthAttributeName);
                 }
-                
+
+                if (XElementHelper.HasAttribute(imageTag, durationAttributeName))
+                {
+                    order.Duration = XElementHelper.GetIntFromAttribute(imageTag, durationAttributeName);
+                }
+
                 if (XElementHelper.HasAttribute(imageTag, delayAttributeName))
                 {
                     order.Delay = XElementHelper.GetIntFromAttribute(imageTag, delayAttributeName);

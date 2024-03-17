@@ -113,6 +113,7 @@ namespace Animations
                 {
                     Amount = e.CurrentOrder.Depth,
                     Delay = e.CurrentOrder.Delay,
+                    Duration = e.CurrentOrder.Duration,
                     Target = TargetImageContainer.FrontChild,
                 };
 

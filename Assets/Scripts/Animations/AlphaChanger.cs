@@ -1,4 +1,6 @@
-﻿using SceneContents;
+﻿using System;
+using SceneContents;
+using UnityEngine;
 
 namespace Animations
 {
@@ -7,6 +9,9 @@ namespace Animations
         private readonly bool canUpdateTarget;
         private float amount = 0.1f;
         private IDisplayObject target;
+        private float pp;
+        private int frameCounter = 1;
+        private int duration;
 
         public AlphaChanger(bool canUpdateTarget = false)
         {
@@ -51,6 +56,22 @@ namespace Animations
 
         public string GroupName { get; set; } = string.Empty;
 
+        public int Duration
+        {
+            get => duration;
+            set
+            {
+                if (value != 0)
+                {
+                    // pp は、 Math.Cos に対して、 Duration の回数だけ入力すれば -1 >> +1 まで値が変化するような値
+                    // Duration が入力された時点で算出可能なので、ここに記述する。
+                    pp = (float)(Math.PI) / value;
+                }
+
+                duration = value;
+            }
+        }
+
         public void Execute()
         {
             if (!IsWorking)
@@ -64,9 +85,17 @@ namespace Animations
                 return;
             }
 
-            Target.Alpha += amount;
+            if (Duration <= 0)
+            {
+                Target.Alpha += amount;
+            }
+            else
+            {
+                Target.Alpha = (float)((Math.Cos(Math.PI + pp * frameCounter) + 1.0) / 2.0);
+                frameCounter++;
+            }
 
-            if (Target.Alpha > 1.0f)
+            if (Target.Alpha >= 0.999f)
             {
                 IsWorking = false;
             }
