@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SceneContents;
+using UnityEngine;
 
 namespace Loaders
 {
@@ -22,6 +23,8 @@ namespace Loaders
         public float BgvVolume { get; set; } = 1.0f;
 
         public float MessageWindowAlpha { get; set; } = 0.6f;
+
+        public Vector2 MessageWindowPos { get; set; } = new Vector2(0, 0);
 
         public List<ImageLocation> ImageLocations { get; set; } = new();
 

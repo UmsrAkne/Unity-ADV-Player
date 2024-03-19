@@ -2,6 +2,7 @@
 using System.Linq;
 using Loaders.XmlElementConverters;
 using SceneContents;
+using UnityEngine;
 
 namespace Loaders
 {
@@ -85,6 +86,15 @@ namespace Loaders
             {
                 var alpha = messageWindowElement.Attribute(alphaAttribute)?.Value;
                 setting.MessageWindowAlpha = alpha != null ? float.Parse(alpha) : setting.MessageWindowAlpha;
+
+                var x = messageWindowElement.Attribute(xAttribute)?.Value;
+                var y = messageWindowElement.Attribute(yAttribute)?.Value;
+
+                setting.MessageWindowPos =
+                    new Vector2(
+                        x != null ? float.Parse(x) : setting.MessageWindowPos.x,
+                        y != null ? float.Parse(y) : setting.MessageWindowPos.y
+                    );
             }
 
             var bgvElement = settingTag.Element(bgvElementName1) ?? settingTag.Element(bgvElementName2);
