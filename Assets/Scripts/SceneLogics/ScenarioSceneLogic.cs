@@ -171,6 +171,7 @@ namespace SceneLogics
             UiContainer.BGMPlayer.SetResource(SceneResource);
             UiContainer.BGMPlayer.Execute();
             UiContainer.SetMsgWindowOpacity(SceneResource.SceneSetting.MessageWindowAlpha);
+            UiContainer.MoveMessageWindow(SceneResource.SceneSetting.MessageWindowPos.x, SceneResource.SceneSetting.MessageWindowPos.y);
             UiContainer.SetScreenWidth(SceneResource.SceneSetting.DefaultImageWidth);
 
             InvokeRepeating(nameof(EraseOverImage), 0, 0.025f);
