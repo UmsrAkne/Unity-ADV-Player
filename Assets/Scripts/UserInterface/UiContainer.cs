@@ -1,5 +1,6 @@
 using ScenarioSceneParts;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UserInterface
 {
@@ -18,6 +19,8 @@ namespace UserInterface
         public GameObject RightFrame { get; } = GameObject.Find(nameof(RightFrame));
 
         public GameObject MessageWindow { get; } = GameObject.Find(nameof(MessageWindow));
+
+        public Text TextField { get; set; } = GameObject.Find("TextField").GetComponent<Text>();
 
         public BGMPlayer BGMPlayer { get; set; }
 
@@ -49,6 +52,21 @@ namespace UserInterface
             {
                 comp.color = new Color(1f, 1f, 1f, value);
             }
+        }
+
+        /// <summary>
+        /// メッセージウィンドウと、その上にあるテキストオブジェクトを移動させます。
+        /// 移動は、引数に入力した値を現在のウィンドウ、テキストオブジェクトの座標に加算して実現します。
+        /// </summary>
+        /// <param name="x">x の移動量</param>
+        /// <param name="y">y の移動量</param>
+        public void MoveMessageWindow(float x, float y)
+        {
+            var r = TextField.rectTransform.anchoredPosition;
+            TextField.rectTransform.anchoredPosition = new Vector2(r.x + x, r.y + y);
+
+            var mPos = MessageWindow.transform.position;
+            MessageWindow.transform.position = new Vector3(mPos.x + x, mPos.y + y);
         }
     }
 }
