@@ -11,24 +11,24 @@ namespace Loaders
 
     public class SceneSettingLoader
     {
-        private readonly string bgmElementName = "bgm";
-        private readonly string seElementName = "se";
-        private readonly string voiceElementName = "voice";
-        private readonly string messageWindowElementName = "messageWindow";
-        private readonly string bgvElementName1 = "bgv";
-        private readonly string bgvElementName2 = "backgroundVoice";
-        private readonly string defaultSizeElementName = "defaultSize";
-        private readonly string fileNameAttribute = "fileName";
-        private readonly string heightAttribute = "height";
-        private readonly string alphaAttribute = "alpha";
+        private const string BgmElementName = "bgm";
+        private const string SeElementName = "se";
+        private const string VoiceElementName = "voice";
+        private const string MessageWindowElementName = "messageWindow";
+        private const string BgvElementName1 = "bgv";
+        private const string BgvElementName2 = "backgroundVoice";
+        private const string DefaultSizeElementName = "defaultSize";
+        private const string FileNameAttribute = "fileName";
+        private const string HeightAttribute = "height";
+        private const string AlphaAttribute = "alpha";
 
-        private readonly string nameAttribute = "name";
-        private readonly string numberAttribute = "number";
-        private readonly string volumeAttribute = "volume";
+        private const string NameAttribute = "name";
+        private const string NumberAttribute = "number";
+        private const string VolumeAttribute = "volume";
 
-        private readonly string widthAttribute = "width";
-        private readonly string xAttribute = "x";
-        private readonly string yAttribute = "y";
+        private const string WidthAttribute = "width";
+        private const string XAttribute = "x";
+        private const string YAttribute = "y";
         private readonly XName blinkElementName = "blink";
 
         public List<string> Log { get; private set; } = new List<string>();
@@ -43,52 +43,52 @@ namespace Loaders
                 return setting;
             }
 
-            if (settingTag.Element(defaultSizeElementName) != null)
+            if (settingTag.Element(DefaultSizeElementName) != null)
             {
-                var w = settingTag.Element(defaultSizeElementName)?.Attribute(widthAttribute)?.Value;
+                var w = settingTag.Element(DefaultSizeElementName)?.Attribute(WidthAttribute)?.Value;
                 setting.DefaultImageWidth = w != null ? int.Parse(w) : setting.DefaultImageWidth;
 
-                var h = settingTag.Element(defaultSizeElementName)?.Attribute(heightAttribute)?.Value;
+                var h = settingTag.Element(DefaultSizeElementName)?.Attribute(HeightAttribute)?.Value;
                 setting.DefaultImageHeight = h != null ? int.Parse(h) : setting.DefaultImageHeight;
             }
 
-            var bgmElement = settingTag.Element(bgmElementName);
+            var bgmElement = settingTag.Element(BgmElementName);
             if (bgmElement != null)
             {
-                var bgmNumber = bgmElement.Attribute(numberAttribute)?.Value;
+                var bgmNumber = bgmElement.Attribute(NumberAttribute)?.Value;
                 setting.BGMNumber = bgmNumber != null ? int.Parse(bgmNumber) : setting.BGMNumber;
 
-                var bgmName = bgmElement.Attribute(fileNameAttribute);
+                var bgmName = bgmElement.Attribute(FileNameAttribute);
                 setting.BGMFileName = bgmName != null ? bgmName.Value : string.Empty;
 
-                var bgmVolume = bgmElement.Attribute(volumeAttribute)?.Value;
+                var bgmVolume = bgmElement.Attribute(VolumeAttribute)?.Value;
                 setting.BGMVolume = bgmVolume != null ? float.Parse(bgmVolume) : setting.BGMVolume;
             }
 
             // se 要素が記述されていれば、効果音のボリュームを設定する。
-            var seElement = settingTag.Element(seElementName);
+            var seElement = settingTag.Element(SeElementName);
             if (seElement != null)
             {
-                var seVolume = seElement.Attribute(volumeAttribute)?.Value;
+                var seVolume = seElement.Attribute(VolumeAttribute)?.Value;
                 setting.SeVolume = seVolume != null ? float.Parse(seVolume) : setting.SeVolume;
             }
 
             // voice 要素が記述されていれば、ボイスのボリュームを設定する。
-            var voiceElement = settingTag.Element(voiceElementName);
+            var voiceElement = settingTag.Element(VoiceElementName);
             if (voiceElement != null)
             {
-                var voiceVolume = voiceElement.Attribute(volumeAttribute)?.Value;
+                var voiceVolume = voiceElement.Attribute(VolumeAttribute)?.Value;
                 setting.VoiceVolume = voiceVolume != null ? float.Parse(voiceVolume) : setting.VoiceVolume;
             }
 
-            var messageWindowElement = settingTag.Element(messageWindowElementName);
+            var messageWindowElement = settingTag.Element(MessageWindowElementName);
             if (messageWindowElement != null)
             {
-                var alpha = messageWindowElement.Attribute(alphaAttribute)?.Value;
+                var alpha = messageWindowElement.Attribute(AlphaAttribute)?.Value;
                 setting.MessageWindowAlpha = alpha != null ? float.Parse(alpha) : setting.MessageWindowAlpha;
 
-                var x = messageWindowElement.Attribute(xAttribute)?.Value;
-                var y = messageWindowElement.Attribute(yAttribute)?.Value;
+                var x = messageWindowElement.Attribute(XAttribute)?.Value;
+                var y = messageWindowElement.Attribute(YAttribute)?.Value;
 
                 setting.MessageWindowPos =
                     new Vector2(
@@ -97,11 +97,11 @@ namespace Loaders
                     );
             }
 
-            var bgvElement = settingTag.Element(bgvElementName1) ?? settingTag.Element(bgvElementName2);
+            var bgvElement = settingTag.Element(BgvElementName1) ?? settingTag.Element(BgvElementName2);
 
             if (bgvElement != null)
             {
-                var bgvVolume = bgvElement.Attribute(volumeAttribute)?.Value;
+                var bgvVolume = bgvElement.Attribute(VolumeAttribute)?.Value;
                 setting.BgvVolume = bgvVolume != null ? float.Parse(bgvVolume) : setting.BgvVolume;
             }
 
@@ -138,19 +138,19 @@ namespace Loaders
             }
 
             locations.AddRange(xml.Elements("imageLocation")
-                .Where(locationTag => !string.IsNullOrWhiteSpace(XElementHelper.GetStringFromAttribute(locationTag, nameAttribute)))
+                .Where(locationTag => !string.IsNullOrWhiteSpace(XElementHelper.GetStringFromAttribute(locationTag, NameAttribute)))
                 .Select(locationTag =>
                 {
-                    var rawName = XElementHelper.GetStringFromAttribute(locationTag, nameAttribute);
+                    var rawName = XElementHelper.GetStringFromAttribute(locationTag, NameAttribute);
                     var fileNameWe = Path.GetFileNameWithoutExtension(new FileInfo(rawName).FullName);
 
                     return new ImageLocation
                     {
                         Name = fileNameWe,
-                        X = XElementHelper.GetIntFromAttribute(locationTag, xAttribute),
-                        Y = XElementHelper.GetIntFromAttribute(locationTag, yAttribute),
-                        Width = XElementHelper.GetIntFromAttribute(locationTag, widthAttribute),
-                        Height = XElementHelper.GetIntFromAttribute(locationTag, heightAttribute),
+                        X = XElementHelper.GetIntFromAttribute(locationTag, XAttribute),
+                        Y = XElementHelper.GetIntFromAttribute(locationTag, YAttribute),
+                        Width = XElementHelper.GetIntFromAttribute(locationTag, WidthAttribute),
+                        Height = XElementHelper.GetIntFromAttribute(locationTag, HeightAttribute),
                     };
                 }));
 
