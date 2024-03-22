@@ -20,7 +20,8 @@ namespace SceneLogics
 
             SceneManager.sceneLoaded += NextSceneLoaded;
 
-            SceneManager.LoadScene("ScenarioScene");
+            SceneManager.LoadScene("SelectionScene");
+            // SceneManager.LoadScene("ScenarioScene");
             // SceneManager.LoadScene("LoadScene");
         }
 
@@ -30,8 +31,10 @@ namespace SceneLogics
             // loadingSceneLogic.TargetDirectoryPath = @"scenes\sampleScn001";
             // SceneManager.sceneLoaded -= NextSceneLoaded;
 
-            var scenarioSceneLogic = GameObject.Find("Main Camera").GetComponent<ScenarioSceneLogic>();
-            scenarioSceneLogic.ScenarioDirectoryPath = @"scenes\sampleScn001";
+            // var scenarioSceneLogic = GameObject.Find("Main Camera").GetComponent<ScenarioSceneLogic>();
+            // scenarioSceneLogic.ScenarioDirectoryPath = @"scenes\sampleScn001";
+            // SceneManager.sceneLoaded -= NextSceneLoaded;
+
             SceneManager.sceneLoaded -= NextSceneLoaded;
         }
     }
