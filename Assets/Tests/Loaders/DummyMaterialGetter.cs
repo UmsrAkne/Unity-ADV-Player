@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Loaders;
 using SceneContents;
 
@@ -28,6 +29,16 @@ namespace Tests.Loaders
         {
             Paths.Add(path);
             return new SpriteWrapper();
+        }
+
+        public SpriteWrapper LoadImage(string path, float scale)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Size GetImageSizeFrom(string path)
+        {
+            throw new NotImplementedException();
         }
     }
 }
