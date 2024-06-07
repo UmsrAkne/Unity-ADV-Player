@@ -34,13 +34,13 @@ namespace SceneLogics
             if (loadingSceneLogic != null)
             {
                 loadingSceneLogic.TargetDirectoryPath = currentSceneDirectoryPath;
-                // loadingSceneLogic.TargetDirectoryPath = @"scenes\sampleScn001";
-                SceneManager.sceneLoaded -= NextSceneLoaded;
             }
 
-            // var scenarioSceneLogic = GameObject.Find("Main Camera").GetComponent<ScenarioSceneLogic>();
-            // scenarioSceneLogic.ScenarioDirectoryPath = @"scenes\sampleScn001";
-            // SceneManager.sceneLoaded -= NextSceneLoaded;
+            var scenarioSceneLogic = GameObject.Find("Main Camera").GetComponent<ScenarioSceneLogic>();
+            if (scenarioSceneLogic != null)
+            {
+                scenarioSceneLogic.ScenarioDirectoryPath = currentSceneDirectoryPath;
+            }
 
             var selectionSceneLogic = GameObject.Find("Canvas")?.GetComponent<SelectionSceneLogic>();
             if (selectionSceneLogic != null)
