@@ -15,6 +15,9 @@ namespace SceneLogics
         private List<string> selectableScenePaths = new ();
         public GameObject sceneDetailPrefab;
         public List<GameObject> sceneDetails;
+        public event EventHandler SceneSelected;
+
+        public string SelectedScenePath { get; set; } = string.Empty;
 
         private int CursorIndex
         {
@@ -127,6 +130,12 @@ namespace SceneLogics
                 {
                     ReloadThumbnails();
                 }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                SelectedScenePath = selectableScenePaths[CursorIndex];
+                SceneSelected?.Invoke(this, EventArgs.Empty);
             }
         }
     }
