@@ -71,10 +71,7 @@ namespace SceneLogics
                 var t = sceneDetail.GetComponentInChildren<Text>();
                 if (t != null)
                 {
-                    t.text = p;
-                    var r = t.GetComponent<RectTransform>();
-                    r.anchoredPosition = new Vector2(400, -40 * i);
-                    r.sizeDelta = new Vector2(800, r.sizeDelta.y);
+                    t.text = i == 2 ? p : string.Empty;
                 }
 
                 var ren = sceneDetail.GetComponentInChildren<SpriteRenderer>();
