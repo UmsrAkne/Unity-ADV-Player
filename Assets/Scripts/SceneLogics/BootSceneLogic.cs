@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Logger = DebugTools.Logger;
 
 namespace SceneLogics
 {
@@ -30,19 +32,20 @@ namespace SceneLogics
 
         private static void NextSceneLoaded(Scene arg0, LoadSceneMode arg1)
         {
+            Logger.Add("BootSceneLogic : NextSceneLoaded() が実行されます");
             var loadingSceneLogic = GameObject.Find("Main Camera")?.GetComponent<LoadSceneLogic>();
             if (loadingSceneLogic != null)
             {
                 loadingSceneLogic.TargetDirectoryPath = currentSceneDirectoryPath;
-                // loadingSceneLogic.TargetDirectoryPath = @"scenes\sampleScn001";
-                SceneManager.sceneLoaded -= NextSceneLoaded;
             }
 
-            // var scenarioSceneLogic = GameObject.Find("Main Camera").GetComponent<ScenarioSceneLogic>();
-            // scenarioSceneLogic.ScenarioDirectoryPath = @"scenes\sampleScn001";
-            // SceneManager.sceneLoaded -= NextSceneLoaded;
+            var scenarioSceneLogic = GameObject.Find("Main Camera").GetComponent<ScenarioSceneLogic>();
+            if (scenarioSceneLogic != null)
+            {
+                scenarioSceneLogic.ScenarioDirectoryPath = currentSceneDirectoryPath;
+            }
 
-            var selectionSceneLogic = GameObject.Find("Canvas")?.GetComponent<SelectionSceneLogic>();
+            var selectionSceneLogic = arg0.GetRootGameObjects().FirstOrDefault(g => g.name == "Canvas")?.GetComponent<SelectionSceneLogic>();
             if (selectionSceneLogic != null)
             {
                 selectionSceneLogic.SceneSelected += SelectionSceneLogicOnSceneSelected;
@@ -51,7 +54,10 @@ namespace SceneLogics
 
         private static void SelectionSceneLogicOnSceneSelected(object sender, EventArgs e)
         {
+            Logger.Add("BottSceneLogic : シーンが選択されたので、メディアのロードを開始します");
             currentSceneDirectoryPath = ((SelectionSceneLogic)sender).SelectedScenePath;
+
+            Logger.Add($"BottSceneLogic : ScenePath = {currentSceneDirectoryPath}");
             SceneManager.LoadScene("LoadScene");
         }
     }
