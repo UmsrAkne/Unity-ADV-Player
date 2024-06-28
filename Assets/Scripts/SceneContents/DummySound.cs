@@ -21,5 +21,7 @@ namespace SceneContents
         {
             IsPlaying = false;
         }
+
+        public float Delay { get; set; }
     }
 }

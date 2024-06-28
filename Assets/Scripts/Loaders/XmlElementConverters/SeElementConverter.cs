@@ -11,6 +11,7 @@
         private readonly string numberAttribute = "number";
         private readonly string volumeAttribute = "volume";
         private readonly string repeatCountAttribute = "repeatCount";
+        private readonly string delayAttribute = "delay";
 
         public string TargetElementName => "se";
 
@@ -53,6 +54,12 @@
                 {
                     var v = XElementHelper.GetFloatFromAttribute(seTag, volumeAttribute);
                     order.Volume = v != 0 ? XElementHelper.GetFloatFromAttribute(seTag, volumeAttribute) : order.Volume;
+                }
+
+                if (XElementHelper.HasAttribute(seTag, delayAttribute))
+                {
+                    var d = XElementHelper.GetFloatFromAttribute(seTag, delayAttribute);
+                    order.Delay = d != 0 ? d : order.Delay;
                 }
 
                 scenario.SeOrders.Add(order);

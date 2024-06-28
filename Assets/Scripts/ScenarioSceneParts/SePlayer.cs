@@ -56,6 +56,7 @@ namespace ScenarioSceneParts
                 PlayingSound.AudioSource.loop = true;
             }
 
+            PlayingSound.Delay = CurrentOrder.Delay;
             PlayingSound.Volume = CurrentOrder.Volume ?? BaseVolume;
             PlayingSound.Play();
             CurrentOrder = null;

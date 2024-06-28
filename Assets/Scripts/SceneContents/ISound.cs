@@ -19,5 +19,7 @@
         void Play();
 
         void Stop();
+
+        float Delay { get; set; }
     }
 }
