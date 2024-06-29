@@ -11,6 +11,8 @@ namespace SceneContents
 
         public string ChapterName { get; set; } = string.Empty;
 
+        public bool MoveMessageWindow { get; set; }
+
         public List<ImageOrder> ImageOrders { get; set; } = new List<ImageOrder>();
 
         public List<ImageOrder> DrawOrders { get; set; } = new List<ImageOrder>();
