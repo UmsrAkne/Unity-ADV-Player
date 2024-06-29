@@ -69,6 +69,7 @@ namespace Loaders
             Converters.Add(new BackgroundVoiceElementConverter());
             Converters.Add(new StopElementConverter());
             Converters.Add(new AnimeElementConverter());
+            Converters.Add(new MoveMessageWindowElementConverter());
 
             var scenarioIndex = 0;
             var scenarioList =
