@@ -137,6 +137,8 @@ namespace SceneLogics
                 });
             });
 
+            var msgWindowMover = new MsgWindowMover();
+
             var list = new List<IScenarioSceneParts>
             {
                 imageDrawers[0],
@@ -153,6 +155,7 @@ namespace SceneLogics
                 ScenePartsProvider.GetBgvPlayer(0),
                 ScenePartsProvider.GetBgvPlayer(1),
                 ScenePartsProvider.GetBgvPlayer(2),
+                msgWindowMover,
             };
 
             list.ForEach(s =>
@@ -173,6 +176,8 @@ namespace SceneLogics
             UiContainer.SetMsgWindowOpacity(SceneResource.SceneSetting.MessageWindowAlpha);
             UiContainer.MoveMessageWindow(SceneResource.SceneSetting.MessageWindowPos.x, SceneResource.SceneSetting.MessageWindowPos.y);
             UiContainer.SetScreenWidth(SceneResource.SceneSetting.DefaultImageWidth);
+
+            msgWindowMover.UiContainer = UiContainer;
 
             InvokeRepeating(nameof(EraseOverImage), 0, 0.025f);
             InvokeRepeating(nameof(ExecuteEveryFrames), 0, 0.025f);
