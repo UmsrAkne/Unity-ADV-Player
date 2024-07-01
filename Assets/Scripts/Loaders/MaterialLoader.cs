@@ -42,7 +42,7 @@ namespace Loaders
             var sp = Sprite.Create(texture,
                 new Rect(0, 0, x, y), new Vector2(0.5f, 0.5f), 1);
 
-            return new SpriteWrapper { Sprite = sp, Width = x, Height = y };
+            return new SpriteWrapper { Sprite = sp, Width = x, Height = y, };
         }
 
         public SpriteWrapper LoadImage(string path)
@@ -50,7 +50,8 @@ namespace Loaders
             var size = GetImageSize(path);
             var sp = Sprite.Create(ReadTexture(path, (int)size.x, (int)size.y),
                 new Rect(0, 0, (int)size.x, (int)size.y), new Vector2(0.5f, 0.5f), 1);
-            return new SpriteWrapper { Sprite = sp, Width = (int)size.x, Height = (int)size.y };
+
+            return new SpriteWrapper { Sprite = sp, Width = (int)size.x, Height = (int)size.y, };
         }
 
         public SpriteWrapper LoadThumbnail(string path, Rect croppedSize)
@@ -58,7 +59,8 @@ namespace Loaders
             var size = GetImageSize(path);
             var sp = Sprite.Create(ReadTexture(path, (int)size.x, (int)size.y),
                 croppedSize, new Vector2(0.5f, 0.5f), 1);
-            return new SpriteWrapper { Sprite = sp, Width = (int)size.x, Height = (int)size.y };
+
+            return new SpriteWrapper { Sprite = sp, Width = (int)size.x, Height = (int)size.y, };
         }
 
         private Texture2D ReadTexture(string path, int width, int height)

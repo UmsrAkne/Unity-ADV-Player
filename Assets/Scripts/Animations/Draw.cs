@@ -70,11 +70,11 @@ namespace Animations
                 drew = true;
                 var drawOrder = new ImageOrder()
                 {
-                    Names = { A, B, C, D },
+                    Names = { A, B, C, D, },
                     IsDrawOrder = true,
                 };
 
-                var scenario = new Scenario() { DrawOrders = new List<ImageOrder>() { drawOrder } };
+                var scenario = new Scenario() { DrawOrders = new List<ImageOrder>() { drawOrder, }, };
                 ImageDrawer.SetScenario(scenario);
                 ImageDrawer.Execute();
             }

@@ -79,11 +79,11 @@ namespace Animations
                 {
                     X = X,
                     Y = Y,
-                    Names = { A, B, C, D },
+                    Names = { A, B, C, D, },
                     Scale = Scale,
                 };
 
-                var scenario = new Scenario() { ImageOrders = new List<ImageOrder>() { imageOrder } };
+                var scenario = new Scenario() { ImageOrders = new List<ImageOrder>() { imageOrder, }, };
                 ImageDrawer.SetScenario(scenario);
                 ImageDrawer.Execute();
             }
