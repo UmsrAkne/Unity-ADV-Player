@@ -20,8 +20,8 @@ namespace SceneLogics
         {
             // このメソッド内の処理はアプリ起動時に実行される。
             
-            DebugTools.Logger.Add($"--------------------------------------------------");
-            DebugTools.Logger.Add($"BootSceneLogic : アプリを起動しました");
+            Logger.Add($"--------------------------------------------------");
+            Logger.Add($"BootSceneLogic : アプリを起動しました");
 
             SceneManager.sceneLoaded += NextSceneLoaded;
 

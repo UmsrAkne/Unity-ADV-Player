@@ -19,5 +19,7 @@
         public int Channel { get; set; }
 
         public bool StopRequest { get; set; }
+
+        public float Delay { get; set; }
     }
 }

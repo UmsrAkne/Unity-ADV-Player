@@ -35,7 +35,15 @@
 
         public void Play()
         {
-            AudioSource.Play();
+            if (Delay == 0)
+            {
+                AudioSource.Play();
+            }
+            else
+            {
+                AudioSource.PlayDelayed(Delay);
+            }
+
             playStartedDateTime = DateTime.Now;
             playing = true;
         }
@@ -45,5 +53,7 @@
             AudioSource.Stop();
             playing = false;
         }
+
+        public float Delay { get; set; }
     }
 }

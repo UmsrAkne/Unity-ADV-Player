@@ -68,5 +68,10 @@ namespace UserInterface
             var mPos = MessageWindow.transform.position;
             MessageWindow.transform.position = new Vector3(mPos.x + x, mPos.y + y);
         }
+
+        public void SetMessageWindowPos(float x, float y)
+        {
+            MessageWindow.transform.position = new Vector3(x, y);
+        }
     }
 }
