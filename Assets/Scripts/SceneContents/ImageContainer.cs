@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace SceneContents
 {
@@ -9,6 +10,7 @@ namespace SceneContents
         public delegate void ImageAddedEventHandler(object sender, ImageAddedEventArgs e);
 
         private GameObject gameObject;
+        private readonly SortingGroup sortingGroup;
 
         public ImageContainer()
         {
@@ -21,6 +23,8 @@ namespace SceneContents
         public ImageContainer(GameObject parentObject)
         {
             GameObject = new GameObject("ImageContainerChild");
+            sortingGroup = GameObject.AddComponent<SortingGroup>();
+            sortingGroup.sortingLayerName = "ImageLayer";
             GameObject.transform.SetParent(parentObject.transform);
         }
 
@@ -42,7 +46,11 @@ namespace SceneContents
 
         // public ImageSet EffectImageSet { get; private set; }
 
-        public int Index { get; set; }
+        public int Index
+        {
+            get => sortingGroup.sortingOrder;
+            set => sortingGroup.sortingOrder = value;
+        }
 
         public int Capacity { get; set; } = 4;
 
