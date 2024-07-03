@@ -83,5 +83,21 @@ namespace Tests.Loaders.XmlElementConverters
             CollectionAssert.AreEqual(scenario.ImageOrders[1].Names,
                 new List<string>() { "A02", string.Empty, string.Empty, string.Empty });
         }
+
+        [Test]
+        public void LayerIndexの読み込みテスト()
+        {
+            var converter = new ImageElementConverter();
+            var scenarioElement =
+                XDocument.Parse("<scenario>"
+                                + " <image a=\"A01\" />"
+                                + " <image a=\"A02\" targetLayerIndex=\"1\"/>"
+                                + " <image a=\"A03\" targetLayerIndex=\"2\"/>"
+                                + " </scenario>").Root;
+            var scenario = new Scenario();
+            converter.Convert(scenarioElement, scenario);
+
+            CollectionAssert.AreEqual(new[] { 0, 1, 2, }, scenario.ImageOrders.Select(o => o.TargetLayerIndex));
+        }
     }
 }
