@@ -19,6 +19,8 @@
         private readonly string durationAttributeName = nameof(ImageOrder.Duration).ToLower(0);
         private readonly string inheritStatusAttributeName = nameof(ImageOrder.InheritStatus).ToLower(0);
         private readonly string targetLayerIndexAttribute = nameof(ImageOrder.TargetLayerIndex).ToLower(0);
+        private readonly string maskAttribute = "mask";
+        private readonly string maskFrameAttribute = "maskFrame";
 
         public string TargetElementName => "image";
 
@@ -99,11 +101,16 @@
                     order.InheritStatus = bool.Parse(XElementHelper.GetStringFromAttribute(imageTag, inheritStatusAttributeName));
                 }
                 
-                if (XElementHelper.HasAttribute(imageTag, "mask"))
+                if (XElementHelper.HasAttribute(imageTag, maskAttribute))
                 {
-                    order.MaskImageName = XElementHelper.GetStringFromAttribute(imageTag, "mask");
+                    order.MaskImageName = XElementHelper.GetStringFromAttribute(imageTag, maskAttribute);
                 }
-                
+
+                if (XElementHelper.HasAttribute(imageTag, maskFrameAttribute))
+                {
+                    order.MaskFrameImageName = XElementHelper.GetStringFromAttribute(imageTag, maskFrameAttribute);
+                }
+
                 scenario.ImageOrders.Add(order);
             }
         }

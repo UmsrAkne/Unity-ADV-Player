@@ -99,5 +99,24 @@ namespace Tests.Loaders.XmlElementConverters
 
             CollectionAssert.AreEqual(new[] { 0, 1, 2, }, scenario.ImageOrders.Select(o => o.TargetLayerIndex));
         }
+
+        [Test]
+        public void Mask属性の読み込みテスト()
+        {
+            var converter = new ImageElementConverter();
+            var scenarioElement =
+                XDocument.Parse("<scenario>"
+                                + " <image a=\"A01\" />"
+                                + " <image a=\"A02\" mask=\"testMask\" maskFrame=\"testMaskFrame\"/>"
+                                + " </scenario>").Root;
+            var scenario = new Scenario();
+            converter.Convert(scenarioElement, scenario);
+
+            Assert.That(scenario.ImageOrders[0].MaskImageName, Is.EqualTo(string.Empty));
+            Assert.That(scenario.ImageOrders[0].MaskFrameImageName, Is.EqualTo(string.Empty));
+
+            Assert.That(scenario.ImageOrders[1].MaskImageName, Is.EqualTo("testMask"));
+            Assert.That(scenario.ImageOrders[1].MaskFrameImageName, Is.EqualTo("testMaskFrame"));
+        }
     }
 }
