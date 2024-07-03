@@ -28,9 +28,9 @@ namespace Loaders
                 case TargetImageType.EventCg:
                     targetDirectoryPath += $@"\images";
                     break;
-                // case TargetImageType.Mask:
-                //     targetDirectoryPath += $@"\{ResourcePath.SceneMaskImageDirectoryName}";
-                //     break;
+                case TargetImageType.MaskImage:
+                    targetDirectoryPath += $@"\masks";
+                    break;
                 // case TargetImageType.UiImage:
                 //     targetDirectoryPath = ResourcePath.CommonUIDirectoryName;
                 //     break;
@@ -72,6 +72,7 @@ namespace Loaders
     public enum TargetImageType
     {
         EventCg,
-        UiImage
+        UiImage,
+        MaskImage,
     }
 }

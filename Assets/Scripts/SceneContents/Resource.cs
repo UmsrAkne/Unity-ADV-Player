@@ -16,9 +16,9 @@ namespace SceneContents
 
         public List<SpriteWrapper> Images { get; set; } = new();
 
-        // public List<SpriteWrapper> MaskImages { get; set; }
+        public List<SpriteWrapper> MaskImages { get; set; } = new List<SpriteWrapper>();
 
-        public Dictionary<string, SpriteWrapper> MaskImagesByName { get; set; }
+        public Dictionary<string, SpriteWrapper> MaskImagesByName { get; set; } = new Dictionary<string, SpriteWrapper>();
 
         public AudioSource BGMAudioSource { get; set; }
 
@@ -70,6 +70,7 @@ namespace SceneContents
             {
                 TargetImageType.EventCg => ImagesByName[targetName],
                 TargetImageType.UiImage => throw new NotImplementedException(),
+                TargetImageType.MaskImage => MaskImagesByName[targetName],
                 _ => throw new NotImplementedException()
             };
         }
@@ -97,13 +98,14 @@ namespace SceneContents
         /// <param name="name">画像ファイルの名前を入力します</param>
         /// <returns>指定のリソースを持っているか</returns>
         /// <exception cref="System.NotImplementedException">
-        /// 調査対象として、TargetImageType.EventCg 以外の種類を指定した場合にスローされます
+        /// 調査対象として、TargetImageType.EventCg, MaskImage 以外の種類を指定した場合にスローされます
         /// </exception>
         public bool ContainsImage(TargetImageType targetImageType, string name)
         {
             return targetImageType switch
             {
                 TargetImageType.EventCg => ImagesByName.ContainsKey(name),
+                TargetImageType.MaskImage => MaskImagesByName.ContainsKey(name),
                 _ => throw new NotImplementedException()
             };
         }
@@ -128,6 +130,15 @@ namespace SceneContents
                     }
 
                     ImagesByName.TryAdd(fileName, spw);
+                    break;
+
+                case TargetImageType.MaskImage:
+                    if (!MaskImages.Contains(spw))
+                    {
+                        MaskImages.Add(spw);
+                    }
+
+                    MaskImagesByName.TryAdd(fileName, spw);
                     break;
 
                 default:

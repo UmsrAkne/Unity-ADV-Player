@@ -16,7 +16,7 @@ namespace Loaders
         private int loadCompleteCount;
         private readonly TextLoader textLoader = new TextLoader();
         private readonly ImageLoader imageLoader = new ImageLoader{TargetImageType = TargetImageType.EventCg};
-        // private readonly ImageLoader maskLoader = new ImageLoader{TargetImageType = TargetImageType.mask};
+        private readonly ImageLoader maskImageLoader = new ImageLoader{TargetImageType = TargetImageType.MaskImage};
         private readonly BGMLoader bgmLoader = new GameObject("BGMLoader-Generator").AddComponent<BGMLoader>();
         private readonly VoiceLoader voiceLoader = new();
         private readonly VoiceLoader bgvLoader = new();
@@ -61,7 +61,7 @@ namespace Loaders
                 // bgm のロードを最後にすると、読み込む前にシーンが始まる？
                 bgmLoader,
                 imageLoader,
-                // maskLoader,
+                maskImageLoader,
                 voiceLoader,
                 bgvLoader,
                 seLoader,
