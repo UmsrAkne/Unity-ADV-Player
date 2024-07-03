@@ -18,6 +18,7 @@
         private readonly string delayAttributeName = nameof(ImageOrder.Delay).ToLower(0);
         private readonly string durationAttributeName = nameof(ImageOrder.Duration).ToLower(0);
         private readonly string inheritStatusAttributeName = nameof(ImageOrder.InheritStatus).ToLower(0);
+        private readonly string targetLayerIndexAttribute = nameof(ImageOrder.TargetLayerIndex).ToLower(0);
 
         public string TargetElementName => "image";
 
@@ -51,6 +52,11 @@
                 else
                 {
                     Log.Add($"image要素に a, b. c, d 属性が含まれていません。Index={scenario.Index}");
+                }
+
+                if (XElementHelper.HasAttribute(imageTag, targetLayerIndexAttribute))
+                {
+                    order.TargetLayerIndex = XElementHelper.GetIntFromAttribute(imageTag, targetLayerIndexAttribute);
                 }
 
                 if (XElementHelper.HasAttribute(imageTag, scaleAttributeName))
