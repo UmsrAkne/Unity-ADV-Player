@@ -152,6 +152,11 @@ namespace ScenarioSceneParts
 
                 frontImageSet.SetSprite(spriteWrappers[i], i, new Color(1.0f, 1.0f, 1.0f, 0));
             }
+
+            if (((ImageContainer)ImageContainer).IsMaskEnabled)
+            {
+                ((ImageSet)frontImageSet).ChangeMaskInteractions(SpriteMaskInteraction.VisibleInsideMask);
+            }
         }
 
         private void AddBaseImage(ImageOrder order)
@@ -173,6 +178,14 @@ namespace ScenarioSceneParts
                     spriteWrappers.Add(sp);
                 }
             });
+
+            if (!string.IsNullOrWhiteSpace(order.MaskImageName))
+            {
+                // imageSet.SetMask(resource.MaskImagesByName[order.MaskImageName].Sprite);
+                var m = resource.GetImage(TargetImageType.MaskImage, order.MaskImageName);
+                var ml = resource.GetImage(TargetImageType.MaskImage, order.MaskFrameImageName);
+                ((ImageContainer)imageContainer).SetMask(m, ml);
+            }
 
             // InheritStatus が指定されている場合は、最前面の画像の状態をコピーする
             if (order.InheritStatus)
@@ -198,9 +211,9 @@ namespace ScenarioSceneParts
 
             imageSet.Draw(spriteWrappers);
 
-            if (!string.IsNullOrWhiteSpace(order.MaskImageName))
+            if (((ImageContainer)imageContainer).IsMaskEnabled)
             {
-                // imageSet.SetMask(resource.MaskImagesByName[order.MaskImageName].Sprite);
+                imageSet.ChangeMaskInteractions(SpriteMaskInteraction.VisibleInsideMask);
             }
         }
     }

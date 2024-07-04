@@ -152,10 +152,6 @@ namespace SceneContents
                     imageUnit.SpriteRenderer.sortingOrder = -1;
                     imageUnit.SpriteRenderer.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
                 }
-                else
-                {
-                    imageUnit.SetMaskSprite(spw.Sprite);
-                }
             }
 
             Alpha = alpha;
@@ -217,6 +213,18 @@ namespace SceneContents
             }
 
             Overwriting = TemporaryImages.Any(i => i != null);
+        }
+
+        /// <summary>
+        /// このオブジェクトに登録されている全てのイメージユニットに対して SpriteMaskInteraction を設定します。
+        /// </summary>
+        /// <param name="smi">設定する SpriteMaskInteraction 。</param>
+        public void ChangeMaskInteractions(SpriteMaskInteraction smi)
+        {
+            foreach (var imageUnit in ImageUnits.Concat(TemporaryImages).Where(u => u != null))
+            {
+                imageUnit.SpriteRenderer.maskInteraction = smi;
+            }
         }
 
         private void ReplaceImage(ImageUnit temporaryImageUnit, int index)

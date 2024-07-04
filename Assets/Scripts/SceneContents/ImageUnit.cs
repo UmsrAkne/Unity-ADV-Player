@@ -51,17 +51,6 @@ namespace SceneContents
             }
         }
 
-        public void SetMaskSprite(Sprite sprite)
-        {
-            var spriteMask = GameObject.GetComponent<SpriteMask>();
-            if (spriteMask == null)
-            {
-                spriteMask = GameObject.AddComponent<SpriteMask>();
-            }
-
-            spriteMask.sprite = sprite;
-        }
-
         public void SetParent(GameObject parent)
         {
             GameObject.transform.SetParent(parent.transform, false);
