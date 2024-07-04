@@ -152,10 +152,6 @@ namespace SceneContents
                     imageUnit.SpriteRenderer.sortingOrder = -1;
                     imageUnit.SpriteRenderer.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
                 }
-                else
-                {
-                    imageUnit.SetMaskSprite(spw.Sprite);
-                }
             }
 
             Alpha = alpha;
