@@ -10,11 +10,21 @@ namespace SceneContents
         public delegate void ImageAddedEventHandler(object sender, ImageAddedEventArgs e);
 
         private GameObject gameObject;
+        private GameObject maskGameObject = new GameObject("MaskObject");
+
         private readonly SortingGroup sortingGroup;
+        private readonly SpriteMask spriteMask;
+        private readonly SpriteRenderer maskFrameSpriteRenderer;
 
         public ImageContainer()
         {
         }
+
+        /// <summary>
+        /// このコンテナのマスクが有効かどうかを取得します。
+        /// SpriteMask に画像が設定されている場合は true を返します。
+        /// </summary>
+        public bool IsMaskEnabled => spriteMask.sprite != null;
 
         /// <summary>
         /// 生成と同時に、このオブジェクトがもつゲームオブジェクトの親として、引数のゲームオブジェクトを設定します。
@@ -25,7 +35,12 @@ namespace SceneContents
             GameObject = new GameObject("ImageContainerChild");
             sortingGroup = GameObject.AddComponent<SortingGroup>();
             sortingGroup.sortingLayerName = "ImageLayer";
+
             GameObject.transform.SetParent(parentObject.transform);
+
+            maskGameObject.transform.SetParent(GameObject.transform);
+            spriteMask = maskGameObject.AddComponent<SpriteMask>();
+            maskFrameSpriteRenderer = maskGameObject.AddComponent<SpriteRenderer>();
         }
 
         public GameObject GameObject
@@ -81,6 +96,30 @@ namespace SceneContents
             }
 
             childObject.SetSortingOrder(AddedChildCount++);
+
+            if (IsMaskEnabled)
+            {
+                ((ImageSet)childObject).ChangeMaskInteractions(SpriteMaskInteraction.VisibleInsideMask);
+            }
+        }
+
+        /// <summary>
+        /// このコンテナ全体に対してマスクを適用します。
+        /// </summary>
+        /// <param name="maskImage">マスクの画像のスプライト</param>
+        /// <param name="maskFrameImage">マスクした画像の上に表示される画像です。マスクの縁部分を隠すための線の画像をセットします。</param>
+        public void SetMask(SpriteWrapper maskImage, SpriteWrapper maskFrameImage)
+        {
+            spriteMask.sprite = maskImage.Sprite;
+            maskFrameSpriteRenderer.sprite = maskFrameImage.Sprite;
+
+            if (spriteMask.sprite != null)
+            {
+                foreach (var displayObject in Children)
+                {
+                    ((ImageSet)displayObject).ChangeMaskInteractions(SpriteMaskInteraction.VisibleInsideMask);
+                }
+            }
         }
 
         // public void AddEffectLayer()
