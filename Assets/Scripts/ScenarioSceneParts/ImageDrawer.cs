@@ -152,6 +152,11 @@ namespace ScenarioSceneParts
 
                 frontImageSet.SetSprite(spriteWrappers[i], i, new Color(1.0f, 1.0f, 1.0f, 0));
             }
+
+            if (((ImageContainer)ImageContainer).IsMaskEnabled)
+            {
+                ((ImageSet)frontImageSet).ChangeMaskInteractions(SpriteMaskInteraction.VisibleInsideMask);
+            }
         }
 
         private void AddBaseImage(ImageOrder order)

@@ -221,7 +221,7 @@ namespace SceneContents
         /// <param name="smi">設定する SpriteMaskInteraction 。</param>
         public void ChangeMaskInteractions(SpriteMaskInteraction smi)
         {
-            foreach (var imageUnit in ImageUnits.Where(u => u != null))
+            foreach (var imageUnit in ImageUnits.Concat(TemporaryImages).Where(u => u != null))
             {
                 imageUnit.SpriteRenderer.maskInteraction = smi;
             }
