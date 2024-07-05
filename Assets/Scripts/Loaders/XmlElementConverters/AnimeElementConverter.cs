@@ -106,6 +106,7 @@ namespace Loaders.XmlElementConverters
                 case "draw": return new Draw();
                 case "image": return new Image();
                 case "scaleChange": return new ScaleChange();
+                case "dummy": return new Dummy();
             }
 
             DebugTools.Logger.Add($"AnimeElementConverter : アニメーションの生成に失敗。 name={animationName}");
