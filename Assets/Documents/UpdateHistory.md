@@ -1,5 +1,13 @@
 # Unity-ADV-Player Update History
 
+## 20240705a
+
+- 機能実装
+    - ダミーアニメーションの生成機能を実装。
+- ドキュメント更新
+    - sceneSetting.xml の defaultSize 属性の項目を追加。
+    - Dummy(アニメーション) の項目を追加。
+
 ## 20240704a
     
 - 画像にマスクを適用する機能を実装。
