@@ -6,6 +6,7 @@ using ScenarioSceneParts;
 using SceneContents;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UserInterface;
 using Logger = DebugTools.Logger;
@@ -203,6 +204,15 @@ namespace SceneLogics
             SceneResource = loader.Resource;
             Init();
             loader.LoadCompleted -= LoaderOnLoadCompleted;
+
+            // メッセージウィンドウにフォーカスを当てる。
+            var m = GameObject.Find("MessageWindow");
+            if (m == null)
+            {
+                return;
+            }
+
+            EventSystem.current.SetSelectedGameObject(GameObject.Find("MessageWindow"));
         }
 
         private void Forward()
