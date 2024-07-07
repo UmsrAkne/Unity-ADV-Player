@@ -88,6 +88,7 @@ namespace Animations
         {
             // effectImageSet = TargetContainer.EffectImageSet;
             effectImageSet = EffectLayerGettable.GetWhiteLayer(TargetLayerIndex);
+            effectImageSet.Alpha = 0;
         }
 
         public void Stop()

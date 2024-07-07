@@ -148,6 +148,8 @@ scenario.xml に関する仕様を以下に記述します。
     - int number : `commonResource/ses` フォルダ内の通し番号で指定します。
     - string fileName : `commonResource/ses` フォルダ内のファイル名で指定します。
     - int repeatCount : 繰り返し回数を指定します。デフォルトは `0` です。
+    - double volume : サウンドのボリュームを設定します。  
+      この要素の中で指定された音量は、他のサウンドの要素には影響しません。
 
 
     <!-- sample --> 
