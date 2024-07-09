@@ -10,7 +10,7 @@ namespace SceneContents
         public delegate void ImageAddedEventHandler(object sender, ImageAddedEventArgs e);
 
         private GameObject gameObject;
-        private GameObject maskGameObject = new GameObject("MaskObject");
+        private GameObject maskGameObject = new GameObject();
 
         private readonly SortingGroup sortingGroup;
         private readonly SpriteMask spriteMask;
@@ -64,7 +64,15 @@ namespace SceneContents
         public int Index
         {
             get => sortingGroup.sortingOrder;
-            set => sortingGroup.sortingOrder = value;
+            set
+            {
+                if (maskGameObject != null)
+                {
+                    maskGameObject.name = $"MaskObject-{value}";
+                }
+
+                sortingGroup.sortingOrder = value;
+            }
         }
 
         public int Capacity { get; set; } = 4;
