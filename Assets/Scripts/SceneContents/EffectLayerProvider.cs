@@ -6,7 +6,7 @@ namespace SceneContents
 {
     public class EffectLayerProvider : IEffectLayerGettable
     {
-        private IDisplayObject overWhite;
+        private static IDisplayObject overWhite;
         private IDisplayObject overBlack;
 
         public IDisplayObject GetWhiteLayer(int containerLayerIndex)
