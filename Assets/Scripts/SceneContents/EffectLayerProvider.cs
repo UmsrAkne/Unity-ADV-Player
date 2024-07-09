@@ -9,6 +9,8 @@ namespace SceneContents
         private static IDisplayObject overWhite;
         private IDisplayObject overBlack;
 
+        private static List<IDisplayObject> masks = new List<IDisplayObject>(3) {null, null, null,};
+
         public IDisplayObject GetWhiteLayer(int containerLayerIndex)
         {
             if (overWhite != null)
@@ -37,6 +39,19 @@ namespace SceneContents
             blackImage.Draw(new List<SpriteWrapper>() { spw, }, "EffectLayer");
             overBlack = blackImage;
             return blackImage;
+        }
+
+        public IDisplayObject GetMask(int containerLayerIndex)
+        {
+            var m = masks[containerLayerIndex];
+            if (m != null)
+            {
+                return m;
+            }
+
+            var d = new DisplayObject(GameObject.Find($"MaskObject-{containerLayerIndex}"));
+            masks[containerLayerIndex] = d;
+            return d;
         }
     }
 }

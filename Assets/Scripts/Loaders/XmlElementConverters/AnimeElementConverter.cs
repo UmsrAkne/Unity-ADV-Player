@@ -106,6 +106,7 @@ namespace Loaders.XmlElementConverters
                 case "draw": return new Draw();
                 case "image": return new Image();
                 case "scaleChange": return new ScaleChange();
+                case "maskSlide": return new MaskSlide();
                 case "dummy": return new Dummy();
             }
 
