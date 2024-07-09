@@ -1,6 +1,6 @@
 # Unity-ADV-Player Document
 
-## version 20240704a
+## version 20240709a 対応
 
 ## Summary 
 
@@ -260,6 +260,21 @@ bgv を鳴らす
     - string groupName
 
 ### bound
+
+### maskSlide
+
+指定したレイヤーのマスクと、MaskLine を移動させます。  
+マスクが適用されているオブジェクトは移動しません。こちらの移動には Slide を使います。
+
+- 属性
+    - int degree
+    - int distance 
+    - int duration
+    - int repeatCount
+    - int delay
+    - int interval
+    - int targetLayerIndex
+    - string groupName
 
 ### animationChain
 
