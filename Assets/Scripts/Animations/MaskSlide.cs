@@ -5,12 +5,11 @@ namespace Animations
     public class MaskSlide : IAnimation
     {
         private SlideCore core;
-        private int executeCounter;
-        private bool isInitialExecute;
+        private bool isInitialExecute = true;
 
-        public string AnimationName { get; }
+        public string AnimationName => "maskSlide";
 
-        public bool IsWorking { get; private set; }
+        public bool IsWorking { get; private set; } = true;
 
         public IDisplayObject Target { get; set; }
 
@@ -28,15 +27,21 @@ namespace Animations
 
         public string GroupName { get; set; }
 
+        // ReSharper disable once MemberCanBePrivate.Global
+        // リフレクションでアクセスするために公開する。
         public int Duration { get; set; }
 
+        // ReSharper disable once MemberCanBePrivate.Global
+        // リフレクションでアクセスするために公開する。
         public int Degree { get; set; }
 
+        // ReSharper disable once MemberCanBePrivate.Global
+        // リフレクションでアクセスするために公開する。
         public int Distance { get; set; }
 
         public void Execute()
         {
-            if (Target == null || !IsWorking)
+            if (!IsWorking)
             {
                 return;
             }
@@ -53,7 +58,6 @@ namespace Animations
             }
 
             core.Execute();
-            executeCounter++;
 
             if (!core.IsWorking)
             {
@@ -73,7 +77,6 @@ namespace Animations
 
         public void Start()
         {
-            throw new System.NotImplementedException();
         }
 
         public void Stop()
@@ -86,9 +89,10 @@ namespace Animations
 
         private void Initialize()
         {
+            var targetProvider = new EffectLayerProvider();
             core = new SlideCore()
             {
-                Target = Target,
+                Target = targetProvider.GetMask(TargetLayerIndex),
                 Distance = Distance,
                 Degree = Degree,
                 Duration = Duration,
