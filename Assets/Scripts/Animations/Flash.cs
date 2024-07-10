@@ -8,7 +8,6 @@ namespace Animations
         private IDisplayObject effectImageSet;
         private int frameCounter;
         private int intervalCounter;
-        private ImageContainer targetContainer;
         private double changeValuePerOne;
 
         public IDisplayObject EffectImageSet
@@ -42,8 +41,6 @@ namespace Animations
         public int Interval { get; set; }
 
         public string GroupName { get; set; } = string.Empty;
-
-        public ImageContainer TargetContainer { get => targetContainer; set => targetContainer ??= value; }
 
         public IEffectLayerGettable EffectLayerGettable { private get; set; } = new EffectLayerProvider();
 
@@ -86,7 +83,6 @@ namespace Animations
 
         public void Start()
         {
-            // effectImageSet = TargetContainer.EffectImageSet;
             effectImageSet = EffectLayerGettable.GetWhiteLayer(TargetLayerIndex);
             effectImageSet.Alpha = 0;
         }

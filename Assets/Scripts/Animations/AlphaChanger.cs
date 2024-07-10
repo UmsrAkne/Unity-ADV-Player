@@ -1,6 +1,5 @@
 ﻿using System;
 using SceneContents;
-using UnityEngine;
 
 namespace Animations
 {
@@ -35,11 +34,6 @@ namespace Animations
                     target = value;
                 }
             }
-        }
-
-        public ImageContainer TargetContainer
-        {
-            set => _ = value;
         }
 
         public int TargetLayerIndex { get; set; }
