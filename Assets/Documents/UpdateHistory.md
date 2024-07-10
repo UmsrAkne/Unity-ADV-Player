@@ -1,5 +1,10 @@
 # Unity-ADV-Player Update History
 
+## 20240710a
+
+- リファクタリング
+  - 不要なコードの削除
+
 ## 20240709a
 
 - 機能追加
