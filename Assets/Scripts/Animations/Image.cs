@@ -36,8 +36,6 @@ namespace Animations
 
         public IDisplayObject Target { get; set; }
 
-        public ImageContainer TargetContainer { get; set; }
-
         public int TargetLayerIndex { get; set; }
 
         public int RepeatCount { get; set; }

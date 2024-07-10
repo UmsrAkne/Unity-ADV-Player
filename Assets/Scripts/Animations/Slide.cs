@@ -61,11 +61,6 @@ namespace Animations
 
         public string GroupName { get; set; } = string.Empty;
 
-        public ImageContainer TargetContainer
-        {
-            set => _ = value;
-        }
-
         public void Execute()
         {
             if (Target == null || !IsWorking)

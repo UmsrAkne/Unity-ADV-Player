@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using ScenarioSceneParts;
@@ -140,7 +139,6 @@ namespace Animations
                 }
             }
 
-            anime.TargetContainer = TargetImageContainer;
             anime.Target = TargetImageContainer.FrontChild;
             anime.Start();
             Animations.Add(anime);

@@ -10,8 +10,6 @@ namespace Animations
 
         IDisplayObject Target { set; }
 
-        ImageContainer TargetContainer { set; }
-
         int TargetLayerIndex { get; set; }
 
         int RepeatCount { get; set; }

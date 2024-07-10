@@ -22,11 +22,6 @@ namespace Animations
 
         public IDisplayObject Target { private get; set; }
 
-        public ImageContainer TargetContainer
-        {
-            set => _ = value;
-        }
-
         public int TargetLayerIndex { get; set; }
 
         public int RepeatCount { get; set; }

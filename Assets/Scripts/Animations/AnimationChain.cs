@@ -54,8 +54,6 @@ namespace Animations
             }
         }
 
-        public ImageContainer TargetContainer { get; set; }
-
         public int TargetLayerIndex { get; set; }
 
         public int RepeatCount { get; set; }
