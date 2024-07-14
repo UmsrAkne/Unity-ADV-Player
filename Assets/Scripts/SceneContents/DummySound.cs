@@ -8,6 +8,8 @@ namespace SceneContents
 
         public double Volume { get; set; } = 1.0;
 
+        public float PanStereo { get; set; }
+
         public bool IsPlaying { get; set; }
 
         public bool Available { get; set; }

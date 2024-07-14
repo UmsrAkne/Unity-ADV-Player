@@ -16,6 +16,12 @@
             set => AudioSource.volume = (float)value;
         }
 
+        public float PanStereo
+        {
+            get => AudioSource.panStereo;
+            set => AudioSource.panStereo = value;
+        }
+
         public bool IsPlaying
         {
             get

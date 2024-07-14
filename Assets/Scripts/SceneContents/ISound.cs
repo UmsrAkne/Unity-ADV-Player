@@ -8,6 +8,8 @@
 
         double Volume { get; set; }
 
+        float PanStereo { get; set; }
+
         bool IsPlaying { get; }
 
         /// <summary>
