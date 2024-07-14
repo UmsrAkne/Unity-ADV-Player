@@ -1,7 +1,9 @@
+using System.Linq;
 using Loaders;
 using SceneContents;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace SceneLogics
 {
@@ -42,6 +44,12 @@ namespace SceneLogics
             }
 
             loader.LoadTexts(TargetDirectoryPath);
+
+            if (DebugTools.Logger.ErrorMessages.Count != 0)
+            {
+                GameObject.Find("MessageWindowObject").GetComponent<Text>().text =
+                    string.Join(string.Empty, DebugTools.Logger.ErrorMessages);
+            }
         }
     }
 }

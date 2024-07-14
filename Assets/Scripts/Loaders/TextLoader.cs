@@ -31,6 +31,8 @@ namespace Loaders
 
         public Resource Resource { get; set; }
 
+        public bool LoadSuccess { get; set; }
+
         public event EventHandler LoadCompleted;
 
         private List<IXMLElementConverter> Converters { get; set; } = new();
@@ -56,8 +58,8 @@ namespace Loaders
             catch (XmlException e)
             {
                 Scenarios = new List<Scenario>() { new() { Text = "シナリオの読み込みに失敗しました。" } };
-                DebugTools.Logger.Add($"TextLoader : Scenario.xmlのパースに失敗しました。");
-                DebugTools.Logger.Add($"{Environment.NewLine}{e.Message}");
+                DebugTools.Logger.Add($"TextLoader : Scenario.xmlのパースに失敗しました。", true);
+                DebugTools.Logger.Add($"{Environment.NewLine}{e.Message}", true);
                 return;
             }
 
@@ -113,6 +115,7 @@ namespace Loaders
 
             // Converters.ForEach(c => Log.AddRange(c.Log));
 
+            LoadSuccess = true;
             Resource.Scenarios = Scenarios;
             DebugTools.Logger.Add($"TextLoader : Scenarios.Count = {Scenarios.Count}");
             DebugTools.Logger.Add($"TextLoader : Scenario.xml のパースが完了しました。");
