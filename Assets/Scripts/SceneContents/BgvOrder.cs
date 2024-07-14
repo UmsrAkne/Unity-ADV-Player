@@ -9,5 +9,7 @@ namespace SceneContents
         public int Channel { get; set; }
 
         public bool IsStopOrder { get; set; }
+
+        public float PanStereo { get; set; }
     }
 }

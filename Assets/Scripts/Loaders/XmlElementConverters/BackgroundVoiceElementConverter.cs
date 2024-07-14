@@ -9,6 +9,8 @@ namespace Loaders.XmlElementConverters
     {
         private readonly string channelAttribute = "channel";
         private readonly string namesAttribute = "names";
+        private readonly string panStereoAttribute = "panStereo";
+
 
         public string TargetElementName => "backgroundVoice";
 
@@ -32,6 +34,11 @@ namespace Loaders.XmlElementConverters
                     var fileNames = XElementHelper.GetStringFromAttribute(bgvTag, namesAttribute);
                     order.FileNames = new List<string>(fileNames.Split(','));
                     order.FileNames = order.FileNames.Select(name => name.Trim()).ToList();
+                }
+
+                if (XElementHelper.HasAttribute(bgvTag, panStereoAttribute))
+                {
+                    order.PanStereo = XElementHelper.GetFloatFromAttribute(bgvTag, panStereoAttribute);
                 }
 
                 if (XElementHelper.HasAttribute(bgvTag, channelAttribute))

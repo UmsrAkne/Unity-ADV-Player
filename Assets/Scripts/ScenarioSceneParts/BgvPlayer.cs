@@ -95,6 +95,11 @@ namespace ScenarioSceneParts
                     .OrderBy(_ => Guid.NewGuid())
                     .ToList();
 
+                foreach (var v in voices)
+                {
+                    v.PanStereo = bgvOrder.PanStereo;
+                }
+
                 Volume = 0;
                 Play(voices.FirstOrDefault());
             }
