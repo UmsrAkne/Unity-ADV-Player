@@ -91,7 +91,10 @@ namespace Loaders
         {
             textLoader.Resource = Resource;
             textLoader.Load(targetDirectoryPath);
-            TextLoadCompleted?.Invoke(this, EventArgs.Empty);
+            if (textLoader.LoadSuccess)
+            {
+                TextLoadCompleted?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         public void Recycle(Resource res)
