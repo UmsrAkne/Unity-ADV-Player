@@ -1,6 +1,6 @@
 # Unity-ADV-Player Document
 
-## version 20240709a 対応
+## version 20240715a 対応
 
 ## Summary 
 
@@ -248,7 +248,7 @@ bgv を鳴らす
     - int interval
     - string groupName
 
-### flash
+#### flash
 
 画面を白発光させます。Duration に指定したフレーム数の間に１回発光します。  
 複数回発光させたい場合は、repeatCount を指定します。
@@ -260,9 +260,9 @@ bgv を鳴らす
     - int interval
     - string groupName
 
-### bound
+#### bound
 
-### maskSlide
+#### maskSlide
 
 指定したレイヤーのマスクと、MaskLine を移動させます。  
 マスクが適用されているオブジェクトは移動しません。こちらの移動には Slide を使います。
@@ -277,7 +277,7 @@ bgv を鳴らす
     - int targetLayerIndex
     - string groupName
 
-### animationChain
+#### animationChain
 
 - 属性
     - int repeatCount = 0;
@@ -308,23 +308,35 @@ bgv を鳴らす
 
 Image により、画像の描画命令があった場合、他のアニメーション同様にストップします。
 
-### chain
+#### chain
 
 `animationChain` の別名です。nameにこれを指定した場合は、`animationChain` が生成されます。
 
-### draw
+#### image
+
+新規レイヤーを追加しつつ画像を描画します。
 
 - 属性
-    - string a;
+  - string a;
+  - string b;
+  - string c;
+  - string d;
+  - int x = 0;
+  - int y = 0;
+  - double scale = 1.0;
+  - int wait = 0;
+
+#### draw
+
+現在のレイヤーに画像を描画します。
+
+- 属性
     - string b;
     - string c;
     - string d;
-    - int x = 0;
-    - int y = 0;
-    - double scale = 1.0;
     - int wait = 0;
 
-### scaleChange
+#### scaleChange
 
 画像を拡大、縮小します。現在の拡大率から `to` で指定した倍率まで、`Duration` に指定した時間をかけて変化します。
 
