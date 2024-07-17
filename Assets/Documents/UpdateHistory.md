@@ -1,5 +1,11 @@
 # Unity-ADV-Player Update History
 
+## 20240717a
+
+- ドキュメント更新
+  - image(anime), draw(anime) の項目を追加。
+  - 一部見出しのレベルを整理。
+
 ## 20240715a
 
 - 機能追加
