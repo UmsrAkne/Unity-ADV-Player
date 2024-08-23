@@ -42,6 +42,16 @@ namespace SceneLogics
             var scenesPath = new DirectoryInfo(Application.dataPath).Parent + @"\scenes";
             selectableScenePaths = GetDirectories(scenesPath);
 
+            var lastPath = LoadLastSelectedScenePath(BootSceneLogic.LastSelectedDirectoryTextFileName);
+            if (!string.IsNullOrWhiteSpace(lastPath))
+            {
+                var index = selectableScenePaths.IndexOf(lastPath);
+                if (index != -1)
+                {
+                    CursorIndex = index;
+                }
+            }
+
             ReloadThumbnails();
         }
 
@@ -105,6 +115,11 @@ namespace SceneLogics
             }
 
             return directories;
+        }
+
+        private string LoadLastSelectedScenePath(string path)
+        {
+            return File.Exists(path) ? File.ReadAllText(path) : string.Empty;
         }
 
         void Update()
