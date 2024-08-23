@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,6 +10,7 @@ namespace SceneLogics
     public class BootSceneLogic : MonoBehaviour
     {
         private static string currentSceneDirectoryPath = string.Empty;
+        private const string LastSelectedDirectoryTextFileName = "lastSelectedDirectoryPath.txt";
 
         private void Awake()
         {
@@ -57,8 +59,16 @@ namespace SceneLogics
             Logger.Add("BottSceneLogic : シーンが選択されたので、メディアのロードを開始します");
             currentSceneDirectoryPath = ((SelectionSceneLogic)sender).SelectedScenePath;
 
+            SaveToText(currentSceneDirectoryPath, LastSelectedDirectoryTextFileName);
+            Logger.Add("BottSceneLogic : 選択したシーンのパスを記録しました");
+
             Logger.Add($"BottSceneLogic : ScenePath = {currentSceneDirectoryPath}");
             SceneManager.LoadScene("LoadScene");
+        }
+
+        private static void SaveToText(string text, string path)
+        {
+            File.WriteAllText(path, text);
         }
     }
 }
