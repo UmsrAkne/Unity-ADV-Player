@@ -9,8 +9,8 @@ namespace SceneLogics
 {
     public class BootSceneLogic : MonoBehaviour
     {
+        public const string LastSelectedDirectoryTextFileName = "lastSelectedDirectoryPath.txt";
         private static string currentSceneDirectoryPath = string.Empty;
-        private const string LastSelectedDirectoryTextFileName = "lastSelectedDirectoryPath.txt";
 
         private void Awake()
         {
