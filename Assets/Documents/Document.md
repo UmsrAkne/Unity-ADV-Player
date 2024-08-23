@@ -1,6 +1,6 @@
 # Unity-ADV-Player Document
 
-## version 20240715a 対応
+## version 20240823a 対応
 
 ## Summary 
 
@@ -24,6 +24,7 @@ Unity-ADV-Player は、xml に記述した命令に基づいて文字と画像�
     │  │  ├─texts
     │  │  └─voices
 
+`scenes` 以下のディレクトリは、 `createScenesDir.sh` で生成可能です。
 
 - `sampleScn001` は任意の名前を設定します。
 - `scenes` の直下には、同じ構造のディレクトリを任意の数だけ作成可能です。
