@@ -20,5 +20,14 @@ mkdir -p "$script_dir/$dir_name/voices"
 touch "$script_dir/$dir_name/texts/scenario.xml"
 touch "$script_dir/$dir_name/texts/setting.xml"
 
-echo "ディレクトリ構造と空のファイルが作成されました。"
+cat <<EOL >> "$script_dir/$dir_name/texts/setting.xml"
+<setting>
+    <bgm number="0" volume="1.0" />
+    <defaultSize width="1280" />
+    <voice volume="1.0" />
+    <se volume="1.0" />
+    <bgv volume="1.0" />
+</setting>
+EOL
 
+echo "ディレクトリ構造と空のファイルが作成されました。"

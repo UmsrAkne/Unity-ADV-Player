@@ -1,5 +1,10 @@
 # Unity-ADV-Player Update History
 
+## 20240825a
+
+- 機能追加
+  - createScenesDir.sh でディレクトリを作成した際、 `setting.xml` の内容を書き込むようにした。
+
 ## 20240823a 
 
 - 機能追加
