@@ -1,6 +1,6 @@
 # Unity-ADV-Player Document
 
-## version 20240823a 対応
+## version 20240825a 対応
 
 ## Summary 
 
