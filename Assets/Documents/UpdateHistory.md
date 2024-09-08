@@ -1,5 +1,17 @@
 # Unity-ADV-Player Update History
 
+## 20240908a
+
+  - 機能追加
+    - Animation の draw に depth を実行。画像が表示されるスピードをコントロール可能にした。
+  
+  - バグ修正
+    - AnimationChain の中で draw を複数定義すると、全て一括で実行されてしまうバグを修正した。
+
+  - ドキュメント更新
+    - MoveMessageWindow タグについての記述を追加。
+    - Animations.draw の属性に `depath` を追加。 `wait` を削除。
+
 ## 20240825a
 
 - 機能追加
