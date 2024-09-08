@@ -37,6 +37,8 @@ namespace Animations
 
         public int Interval { get; set; }
 
+        public double Depth { get; set; }
+
         public string GroupName { get; set; } = string.Empty;
 
         public bool PlayOnce { get; set; }
@@ -70,6 +72,7 @@ namespace Animations
                 {
                     Names = { A, B, C, D, },
                     IsDrawOrder = true,
+                    Depth = Depth,
                 };
 
                 var scenario = new Scenario() { DrawOrders = new List<ImageOrder>() { drawOrder, }, };
