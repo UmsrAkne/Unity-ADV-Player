@@ -1,6 +1,6 @@
 # Unity-ADV-Player Document
 
-## version 20240825a 対応
+## version 20240908a 対応
 
 ## Summary 
 
@@ -169,6 +169,15 @@ bgv を鳴らす
     <!-- sample --> 
     <backgroundVoice names="v1, v2, v3, v4" channel="1" />
 
+### MoveMessageWindow
+
+メッセージウィンドウを上下に移動させます。
+
+位置は実行ごとに　上 -> 下 -> 上 -> 下 -> ... という風にトグルします。
+
+    <!-- sample -->
+    <moveMessageWindow />
+
 ### stop
 
 // TODO : 動作未確認
@@ -332,10 +341,11 @@ Image により、画像の描画命令があった場合、他のアニメー�
 現在のレイヤーに画像を描画します。
 
 - 属性
+    - string a;
     - string b;
     - string c;
     - string d;
-    - int wait = 0;
+    - double depth : １度に描画する画像の透明度です。例えば `0.1` を指定した場合、画像を完全に表示するまでに 10 回の描画を要します。無指定の場合は `0.1` が設定されます。
 
 #### scaleChange
 

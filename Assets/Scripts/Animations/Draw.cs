@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ScenarioSceneParts;
 using SceneContents;
@@ -7,6 +8,7 @@ namespace Animations
     public class Draw : IAnimation
     {
         private bool drew;
+        private bool initialExecution = true;
 
         // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public string A { get; set; } = string.Empty;
@@ -19,9 +21,6 @@ namespace Animations
 
         // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
         public string D { get; set; } = string.Empty;
-
-        // ReSharper disable once MemberCanBePrivate.Global / リフレクションでアクセスを行うため
-        public int Wait { get; set; }
 
         public string AnimationName { get; } = "draw";
 
@@ -37,17 +36,32 @@ namespace Animations
 
         public int Interval { get; set; }
 
+        public double Depth { get; set; }
+
         public string GroupName { get; set; } = string.Empty;
 
         public bool PlayOnce { get; set; }
 
         private ImageDrawer ImageDrawer { get; set; }
 
+        private int Wait { get; set; }
+
         public void Execute()
         {
             if (!IsWorking)
             {
                 return;
+            }
+
+            if (initialExecution)
+            {
+                initialExecution = false;
+                if (Depth <= 0)
+                {
+                    Depth = 0.1;
+                }
+
+                Wait = (int)Math.Ceiling(1.0 / Depth);
             }
 
             ImageDrawer ??= ScenePartsProvider.GetImageDrawer(TargetLayerIndex);
@@ -70,6 +84,7 @@ namespace Animations
                 {
                     Names = { A, B, C, D, },
                     IsDrawOrder = true,
+                    Depth = Depth,
                 };
 
                 var scenario = new Scenario() { DrawOrders = new List<ImageOrder>() { drawOrder, }, };
