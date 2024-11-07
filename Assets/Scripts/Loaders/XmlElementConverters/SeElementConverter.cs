@@ -12,6 +12,7 @@
         private readonly string volumeAttribute = "volume";
         private readonly string repeatCountAttribute = "repeatCount";
         private readonly string delayAttribute = "delay";
+        private readonly string channelAttribute = "channel";
 
         public string TargetElementName => "se";
 
@@ -43,6 +44,11 @@
                 if (XElementHelper.HasAttribute(seTag, fileNameAttribute))
                 {
                     order.FileName = XElementHelper.GetStringFromAttribute(seTag, fileNameAttribute);
+                }
+
+                if (XElementHelper.HasAttribute(seTag, channelAttribute))
+                {
+                    order.Channel = XElementHelper.GetIntFromAttribute(seTag, channelAttribute);
                 }
 
                 if (XElementHelper.HasAttribute(seTag, repeatCountAttribute))

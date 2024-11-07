@@ -92,7 +92,7 @@ namespace ScenarioSceneParts
         {
             scenario.StopOrders.ForEach(order =>
             {
-                if (order.Target == StoppableSceneParts.Se)
+                if (order.Target == StoppableSceneParts.Se && order.Channel == Channel)
                 {
                     stopOrder = order;
                 }
@@ -103,7 +103,11 @@ namespace ScenarioSceneParts
                 return;
             }
 
-            CurrentOrder = scenario.SeOrders.FirstOrDefault();
+            var o = scenario.SeOrders.FirstOrDefault(s => s.Channel == Channel);
+            if (o != null)
+            {
+                CurrentOrder = o;
+            }
         }
     }
 }
