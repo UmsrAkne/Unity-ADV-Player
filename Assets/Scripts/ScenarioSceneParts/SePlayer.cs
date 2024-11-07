@@ -13,6 +13,8 @@ namespace ScenarioSceneParts
 
         private ISound PlayingSound { get; set; }
 
+        public int Channel { get; private set; }
+
         public bool NeedExecuteEveryFrame => false;
 
         public ExecutionPriority Priority => ExecutionPriority.Low;
@@ -20,6 +22,11 @@ namespace ScenarioSceneParts
         private IResource Resource { get; set; }
 
         private float BaseVolume { get; set; }
+
+        public SePlayer(int ch)
+        {
+            Channel = ch;
+        }
 
         public void Execute()
         {
@@ -85,7 +92,7 @@ namespace ScenarioSceneParts
         {
             scenario.StopOrders.ForEach(order =>
             {
-                if (order.Target == StoppableSceneParts.Se)
+                if (order.Target == StoppableSceneParts.Se && order.Channel == Channel)
                 {
                     stopOrder = order;
                 }
@@ -96,7 +103,11 @@ namespace ScenarioSceneParts
                 return;
             }
 
-            CurrentOrder = scenario.SeOrders.FirstOrDefault();
+            var o = scenario.SeOrders.FirstOrDefault(s => s.Channel == Channel);
+            if (o != null)
+            {
+                CurrentOrder = o;
+            }
         }
     }
 }

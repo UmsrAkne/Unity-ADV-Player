@@ -1,6 +1,6 @@
 # Unity-ADV-Player Document
 
-## version 20240908a 対応
+## version 20241107a 対応
 
 ## Summary 
 
@@ -149,12 +149,15 @@ scenario.xml に関する仕様を以下に記述します。
     - int number : `commonResource/ses` フォルダ内の通し番号で指定します。
     - string fileName : `commonResource/ses` フォルダ内のファイル名で指定します。
     - int repeatCount : 繰り返し回数を指定します。デフォルトは `0` です。
+    - int channel : チャンネルを指定します。
+      - 現在同時に利用可能なチャンネルは `0 or 1` のみです。
+      - デフォルトは `0` です。明示的に指定しなくても動作します。
     - double volume : サウンドのボリュームを設定します。  
       この要素の中で指定された音量は、他のサウンドの要素には影響しません。
 
 
     <!-- sample --> 
-    <se fileName="sound" repeatCount="2" />
+    <se fileName="sound" repeatCount="2" channel="0" />
 
 ### backgroundVoice
 

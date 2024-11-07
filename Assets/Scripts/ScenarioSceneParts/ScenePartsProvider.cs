@@ -7,6 +7,7 @@ namespace ScenarioSceneParts
         private static List<ImageDrawer> ImageDrawers { get; } = new ();
         private static List<VoicePlayer> VoicePlayers { get; } = new ();
         private static List<BgvPlayer> BgvPlayers { get; } = new ();
+        private static List<SePlayer> SePlayers { get; } = new ();
 
         public static ImageDrawer GetImageDrawer(int index)
         {
@@ -57,6 +58,22 @@ namespace ScenarioSceneParts
             }
 
             return vps[channel] ?? (vps[channel] = new BgvPlayer(GetVoicePlayer(channel)));
+        }
+
+        /// <summary>
+        /// SePlayer を取得します。新しい channel を指定した場合、内部で SePlayer を新たに作成してそれを取得します。
+        /// </summary>
+        /// <param name="channel"></param>
+        /// <returns></returns>
+        public static SePlayer GetSePlayer(int channel)
+        {
+            var seps = SePlayers;
+            while (seps.Count <= channel)
+            {
+                seps.Add(null);
+            }
+
+            return seps[channel] ?? (seps[channel] = new SePlayer(channel));
         }
     }
 }
