@@ -13,6 +13,8 @@ namespace ScenarioSceneParts
 
         private ISound PlayingSound { get; set; }
 
+        public int Channel { get; private set; }
+
         public bool NeedExecuteEveryFrame => false;
 
         public ExecutionPriority Priority => ExecutionPriority.Low;
@@ -20,6 +22,11 @@ namespace ScenarioSceneParts
         private IResource Resource { get; set; }
 
         private float BaseVolume { get; set; }
+
+        public SePlayer(int ch)
+        {
+            Channel = ch;
+        }
 
         public void Execute()
         {
