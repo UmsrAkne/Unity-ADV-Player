@@ -29,7 +29,7 @@ namespace Loaders
             return sound.Available ? sound : LoadSound(path, sound);
         }
 
-        public SpriteWrapper LoadImage(string path, float scale = 1.0f)
+        public SpriteWrapper LoadImage(string path, float scale)
         {
             var size = GetImageSize(path);
             var x = (int)(size.x * scale);
