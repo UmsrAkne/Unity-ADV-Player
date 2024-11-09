@@ -27,6 +27,7 @@ cat <<EOL >> "$script_dir/$dir_name/texts/setting.xml"
     <voice volume="1.0" />
     <se volume="1.0" />
     <bgv volume="1.0" />
+    <messageWindow alpha="0.6" />
 </setting>
 EOL
 
