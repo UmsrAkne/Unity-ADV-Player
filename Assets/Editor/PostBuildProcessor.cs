@@ -1,6 +1,7 @@
 using System.IO;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
+using UnityEngine;
 
 namespace Editor
 {
@@ -16,6 +17,12 @@ namespace Editor
 
             // summary.outputPath から .exe が取得される。
             var outputPath = Path.GetDirectoryName(report.summary.outputPath) ?? string.Empty;
+
+            if (string.IsNullOrWhiteSpace(outputPath))
+            {
+                Debug.LogError("ビルド先のパスの取得に失敗しました");
+                return;
+            }
 
             var updateHistoryFileDestinationPath = Path.Combine(outputPath, "UpdateHistory.md");
             var documentFileDestinationPath = Path.Combine(outputPath, "Document.md");
