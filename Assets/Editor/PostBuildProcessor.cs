@@ -12,12 +12,14 @@ namespace Editor
         {
             var documentFilePath = "Assets/Documents/Document.md";
             var updateHistoryFilePath = "Assets/Documents/UpdateHistory.md";
+            var createScenesDirScriptPath = "createScenesDir.sh";
 
             // summary.outputPath から .exe が取得される。
             var outputPath = Path.GetDirectoryName(report.summary.outputPath) ?? string.Empty;
 
             var updateHistoryFileDestinationPath = Path.Combine(outputPath, "UpdateHistory.md");
             var documentFileDestinationPath = Path.Combine(outputPath, "Document.md");
+            var createScenesDirScriptDestinationPath = Path.Combine(outputPath, "createScenesDir.sh");
 
             if (File.Exists(updateHistoryFilePath))
             {
@@ -27,6 +29,11 @@ namespace Editor
             if (File.Exists(documentFilePath))
             {
                 File.Copy(documentFilePath, documentFileDestinationPath, true);
+            }
+
+            if (File.Exists(createScenesDirScriptPath))
+            {
+                File.Copy(createScenesDirScriptPath, createScenesDirScriptDestinationPath, true);
             }
         }
     }
