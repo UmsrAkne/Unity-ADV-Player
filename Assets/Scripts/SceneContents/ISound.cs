@@ -18,6 +18,12 @@
         /// </summary>
         bool Available { get; set; }
 
+        /// <summary>
+        /// 音声を再生します。
+        /// </summary>
+        /// <remarks>
+        /// Delay の値が指定されている場合は遅延再生となります。
+        /// </remarks>
         void Play();
 
         void Stop();
