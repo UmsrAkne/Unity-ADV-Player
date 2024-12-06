@@ -151,6 +151,7 @@ namespace SceneLogics
                 animationsManagers[2],
                 ScenePartsProvider.GetSePlayer(0),
                 ScenePartsProvider.GetSePlayer(1),
+                ScenePartsProvider.GetSePlayer(2),
                 ScenePartsProvider.GetVoicePlayer(0),
                 ScenePartsProvider.GetVoicePlayer(1),
                 ScenePartsProvider.GetVoicePlayer(2),
