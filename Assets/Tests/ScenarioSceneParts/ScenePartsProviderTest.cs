@@ -40,14 +40,14 @@ namespace Tests.ScenarioSceneParts
         [Test]
         public void GetBgvPlayerTest()
         {
-            var v1 = ScenePartsProvider.GetBgvPlayer(1);
-            var v0 = ScenePartsProvider.GetBgvPlayer(0);
+            var v1 = ScenePartsProvider.GetBgvPlayer(1, null);
+            var v0 = ScenePartsProvider.GetBgvPlayer(0, null);
 
             Assert.NotNull(v0);
             Assert.NotNull(v1);
 
-            Assert.AreEqual(v0, ScenePartsProvider.GetBgvPlayer(0));
-            Assert.AreEqual(v1, ScenePartsProvider.GetBgvPlayer(1));
+            Assert.AreEqual(v0, ScenePartsProvider.GetBgvPlayer(0, null));
+            Assert.AreEqual(v1, ScenePartsProvider.GetBgvPlayer(1, null));
             Assert.AreEqual(v0.VoicePlayer, ScenePartsProvider.GetVoicePlayer(0));
             Assert.AreEqual(v1.VoicePlayer, ScenePartsProvider.GetVoicePlayer(1));
         }

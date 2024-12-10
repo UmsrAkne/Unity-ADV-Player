@@ -1,6 +1,6 @@
 # Unity-ADV-Player Document
 
-## version 20241206a 対応
+## version 20241210a 対応
 
 ## Summary 
 
@@ -395,7 +395,9 @@ BGM は `commonResource/bgms` の `.ogg` ファイルのみがカウントの対
 シーンで流れる BGV の音量を設定します。
 
 - 属性
-    - float volume : 音量を設定します。 `0 - 1.0` の間で入力します。デフォルトは `1.0` です。
+    - float volume : 音量を設定します。 `0 - 2.0` の間で入力します。
+      - デフォルト値は `1.0` です。
+      - 最大値の `2.0` は本来の音量の二倍の音量です。
   
 ## backgroundVoice
 

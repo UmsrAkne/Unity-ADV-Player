@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Loaders;
 using SceneContents;
+using UnityEngine.Audio;
+using Utils;
 
 namespace ScenarioSceneParts
 {
@@ -33,11 +35,8 @@ namespace ScenarioSceneParts
             {
                 if (value >= 0 && value <= BaseVolume)
                 {
-                    if (playingVoice != null)
-                    {
-                        playingVoice.Volume = value;
-                    }
-
+                    var vol = AudioMixerVolumeConverter.ConvertLinearToDecibel((float)value);
+                    AudioMixer.SetFloat("bgvMixVol", vol);
                     volume = value;
                 }
             }
@@ -48,6 +47,8 @@ namespace ScenarioSceneParts
         private IResource Resource { get; set; }
 
         public bool NeedExecuteEveryFrame => true;
+
+        public AudioMixer AudioMixer { private get; set; }
 
         public ExecutionPriority Priority => ExecutionPriority.Low;
 
@@ -66,15 +67,12 @@ namespace ScenarioSceneParts
             {
                 // 再生中の音声が終了したら、リスト上で次の音声があれば再生、なければシャッフルして先頭から再生する。
                 var currentIndex = voices.IndexOf(playingVoice);
-                if (currentIndex == voices.Count - 1)
-                {
-                    voices = voices.OrderBy(_ => Guid.NewGuid()).ToList();
-                    Play(voices.First());
-                }
-                else
-                {
-                    Play(voices[currentIndex + 1]);
-                }
+                var v = currentIndex == voices.Count - 1
+                    ? voices.OrderBy(_ => Guid.NewGuid()).ToList().First()
+                    : voices[currentIndex + 1];
+
+                v.AudioSource.outputAudioMixerGroup = AudioMixer.FindMatchingGroups("bgv").First();
+                Play(v);
             }
 
             if (mute)

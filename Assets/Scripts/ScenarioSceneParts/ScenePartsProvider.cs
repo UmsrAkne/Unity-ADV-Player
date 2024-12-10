@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.Audio;
 
 namespace ScenarioSceneParts
 {
@@ -48,8 +49,9 @@ namespace ScenarioSceneParts
         /// 指定したチャンネルの VoicePlayer が存在しない場合は、新たに生成してそれを引数とします。
         /// </summary>
         /// <param name="channel">BgvPlayer にセットする VoicePlayer のチャンネルをセットします</param>
+        /// <param name="mixer">BgvPlayer を割り当てる AudioMixer を入力します。</param>
         /// <returns>指定したチャンネルの VoicePlayer がセットされた BgvPlayer</returns>
-        public static BgvPlayer GetBgvPlayer(int channel)
+        public static BgvPlayer GetBgvPlayer(int channel, AudioMixer mixer)
         {
             var vps = BgvPlayers;
             while (vps.Count <= channel)
@@ -57,7 +59,9 @@ namespace ScenarioSceneParts
                 vps.Add(null);
             }
 
-            return vps[channel] ?? (vps[channel] = new BgvPlayer(GetVoicePlayer(channel)));
+            var result = vps[channel] ?? (vps[channel] = new BgvPlayer(GetVoicePlayer(channel)));
+            result.AudioMixer = mixer;
+            return result;
         }
 
         /// <summary>
