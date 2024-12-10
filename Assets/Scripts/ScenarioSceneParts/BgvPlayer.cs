@@ -4,6 +4,7 @@ using System.Linq;
 using Loaders;
 using SceneContents;
 using UnityEngine.Audio;
+using Utils;
 
 namespace ScenarioSceneParts
 {
@@ -34,11 +35,8 @@ namespace ScenarioSceneParts
             {
                 if (value >= 0 && value <= BaseVolume)
                 {
-                    if (playingVoice != null)
-                    {
-                        playingVoice.Volume = value;
-                    }
-
+                    var vol = AudioMixerVolumeConverter.ConvertLinearToDecibel((float)value);
+                    AudioMixer.SetFloat("bgvMixVol", vol);
                     volume = value;
                 }
             }
