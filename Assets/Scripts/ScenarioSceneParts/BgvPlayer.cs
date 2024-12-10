@@ -69,15 +69,12 @@ namespace ScenarioSceneParts
             {
                 // 再生中の音声が終了したら、リスト上で次の音声があれば再生、なければシャッフルして先頭から再生する。
                 var currentIndex = voices.IndexOf(playingVoice);
-                if (currentIndex == voices.Count - 1)
-                {
-                    voices = voices.OrderBy(_ => Guid.NewGuid()).ToList();
-                    Play(voices.First());
-                }
-                else
-                {
-                    Play(voices[currentIndex + 1]);
-                }
+                var v = currentIndex == voices.Count - 1
+                    ? voices.OrderBy(_ => Guid.NewGuid()).ToList().First()
+                    : voices[currentIndex + 1];
+
+                v.AudioSource.outputAudioMixerGroup = AudioMixer.FindMatchingGroups("bgv").First();
+                Play(v);
             }
 
             if (mute)
