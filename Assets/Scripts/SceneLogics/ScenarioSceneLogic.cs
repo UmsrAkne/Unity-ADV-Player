@@ -6,6 +6,7 @@ using ScenarioSceneParts;
 using SceneContents;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UserInterface;
@@ -18,6 +19,7 @@ namespace SceneLogics
         private int counter;
         private Scenario currentScenario;
         private bool initialized;
+        [SerializeField] private AudioMixer audioMixer;
 
         public Resource SceneResource { get; set; }
 
@@ -155,9 +157,9 @@ namespace SceneLogics
                 ScenePartsProvider.GetVoicePlayer(0),
                 ScenePartsProvider.GetVoicePlayer(1),
                 ScenePartsProvider.GetVoicePlayer(2),
-                ScenePartsProvider.GetBgvPlayer(0),
-                ScenePartsProvider.GetBgvPlayer(1),
-                ScenePartsProvider.GetBgvPlayer(2),
+                ScenePartsProvider.GetBgvPlayer(0, audioMixer),
+                ScenePartsProvider.GetBgvPlayer(1, audioMixer),
+                ScenePartsProvider.GetBgvPlayer(2, audioMixer),
                 msgWindowMover,
             };
 

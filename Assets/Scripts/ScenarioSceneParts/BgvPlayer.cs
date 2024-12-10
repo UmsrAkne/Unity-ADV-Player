@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Loaders;
 using SceneContents;
+using UnityEngine.Audio;
 
 namespace ScenarioSceneParts
 {
@@ -48,6 +49,8 @@ namespace ScenarioSceneParts
         private IResource Resource { get; set; }
 
         public bool NeedExecuteEveryFrame => true;
+
+        public AudioMixer AudioMixer { private get; set; }
 
         public ExecutionPriority Priority => ExecutionPriority.Low;
 
