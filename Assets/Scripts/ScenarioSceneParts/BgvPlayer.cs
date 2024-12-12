@@ -36,7 +36,7 @@ namespace ScenarioSceneParts
                 if (value >= 0 && value <= BaseVolume)
                 {
                     var vol = AudioMixerVolumeConverter.ConvertLinearToDecibel((float)value);
-                    AudioMixer.SetFloat("bgvMixVol", vol);
+                    AudioMixer.SetFloat($"bgvMixerGroup{VoicePlayer.Channel}", vol);
                     volume = value;
                 }
             }
@@ -71,7 +71,7 @@ namespace ScenarioSceneParts
                     ? voices.OrderBy(_ => Guid.NewGuid()).ToList().First()
                     : voices[currentIndex + 1];
 
-                v.AudioSource.outputAudioMixerGroup = AudioMixer.FindMatchingGroups("bgv").First();
+                v.AudioSource.outputAudioMixerGroup = AudioMixer.FindMatchingGroups($"bgv{VoicePlayer.Channel}").First();
                 Play(v);
             }
 
